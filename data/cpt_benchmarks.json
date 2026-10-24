@@ -1,0 +1,182 @@
+[
+  {
+    "code": "80053",
+    "name": "Comprehensive Metabolic Panel (CMP)",
+    "category": "Laboratory",
+    "medicareMedian": 52.00,
+    "fairMarketRange": [40.00, 75.00],
+    "markupThreshold": 180.00,
+    "bundles": ["80048", "82040", "82247", "84075", "84155"],
+    "description": "Standard 14-test blood panel evaluating kidney function, liver health, blood glucose, and electrolyte balance."
+  },
+  {
+    "code": "80048",
+    "name": "Basic Metabolic Panel (BMP)",
+    "category": "Laboratory",
+    "medicareMedian": 38.00,
+    "fairMarketRange": [30.00, 55.00],
+    "markupThreshold": 130.00,
+    "bundles": ["82374", "82435", "82565", "82947", "84132", "84295", "84520"],
+    "description": "8-test blood panel checking glucose, electrolyte levels, and renal filtration."
+  },
+  {
+    "code": "85025",
+    "name": "Complete Blood Count (CBC) with Differential",
+    "category": "Laboratory",
+    "medicareMedian": 28.00,
+    "fairMarketRange": [20.00, 45.00],
+    "markupThreshold": 110.00,
+    "bundles": ["85027", "85004"],
+    "description": "Measures red cells, white cells, platelets, and screens for infection or anemia."
+  },
+  {
+    "code": "36415",
+    "name": "Routine Venipuncture (Blood Draw)",
+    "category": "Phlebotomy",
+    "medicareMedian": 12.00,
+    "fairMarketRange": [8.00, 25.00],
+    "markupThreshold": 60.00,
+    "maxAllowedPerEncounter": 1,
+    "description": "Collection of venous blood via needle puncture. Billed once per patient collection encounter."
+  },
+  {
+    "code": "82040",
+    "name": "Albumin; Serum, Plasma, or Whole Blood",
+    "category": "Laboratory",
+    "medicareMedian": 18.00,
+    "fairMarketRange": [12.00, 30.00],
+    "markupThreshold": 75.00,
+    "description": "Assay testing liver protein synthesis. Bundled under CMP (80053)."
+  },
+  {
+    "code": "84075",
+    "name": "Alkaline Phosphatase",
+    "category": "Laboratory",
+    "medicareMedian": 20.00,
+    "fairMarketRange": [15.00, 35.00],
+    "markupThreshold": 85.00,
+    "description": "Liver and bone enzyme evaluation. Bundled under CMP (80053)."
+  },
+  {
+    "code": "99281",
+    "name": "Emergency Department Visit - Level 1",
+    "category": "Evaluation and Management",
+    "medicareMedian": 75.00,
+    "fairMarketRange": [60.00, 140.00],
+    "markupThreshold": 350.00,
+    "severityLevel": 1,
+    "description": "Minimal severity ER visit for minor problems (e.g., simple dressing change or suture removal)."
+  },
+  {
+    "code": "99282",
+    "name": "Emergency Department Visit - Level 2",
+    "category": "Evaluation and Management",
+    "medicareMedian": 140.00,
+    "fairMarketRange": [110.00, 240.00],
+    "markupThreshold": 600.00,
+    "severityLevel": 2,
+    "description": "Low-to-moderate severity ER visit requiring focused examination."
+  },
+  {
+    "code": "99283",
+    "name": "Emergency Department Visit - Level 3",
+    "category": "Evaluation and Management",
+    "medicareMedian": 260.00,
+    "fairMarketRange": [200.00, 450.00],
+    "markupThreshold": 950.00,
+    "severityLevel": 3,
+    "description": "Moderate severity ER encounter requiring moderate clinical decision-making."
+  },
+  {
+    "code": "99284",
+    "name": "Emergency Department Visit - Level 4",
+    "category": "Evaluation and Management",
+    "medicareMedian": 480.00,
+    "fairMarketRange": [380.00, 750.00],
+    "markupThreshold": 1600.00,
+    "severityLevel": 4,
+    "description": "High severity ER evaluation for urgent conditions without immediate life threat."
+  },
+  {
+    "code": "99285",
+    "name": "Emergency Department Visit - Level 5",
+    "category": "Evaluation and Management",
+    "medicareMedian": 720.00,
+    "fairMarketRange": [550.00, 1100.00],
+    "markupThreshold": 2400.00,
+    "severityLevel": 5,
+    "description": "Maximum severity ER evaluation for acute, life-threatening, or highly unstable conditions."
+  },
+  {
+    "code": "71046",
+    "name": "Chest X-Ray - 2 Views (Frontal & Lateral)",
+    "category": "Radiology",
+    "medicareMedian": 68.00,
+    "fairMarketRange": [50.00, 120.00],
+    "markupThreshold": 380.00,
+    "description": "Standard two-view imaging of lungs, heart silhouette, and thoracic cage."
+  },
+  {
+    "code": "73110",
+    "name": "X-Ray Wrist - Complete (Minimum 3 Views)",
+    "category": "Radiology",
+    "medicareMedian": 62.00,
+    "fairMarketRange": [45.00, 110.00],
+    "markupThreshold": 340.00,
+    "description": "Diagnostic radiographic evaluation of wrist bones and carpal alignment."
+  },
+  {
+    "code": "70450",
+    "name": "CT Scan - Head/Brain without Contrast",
+    "category": "Radiology",
+    "medicareMedian": 290.00,
+    "fairMarketRange": [220.00, 520.00],
+    "markupThreshold": 1800.00,
+    "description": "Computed tomography scan of head to rule out intracranial hemorrhage or acute trauma."
+  },
+  {
+    "code": "93000",
+    "name": "Electrocardiogram (ECG/EKG) with Routine Interpretation",
+    "category": "Cardiology",
+    "medicareMedian": 42.00,
+    "fairMarketRange": [30.00, 85.00],
+    "markupThreshold": 260.00,
+    "description": "12-lead electrical tracing evaluating cardiac rhythm and ischemic changes."
+  },
+  {
+    "code": "96374",
+    "name": "Therapeutic/Diagnostic IV Push Injection (Initial Substance)",
+    "category": "Nursing Administration",
+    "medicareMedian": 74.00,
+    "fairMarketRange": [55.00, 130.00],
+    "markupThreshold": 450.00,
+    "description": "Direct intravenous push administration of an initial medication."
+  },
+  {
+    "code": "96360",
+    "name": "Intravenous Hydration Infusion (Initial up to 1 Hour)",
+    "category": "Nursing Administration",
+    "medicareMedian": 88.00,
+    "fairMarketRange": [65.00, 160.00],
+    "markupThreshold": 520.00,
+    "description": "IV administration of saline/electrolytes for rehydration."
+  },
+  {
+    "code": "J7030",
+    "name": "Infusion, Normal Saline Solution, 1,000 cc",
+    "category": "Pharmacy & Supplies",
+    "medicareMedian": 14.00,
+    "fairMarketRange": [8.00, 35.00],
+    "markupThreshold": 180.00,
+    "description": "1 Liter bag of sterile 0.9% sodium chloride IV fluids."
+  },
+  {
+    "code": "29125",
+    "name": "Application of Short Arm Splint (Forearm to Hand)",
+    "category": "Orthopedic & Surgery",
+    "medicareMedian": 115.00,
+    "fairMarketRange": [85.00, 210.00],
+    "markupThreshold": 750.00,
+    "description": "Static immobilization splint applied to forearm/wrist for fracture stabilization."
+  }
+]

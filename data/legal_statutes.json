@@ -1,0 +1,29 @@
+[
+  {
+    "id": "FCBA",
+    "title": "Fair Credit Billing Act (15 U.S.C. § 1666)",
+    "statutoryCode": "15 U.S.C. § 1666",
+    "category": "Billing Discrepancy & Computational Error",
+    "appliesTo": ["DUPLICATE_CHARGE", "UNBUNDLED_CHARGE", "QUANTITY_OVERBILL"],
+    "formalNoticeClause": "Pursuant to the Fair Credit Billing Act (15 U.S.C. § 1666) and Regulation Z (12 C.F.R. § 1026.13), this document serves as timely written notice of significant billing errors and computational discrepancies on Account #{ACCOUNT_NUMBER}.",
+    "mandatoryDemand": "You are formally required to acknowledge this dispute within 30 days and resolve the identified errors within two billing cycles. Under federal statute, you may not report this disputed balance to any consumer credit reporting agency or initiate collection activities while this dispute remains under active investigation."
+  },
+  {
+    "id": "NSA",
+    "title": "Federal No Surprises Act (Public Law 116-260)",
+    "statutoryCode": "42 U.S.C. § 300gg-111",
+    "category": "Surprise Balance Billing & Out-of-Network Emergency",
+    "appliesTo": ["OUT_OF_NETWORK_SURPRISE", "UPCODING_SEVERITY"],
+    "formalNoticeClause": "Under the federal No Surprises Act (Public Law 116-260, 42 U.S.C. § 300gg-111), balance billing for emergency medical services and ancillary facility services without valid prior written consent is strictly prohibited.",
+    "mandatoryDemand": "All out-of-network and emergency practitioner charges must be recalculated to the Qualifying Payment Amount (QPA), and patient cost-sharing cannot exceed in-network median deductible and copayment limits."
+  },
+  {
+    "id": "ACA_501R",
+    "title": "IRC Section 501(r) - Nonprofit Hospital Financial Assistance",
+    "statutoryCode": "26 U.S.C. § 501(r)",
+    "category": "Excessive Markups & Financial Assistance",
+    "appliesTo": ["EXCESSIVE_MARKUP"],
+    "formalNoticeClause": "Under Internal Revenue Code Section 501(r)(4) and (r)(6), tax-exempt 501(c)(3) hospital organizations are legally obligated to provide a Plain Language Summary of their Financial Assistance Policy (FAP) and are prohibited from charging eligible individuals more than the Amounts Generally Billed (AGB) for emergency or other medically necessary care.",
+    "mandatoryDemand": "I hereby formally request a complete copy of your Financial Assistance Policy application, an itemized statement detailing standard CMS Revenue Codes and National Drug Codes (NDCs), and an immediate recalculation of all charges exceeding the hospital's AGB percentage."
+  }
+]
