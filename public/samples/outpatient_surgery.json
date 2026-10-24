@@ -1,0 +1,260 @@
+{
+  "id": "sample_surgery_unbundled_2026",
+  "createdAt": "2026-10-24T00:00:00Z",
+  "facility": {
+    "name": "St. Luke's Ambulatory Surgical Pavilion",
+    "address": "450 Medical Center Way, Boston, MA 02115",
+    "billingPhone": "1-888-555-7890"
+  },
+  "patient": {
+    "accountNumber": "SURG-2026-4410",
+    "statementDate": "2026-10-18",
+    "patientName": "Michael Chang"
+  },
+  "financials": {
+    "totalBilledGross": 8420.00,
+    "insuranceAdjustments": 2800.00,
+    "patientResponsibility": 5620.00,
+    "totalPotentialSavings": 2350.00,
+    "riskScore": 85
+  },
+  "items": [
+    {
+      "id": "surg_item_1",
+      "code": "80053",
+      "rawDescription": "COMPREHENSIVE METABOLIC PANEL",
+      "plainEnglishDescription": "Comprehensive 14-test chemistry screening panel evaluating renal, hepatic, and metabolic functions.",
+      "clinicalCategory": "Laboratory",
+      "dateOfService": "2026-10-15",
+      "quantity": 1,
+      "billedAmount": 340.00,
+      "benchmarkMedian": 52.00,
+      "fairMarketRange": [40.00, 75.00],
+      "status": "NORMAL",
+      "isDisputed": false,
+      "anomalies": []
+    },
+    {
+      "id": "surg_item_2",
+      "code": "82040",
+      "rawDescription": "ALBUMIN SERUM",
+      "plainEnglishDescription": "Blood protein test checking liver function. Legally bundled inside the CMP panel (80053).",
+      "clinicalCategory": "Laboratory",
+      "dateOfService": "2026-10-15",
+      "quantity": 1,
+      "billedAmount": 120.00,
+      "benchmarkMedian": 18.00,
+      "fairMarketRange": [12.00, 30.00],
+      "status": "HIGH",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "surg_item_2",
+          "code": "82040",
+          "anomalyType": "UNBUNDLED_CHARGE",
+          "severity": "HIGH",
+          "disputedAmount": 120.00,
+          "title": "Improper Unbundling (CCI Edit Violation)",
+          "explanation": "CPT 82040 (Albumin) was billed separately for $120.00, but is legally bundled into the Comprehensive Metabolic Panel (CPT 80053) performed on the same day.",
+          "remedy": "Separate charge must be reduced to $0.00 per CMS Correct Coding Initiative.",
+          "statutoryBasis": "CMS National Correct Coding Initiative (NCCI)"
+        }
+      ]
+    },
+    {
+      "id": "surg_item_3",
+      "code": "84075",
+      "rawDescription": "ALKALINE PHOSPHATASE",
+      "plainEnglishDescription": "Liver enzyme test. Legally bundled inside the CMP panel (80053).",
+      "clinicalCategory": "Laboratory",
+      "dateOfService": "2026-10-15",
+      "quantity": 1,
+      "billedAmount": 130.00,
+      "benchmarkMedian": 20.00,
+      "fairMarketRange": [15.00, 35.00],
+      "status": "HIGH",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "surg_item_3",
+          "code": "84075",
+          "anomalyType": "UNBUNDLED_CHARGE",
+          "severity": "HIGH",
+          "disputedAmount": 130.00,
+          "title": "Improper Unbundling (CCI Edit Violation)",
+          "explanation": "CPT 84075 (Alkaline Phosphatase) was billed separately for $130.00, but is an integral component of CPT 80053 billed on the same encounter date.",
+          "remedy": "Separate charge must be reduced to $0.00.",
+          "statutoryBasis": "CMS National Correct Coding Initiative (NCCI)"
+        }
+      ]
+    },
+    {
+      "id": "surg_item_4",
+      "code": "71046",
+      "rawDescription": "CHEST X-RAY 2 VIEWS",
+      "plainEnglishDescription": "Pre-operative two-view chest imaging examining the heart and lung fields.",
+      "clinicalCategory": "Radiology",
+      "dateOfService": "2026-10-15",
+      "quantity": 1,
+      "billedAmount": 490.00,
+      "benchmarkMedian": 68.00,
+      "fairMarketRange": [50.00, 120.00],
+      "status": "MEDIUM",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "surg_item_4",
+          "code": "71046",
+          "anomalyType": "EXCESSIVE_MARKUP",
+          "severity": "MEDIUM",
+          "disputedAmount": 300.00,
+          "title": "Severe Imaging Facility Markup",
+          "explanation": "Billed at $490.00 vs regional Medicare median of $68.00 (7.2x markup).",
+          "remedy": "Request reduction to fair market value ($120.00 maximum).",
+          "statutoryBasis": "Fair Credit Billing Act & IRC § 501(r)"
+        }
+      ]
+    },
+    {
+      "id": "surg_item_5",
+      "code": "93000",
+      "rawDescription": "12-LEAD ELECTROCARDIOGRAM COMPLETE",
+      "plainEnglishDescription": "Routine pre-surgical cardiac rhythm tracing.",
+      "clinicalCategory": "Cardiology",
+      "dateOfService": "2026-10-15",
+      "quantity": 1,
+      "billedAmount": 310.00,
+      "benchmarkMedian": 42.00,
+      "fairMarketRange": [30.00, 85.00],
+      "status": "MEDIUM",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "surg_item_5",
+          "code": "93000",
+          "anomalyType": "EXCESSIVE_MARKUP",
+          "severity": "MEDIUM",
+          "disputedAmount": 200.00,
+          "title": "ECG Facility Markup",
+          "explanation": "Billed at $310.00 vs Medicare allowable rate of $42.00.",
+          "remedy": "Recalculate to hospital AGB percentage.",
+          "statutoryBasis": "IRC § 501(r)"
+        }
+      ]
+    },
+    {
+      "id": "surg_item_6",
+      "code": "96360",
+      "rawDescription": "INTRAVENOUS HYDRATION INFUSION 1ST HOUR",
+      "plainEnglishDescription": "IV line fluid infusion administered prior to surgical induction.",
+      "clinicalCategory": "Nursing Administration",
+      "dateOfService": "2026-10-15",
+      "quantity": 1,
+      "billedAmount": 550.00,
+      "benchmarkMedian": 88.00,
+      "fairMarketRange": [65.00, 160.00],
+      "status": "MEDIUM",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "surg_item_6",
+          "code": "96360",
+          "anomalyType": "EXCESSIVE_MARKUP",
+          "severity": "MEDIUM",
+          "disputedAmount": 350.00,
+          "title": "IV Hydration Facility Markup",
+          "explanation": "Billed at $550.00 for 1 hour of standard saline infusion.",
+          "remedy": "Request reduction to hospital in-network contracted fee.",
+          "statutoryBasis": "IRC § 501(r)"
+        }
+      ]
+    },
+    {
+      "id": "surg_item_7",
+      "code": "J7030",
+      "rawDescription": "NORMAL SALINE 1000ML",
+      "plainEnglishDescription": "1 Liter sterile bag of normal saline infusion solution.",
+      "clinicalCategory": "Pharmacy & Supplies",
+      "dateOfService": "2026-10-15",
+      "quantity": 2,
+      "billedAmount": 420.00,
+      "benchmarkMedian": 28.00,
+      "fairMarketRange": [16.00, 70.00],
+      "status": "MEDIUM",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "surg_item_7",
+          "code": "J7030",
+          "anomalyType": "EXCESSIVE_MARKUP",
+          "severity": "MEDIUM",
+          "disputedAmount": 350.00,
+          "title": "Extreme IV Saline Markup",
+          "explanation": "Billed at $210.00 per liter bag ($420.00 total) for IV fluid that costs hospital under $5.00 wholesale.",
+          "remedy": "Request adjustment to standard retail benchmark.",
+          "statutoryBasis": "IRC § 501(r)"
+        }
+      ]
+    }
+  ],
+  "anomalies": [
+    {
+      "itemId": "surg_item_2",
+      "code": "82040",
+      "anomalyType": "UNBUNDLED_CHARGE",
+      "severity": "HIGH",
+      "disputedAmount": 120.00,
+      "title": "Improper Unbundling (CCI Edit Violation)",
+      "explanation": "CPT 82040 (Albumin) was billed separately for $120.00, but is legally bundled into CPT 80053 performed on the same day.",
+      "remedy": "Separate charge must be reduced to $0.00 per CMS Correct Coding Initiative.",
+      "statutoryBasis": "CMS National Correct Coding Initiative (NCCI)"
+    },
+    {
+      "itemId": "surg_item_3",
+      "code": "84075",
+      "anomalyType": "UNBUNDLED_CHARGE",
+      "severity": "HIGH",
+      "disputedAmount": 130.00,
+      "title": "Improper Unbundling (CCI Edit Violation)",
+      "explanation": "CPT 84075 (Alkaline Phosphatase) was billed separately for $130.00, but is an integral component of CPT 80053 billed on the same encounter date.",
+      "remedy": "Separate charge must be reduced to $0.00.",
+      "statutoryBasis": "CMS National Correct Coding Initiative (NCCI)"
+    },
+    {
+      "itemId": "surg_item_4",
+      "code": "71046",
+      "anomalyType": "EXCESSIVE_MARKUP",
+      "severity": "MEDIUM",
+      "disputedAmount": 300.00,
+      "title": "Severe Imaging Facility Markup",
+      "explanation": "Billed at $490.00 vs regional Medicare median of $68.00 (7.2x markup).",
+      "remedy": "Request reduction to fair market value ($120.00 maximum).",
+      "statutoryBasis": "Fair Credit Billing Act & IRC § 501(r)"
+    },
+    {
+      "itemId": "surg_item_7",
+      "code": "J7030",
+      "anomalyType": "EXCESSIVE_MARKUP",
+      "severity": "MEDIUM",
+      "disputedAmount": 350.00,
+      "title": "Extreme IV Saline Markup",
+      "explanation": "Billed at $210.00 per bag ($420.00 total) for standard saline solution.",
+      "remedy": "Request adjustment to standard retail benchmark.",
+      "statutoryBasis": "IRC § 501(r)"
+    }
+  ],
+  "disputePackage": {
+    "formalLetterText": "Date: October 24, 2026\n\nTo:\nBilling & Patient Financial Services\nSt. Luke's Ambulatory Surgical Pavilion\n450 Medical Center Way, Boston, MA 02115\n\nRE: Formal Notice of Disputed Unbundled Charges & Excessive Markups\nPatient Name: Michael Chang\nAccount Number: SURG-2026-4410\nStatement Date: October 18, 2026\nDisputed Amount: $2,350.00\n\nDear Billing Compliance Department,\n\nPursuant to the Fair Credit Billing Act (15 U.S.C. § 1666) and the CMS National Correct Coding Initiative (NCCI), I am formally disputing unbundled laboratory test charges and excessive facility markups on the above-referenced account.\n\nFollowing forensic analysis, the following charges are in direct violation of federal coding guidelines:\n\n1. CPT 82040 (Albumin) - $120.00 & CPT 84075 (Alkaline Phosphatase) - $130.00\n   Grievance: Illegal Unbundling. Both tests were performed on October 15, 2026, alongside CPT 80053 (Comprehensive Metabolic Panel). Under CMS NCCI standards, individual chemistry components may not be unbundled and billed separately when a comprehensive panel is charged.\n\n2. CPT 71046 (Chest X-Ray) - $490.00\n   Grievance: Severe facility markup exceeding 720% of the Medicare allowable median rate of $68.00.\n\n3. CPT J7030 (Normal Saline Solution) - $420.00\n   Grievance: Extreme pharmaceutical supply markup ($210.00 per 1,000ml bag) exceeding standard reasonable community pricing.\n\nDEMANDS:\n1. Reissue an amended statement zeroing out unbundled laboratory CPT codes 82040 and 84075.\n2. Recalculate facility and supply charges pursuant to your hospital's Amount Generally Billed (AGB) rate under IRC § 501(r).\n3. Maintain a freeze on credit reporting and collection actions pursuant to 15 U.S.C. § 1666 while this investigation remains pending.\n\nSincerely,\n\nMichael Chang\nAccount #SURG-2026-4410",
+    "statutoryCitations": [
+      "CMS National Correct Coding Initiative (NCCI)",
+      "Fair Credit Billing Act (15 U.S.C. § 1666)",
+      "IRS Section 501(r) Financial Assistance Regulations"
+    ],
+    "phoneNegotiationPoints": [
+      "Step 1: Contact surgical pavilion billing at 1-888-555-7890.",
+      "Step 2: Reference Account #SURG-2026-4410 and notify them: 'I have had my bill audited under CMS NCCI rules. CPT 82040 and 84075 are unbundled subcomponents of CPT 80053 and must be written off immediately.'",
+      "Step 3: Point out the 7x markup on the chest X-ray and request an immediate self-pay discount or AGB adjustment."
+    ],
+    "generatedAt": "2026-10-24T00:00:00Z"
+  }
+}
