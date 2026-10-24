@@ -1,0 +1,254 @@
+{
+  "id": "sample_er_wrist_2026",
+  "createdAt": "2026-10-24T00:00:00Z",
+  "facility": {
+    "name": "Mercy General Hospital & Trauma Center",
+    "address": "1200 Healthcare Blvd, Metro City, NY 10001",
+    "billingPhone": "1-800-555-4321"
+  },
+  "patient": {
+    "accountNumber": "ACC-99284-883",
+    "statementDate": "2026-10-14",
+    "patientName": "Sarah Jenkins"
+  },
+  "financials": {
+    "totalBilledGross": 4820.00,
+    "insuranceAdjustments": 1200.00,
+    "patientResponsibility": 3620.00,
+    "totalPotentialSavings": 1650.00,
+    "riskScore": 78
+  },
+  "items": [
+    {
+      "id": "item_1",
+      "code": "99284",
+      "rawDescription": "EMERGENCY DEPT VISIT LEVEL 4",
+      "plainEnglishDescription": "Emergency room physician and facility fee for high-severity evaluation without immediate threat to life.",
+      "clinicalCategory": "Evaluation and Management",
+      "dateOfService": "2026-10-12",
+      "quantity": 1,
+      "billedAmount": 1850.00,
+      "benchmarkMedian": 480.00,
+      "fairMarketRange": [380.00, 750.00],
+      "status": "MEDIUM",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "item_1",
+          "code": "99284",
+          "anomalyType": "EXCESSIVE_MARKUP",
+          "severity": "MEDIUM",
+          "disputedAmount": 1100.00,
+          "title": "Severe Facility Markup",
+          "explanation": "Billed at $1,850.00, which is 3.8x the regional Medicare allowable median ($480.00).",
+          "remedy": "Demand recalculation based on hospital's Amount Generally Billed (AGB) percentage.",
+          "statutoryBasis": "IRC Section 501(r)(6)"
+        }
+      ]
+    },
+    {
+      "id": "item_2",
+      "code": "73110",
+      "rawDescription": "RADIOLOGIC EXAM WRIST COMPLETE 3+ VIEWS",
+      "plainEnglishDescription": "Standard 3-angle X-ray imaging of the wrist to check for fracture or bone displacement.",
+      "clinicalCategory": "Radiology",
+      "dateOfService": "2026-10-12",
+      "quantity": 1,
+      "billedAmount": 420.00,
+      "benchmarkMedian": 62.00,
+      "fairMarketRange": [45.00, 110.00],
+      "status": "NORMAL",
+      "isDisputed": false,
+      "anomalies": []
+    },
+    {
+      "id": "item_3",
+      "code": "80053",
+      "rawDescription": "COMPREHENSIVE METABOLIC PANEL",
+      "plainEnglishDescription": "Standard 14-test blood panel checking liver, kidney function, and glucose levels.",
+      "clinicalCategory": "Laboratory",
+      "dateOfService": "2026-10-12",
+      "quantity": 1,
+      "billedAmount": 280.00,
+      "benchmarkMedian": 52.00,
+      "fairMarketRange": [40.00, 75.00],
+      "status": "NORMAL",
+      "isDisputed": false,
+      "anomalies": []
+    },
+    {
+      "id": "item_4",
+      "code": "80053",
+      "rawDescription": "COMPREHENSIVE METABOLIC PANEL",
+      "plainEnglishDescription": "Standard 14-test blood panel checking liver, kidney function, and glucose levels.",
+      "clinicalCategory": "Laboratory",
+      "dateOfService": "2026-10-12",
+      "quantity": 1,
+      "billedAmount": 280.00,
+      "benchmarkMedian": 52.00,
+      "fairMarketRange": [40.00, 75.00],
+      "status": "HIGH",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "item_4",
+          "code": "80053",
+          "anomalyType": "DUPLICATE_CHARGE",
+          "severity": "HIGH",
+          "disputedAmount": 280.00,
+          "title": "Duplicate Line-Item Billed",
+          "explanation": "CPT 80053 was billed twice on 2026-10-12 with identical parameters ($280.00) within 1 minute of Item #3.",
+          "remedy": "Demand complete deletion of the duplicate lab charge.",
+          "statutoryBasis": "Fair Credit Billing Act (15 U.S.C. § 1666)"
+        }
+      ]
+    },
+    {
+      "id": "item_5",
+      "code": "36415",
+      "rawDescription": "ROUTINE VENIPUNCTURE BLOOD DRAW",
+      "plainEnglishDescription": "Inserting a needle into a vein to collect blood tubes for laboratory testing.",
+      "clinicalCategory": "Phlebotomy",
+      "dateOfService": "2026-10-12",
+      "quantity": 1,
+      "billedAmount": 70.00,
+      "benchmarkMedian": 12.00,
+      "fairMarketRange": [8.00, 25.00],
+      "status": "NORMAL",
+      "isDisputed": false,
+      "anomalies": []
+    },
+    {
+      "id": "item_6",
+      "code": "36415",
+      "rawDescription": "ROUTINE VENIPUNCTURE BLOOD DRAW",
+      "plainEnglishDescription": "Inserting a needle into a vein to collect blood tubes for laboratory testing.",
+      "clinicalCategory": "Phlebotomy",
+      "dateOfService": "2026-10-12",
+      "quantity": 1,
+      "billedAmount": 70.00,
+      "benchmarkMedian": 12.00,
+      "fairMarketRange": [8.00, 25.00],
+      "status": "HIGH",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "item_6",
+          "code": "36415",
+          "anomalyType": "QUANTITY_OVERBILL",
+          "severity": "HIGH",
+          "disputedAmount": 70.00,
+          "title": "Duplicate Venipuncture Charge",
+          "explanation": "CMS guidelines strictly permit only one venipuncture collection fee per patient encounter.",
+          "remedy": "Remove secondary venipuncture fee ($70.00).",
+          "statutoryBasis": "CMS NCCI Guidelines & FCBA"
+        }
+      ]
+    },
+    {
+      "id": "item_7",
+      "code": "29125",
+      "rawDescription": "APPL SHORT ARM SPLINT STATIC FOREARM-HAND",
+      "plainEnglishDescription": "Application of a fiberglass or plaster immobilization splint to stabilize the wrist fracture.",
+      "clinicalCategory": "Orthopedic & Surgery",
+      "dateOfService": "2026-10-12",
+      "quantity": 1,
+      "billedAmount": 650.00,
+      "benchmarkMedian": 115.00,
+      "fairMarketRange": [85.00, 210.00],
+      "status": "MEDIUM",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "item_7",
+          "code": "29125",
+          "anomalyType": "EXCESSIVE_MARKUP",
+          "severity": "MEDIUM",
+          "disputedAmount": 200.00,
+          "title": "Splinting Application Markup",
+          "explanation": "Billed at $650.00 vs regional fair market range of $85 - $210.",
+          "remedy": "Request reduction to hospital Amount Generally Billed (AGB).",
+          "statutoryBasis": "IRC Section 501(r)"
+        }
+      ]
+    },
+    {
+      "id": "item_8",
+      "code": "J7030",
+      "rawDescription": "INFUSION NORMAL SALINE 1000CC",
+      "plainEnglishDescription": "1 Liter sterile bag of 0.9% intravenous sodium chloride hydration fluid.",
+      "clinicalCategory": "Pharmacy & Supplies",
+      "dateOfService": "2026-10-12",
+      "quantity": 1,
+      "billedAmount": 200.00,
+      "benchmarkMedian": 14.00,
+      "fairMarketRange": [8.00, 35.00],
+      "status": "NORMAL",
+      "isDisputed": false,
+      "anomalies": []
+    }
+  ],
+  "anomalies": [
+    {
+      "itemId": "item_4",
+      "code": "80053",
+      "anomalyType": "DUPLICATE_CHARGE",
+      "severity": "HIGH",
+      "disputedAmount": 280.00,
+      "title": "Duplicate Line-Item Billed",
+      "explanation": "CPT 80053 was billed twice on 2026-10-12 with identical parameters ($280.00) within 1 minute of Item #3.",
+      "remedy": "Demand complete deletion of the duplicate lab charge.",
+      "statutoryBasis": "Fair Credit Billing Act (15 U.S.C. § 1666)"
+    },
+    {
+      "itemId": "item_6",
+      "code": "36415",
+      "anomalyType": "QUANTITY_OVERBILL",
+      "severity": "HIGH",
+      "disputedAmount": 70.00,
+      "title": "Duplicate Venipuncture Charge",
+      "explanation": "CMS guidelines strictly permit only one venipuncture collection fee per patient encounter.",
+      "remedy": "Remove secondary venipuncture fee ($70.00).",
+      "statutoryBasis": "CMS NCCI Guidelines & FCBA"
+    },
+    {
+      "itemId": "item_1",
+      "code": "99284",
+      "anomalyType": "EXCESSIVE_MARKUP",
+      "severity": "MEDIUM",
+      "disputedAmount": 1100.00,
+      "title": "Severe Facility Markup",
+      "explanation": "Billed at $1,850.00, which is 3.8x the regional Medicare allowable median ($480.00).",
+      "remedy": "Demand recalculation based on hospital's Amount Generally Billed (AGB) percentage.",
+      "statutoryBasis": "IRC Section 501(r)(6)"
+    },
+    {
+      "itemId": "item_7",
+      "code": "29125",
+      "anomalyType": "EXCESSIVE_MARKUP",
+      "severity": "MEDIUM",
+      "disputedAmount": 200.00,
+      "title": "Splinting Application Markup",
+      "explanation": "Billed at $650.00 vs regional fair market range of $85 - $210.",
+      "remedy": "Request reduction to hospital Amount Generally Billed (AGB).",
+      "statutoryBasis": "IRC Section 501(r)"
+    }
+  ],
+  "disputePackage": {
+    "formalLetterText": "Date: October 24, 2026\n\nTo:\nPatient Financial Services & Billing Department\nMercy General Hospital & Trauma Center\n1200 Healthcare Blvd, Metro City, NY 10001\n\nRE: Formal Notice of Disputed Billing Errors and Statutory Dispute\nPatient Name: Sarah Jenkins\nAccount Number: ACC-99284-883\nStatement Date: October 14, 2026\nDisputed Amount: $1,650.00\n\nDear Billing Director,\n\nPursuant to the Fair Credit Billing Act (15 U.S.C. § 1666), Regulation Z (12 C.F.R. § 1026.13), and Internal Revenue Code Section 501(r), I am formally notifying your office of mathematical billing discrepancies, unauthorized duplicate charges, and excessive pricing markups on the above-referenced account.\n\nFollowing a forensic review of the itemized statement, the following line items are formally disputed:\n\n1. CPT 80053 (Comprehensive Metabolic Panel) - $280.00\n   Grievance: Duplicate charge. This identical laboratory panel was billed twice on October 12, 2026. Under federal billing rules, duplicate billing is prohibited.\n\n2. CPT 36415 (Routine Venipuncture) - $70.00\n   Grievance: Quantity overbill. Venipuncture fees may only be billed once per clinical blood draw encounter according to CMS NCCI standards.\n\n3. CPT 99284 (Emergency Department Level 4) - $1,850.00\n   Grievance: Excessive markup. This fee exceeds 380% of the Medicare allowable median ($480.00). I request an adjustment reflecting your hospital's Amount Generally Billed (AGB) percentage under IRC § 501(r).\n\n4. CPT 29125 (Application of Short Arm Splint) - $650.00\n   Grievance: Excessive supply and application fee exceeding regional fair market benchmarks ($85 - $210).\n\nSTATUTORY DEMANDS:\n1. Acknowledge receipt of this dispute letter within 30 days as mandated by federal law.\n2. In accordance with 15 U.S.C. § 1666, immediately suspend all collection activity and withhold reporting this disputed balance to any credit reporting agency while this investigation remains pending.\n3. Provide a revised itemized billing statement detailing standard CMS Revenue Codes and National Drug Codes (NDCs).\n4. Provide a copy of your hospital's Plain Language Financial Assistance Policy (FAP) application.\n\nSincerely,\n\nSarah Jenkins\nAccount #ACC-99284-883",
+    "statutoryCitations": [
+      "Fair Credit Billing Act (15 U.S.C. § 1666)",
+      "Regulation Z (12 C.F.R. § 1026.13)",
+      "IRS Section 501(r) Nonprofit Hospital Regulations",
+      "CMS National Correct Coding Initiative (NCCI)"
+    ],
+    "phoneNegotiationPoints": [
+      "Step 1: Call 1-800-555-4321 and ask to speak directly with the Patient Financial Services Supervisor.",
+      "Step 2: Reference Account #ACC-99284-883 and state: 'I have conducted a forensic audit of this statement and identified duplicate billing for CPT 80053 and CPT 36415 totaling $350.00.'",
+      "Step 3: Ask: 'Can you immediately credit these two duplicate line items off my balance today?'",
+      "Step 4: For the ER facility fee markup: 'The facility fee on CPT 99284 is 380% above the regional Medicare median. I would like to request an adjustment to your hospital's Amount Generally Billed (AGB) rate under Section 501(r).'",
+      "Step 5: If the representative pushes back: 'Please place a 30-day administrative hold on this account while your billing compliance team reviews my written dispute letter, and mail me your Financial Assistance application.'"
+    ],
+    "generatedAt": "2026-10-24T00:00:00Z"
+  }
+}
