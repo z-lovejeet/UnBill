@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnBill — Architectural App Map & Code Tour</title>
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --border: #E2E8F0;
+      --text: #0F172A;
+      --text-muted: #64748B;
+      --accent-navy: #0F172A;
+      --accent-emerald: #059669;
+      --accent-rose: #E11D48;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      margin: 0;
+      padding: 32px 16px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+    h1 {
+      font-size: 28px;
+      margin: 0 0 8px 0;
+      color: var(--accent-navy);
+      letter-spacing: -0.02em;
+    }
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--accent-emerald);
+      letter-spacing: 0.05em;
+    }
+    p {
+      margin: 8px 0;
+      color: #334155;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    h2 {
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: var(--accent-navy);
+    }
+    .diagram-container {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    svg text {
+      font-family: var(--font-sans);
+    }
+    .route-step {
+      border-left: 3px solid var(--accent-emerald);
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+    .route-step h3 {
+      font-size: 15px;
+      margin: 0 0 4px 0;
+    }
+    code {
+      font-family: var(--font-mono);
+      background: #F1F5F9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #0F172A;
+    }
+    pre {
+      background: #0F172A;
+      color: #F8FAFC;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      overflow-x: auto;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: #ECFDF5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+    }
+    details {
+      margin-top: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      background: #F8FAFC;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+    }
+    ul {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="eyebrow">Devpost Build With AI — App Map & Architectural Tour</div>
+      <h1>UnBill: Forensic Hospital Bill Auditor & Statutory Dispute Engine</h1>
+      <p>A deterministic, multi-agent patient advocacy platform designed to decode cryptographic hospital CPT codes, detect duplicate and unbundled charges against Medicare benchmarks, and compile formal Fair Credit Billing Act (15 U.S.C. § 1666) dispute packages.</p>
+    </header>
+
+    <!-- Overview Card -->
+    <div class="card">
+      <h2>The Core Architecture: 4 Specialized Agents</h2>
+      <p>UnBill replaces brittle probabilistic AI loops with a <strong>hybrid sequential engine</strong>: multimodal vision for intake, deterministic rules for math and statutory NCCI compliance, and ultra-fast LLMs for patient coaching.</p>
+
+      <div class="diagram-container">
+        <svg viewBox="0 0 760 180" width="100%" height="180" xmlns="http://www.w3.org/2000/svg">
+          <!-- Flow boxes -->
+          <rect x="10" y="30" width="160" height="110" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+          <text x="90" y="55" font-size="12" font-weight="bold" fill="#0F172A" text-anchor="middle">Agent 1: Ingestion</text>
+          <text x="90" y="75" font-size="10" fill="#64748B" text-anchor="middle">Gemini 3.5 Flash Lite</text>
+          <text x="90" y="95" font-size="9" fill="#334155" text-anchor="middle">Multimodal Vision OCR</text>
+          <text x="90" y="112" font-size="9" fill="#334155" text-anchor="middle">Extracts CPT Table</text>
+
+          <path d="M 170 85 L 205 85" stroke="#059669" stroke-width="2" marker-end="url(#arrow)"/>
+
+          <rect x="205" y="30" width="160" height="110" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+          <text x="285" y="55" font-size="12" font-weight="bold" fill="#0F172A" text-anchor="middle">Agent 2: Forensic Rules</text>
+          <text x="285" y="75" font-size="10" fill="#059669" text-anchor="middle">Deterministic TypeScript</text>
+          <text x="285" y="95" font-size="9" fill="#334155" text-anchor="middle">Duplicates & NCCI Edits</text>
+          <text x="285" y="112" font-size="9" fill="#334155" text-anchor="middle">Medicare Benchmark Math</text>
+
+          <path d="M 365 85 L 400 85" stroke="#059669" stroke-width="2"/>
+
+          <rect x="400" y="30" width="160" height="110" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+          <text x="480" y="55" font-size="12" font-weight="bold" fill="#0F172A" text-anchor="middle">Agent 3: Legal Advocate</text>
+          <text x="480" y="75" font-size="10" fill="#64748B" text-anchor="middle">Statutory Engine</text>
+          <text x="480" y="95" font-size="9" fill="#334155" text-anchor="middle">15 U.S.C. § 1666 Notice</text>
+          <text x="480" y="112" font-size="9" fill="#334155" text-anchor="middle">Phone Script Playbook</text>
+
+          <path d="M 560 85 L 595 85" stroke="#059669" stroke-width="2"/>
+
+          <rect x="595" y="30" width="155" height="110" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+          <text x="672" y="55" font-size="12" font-weight="bold" fill="#0F172A" text-anchor="middle">Agent 4: Copilot</text>
+          <text x="672" y="75" font-size="10" fill="#059669" text-anchor="middle">Groq (Sub-350ms)</text>
+          <text x="672" y="95" font-size="9" fill="#334155" text-anchor="middle">Streaming SSE Chat</text>
+          <text x="672" y="112" font-size="9" fill="#334155" text-anchor="middle">Real-time Negotiation</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Code Tour Stops -->
+    <div class="card">
+      <h2>Architectural Code Tour: Key Source Locations</h2>
+
+      <div class="route-step">
+        <h3>Stop 1: Multimodal Vision Ingestion & Schema Sanitization</h3>
+        <p><code>src/lib/gemini.ts</code> &rarr; <code>extractBillFromImage()</code> and <code>extractBillFromText()</code></p>
+        <p>Receives user statements, applies structured JSON instructions, and returns standardized clinical rows containing CPT code, raw description, date, and billed amounts.</p>
+      </div>
+
+      <div class="route-step">
+        <h3>Stop 2: Zero-Hallucination Deterministic Forensic Rule Engine</h3>
+        <p><code>src/lib/rules-engine.ts</code> &rarr; <code>compileForensicAudit()</code></p>
+        <p>Executes exact mathematical checks against <code>data/cpt_benchmarks.json</code>:</p>
+        <ul>
+          <li><code>auditDuplicateCharges()</code>: flags duplicate line items billed on identical dates.</li>
+          <li><code>auditUnbundling()</code>: identifies CMS National Correct Coding Initiative (NCCI) component violations.</li>
+          <li><code>auditExcessiveMarkups()</code>: compares hospital charges against regional Medicare Median Allowables.</li>
+        </ul>
+      </div>
+
+      <div class="route-step">
+        <h3>Stop 3: Interactive Forensic Dashboard & Dispute Kit UI</h3>
+        <p><code>src/app/results/[id]/page.tsx</code> & <code>src/components/audit-table.tsx</code></p>
+        <p>Renders the clinical ledger, plain-English drawer explanations, benchmark comparison visualizers, and dynamic savings recalculation as line items are toggled.</p>
+      </div>
+
+      <div class="route-step">
+        <h3>Stop 4: Certified Legal Letter & Phone Negotiation Scripts</h3>
+        <p><code>src/app/dispute/[id]/page.tsx</code></p>
+        <p>Compiles a formal Fair Credit Billing Act notice with USPS Certified Mail tracking fields, and provides 4 interactive phone negotiation scripts with one-click copy buttons.</p>
+      </div>
+
+      <div class="route-step">
+        <h3>Stop 5: Ultra-Low Latency Conversational Copilot</h3>
+        <p><code>src/app/api/chat/route.ts</code> & <code>src/components/copilot-drawer.tsx</code></p>
+        <p>Streams Groq responses via Server-Sent Events with sub-350ms first-token latency, automatically injected with the patient's active audit context.</p>
+      </div>
+    </div>
+
+    <!-- Pointers Card -->
+    <div class="card">
+      <h2>To Change This, Start Here</h2>
+      <ul>
+        <li><strong>Add or update clinical procedures & Medicare benchmarks:</strong> Edit <code>data/cpt_benchmarks.json</code>.</li>
+        <li><strong>Update federal consumer statutory grounds:</strong> Edit <code>data/legal_statutes.json</code>.</li>
+        <li><strong>Modify LLM models or temperatures:</strong> Update <code>src/lib/gemini.ts</code> (for vision extraction) or <code>src/app/api/chat/route.ts</code> (for Groq Copilot).</li>
+        <li><strong>Adjust UI theme or clinical color tokens:</strong> Edit <code>tailwind.config.ts</code> and <code>src/app/globals.css</code>.</li>
+      </ul>
+    </div>
+
+    <!-- Reusable Practice Note -->
+    <div class="card">
+      <h2>A Practice to Reuse: The Hybrid Deterministic AI Pattern</h2>
+      <p>Medical billing and consumer law have zero tolerance for mathematical hallucinations. A critical design decision in UnBill is <strong>isolating AI to perception and communication</strong> (Gemini vision OCR for document reading and Groq for conversational coaching), while reserving <strong>critical business calculations, duplicate detection, and statutory compliance entirely for deterministic TypeScript algorithms</strong>.</p>
+      <p>This hybrid architecture guarantees 100% computational correctness, reproducible benchmark comparisons, and verifiable legal citations while leveraging the natural language power of modern LLMs.</p>
+    </div>
+
+    <!-- How to Run -->
+    <div class="card">
+      <h2>How to Run Locally</h2>
+      <pre><code># Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+
+# Open in browser: http://localhost:3000</code></pre>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 12px;">App Map generated October 2026 for Devpost "Build With AI: Basics" submission.</p>
+    </div>
+  </div>
+</body>
+</html>
