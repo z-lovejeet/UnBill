@@ -157,8 +157,13 @@ export default function ResultsPage() {
     financials.totalBilledGross - financials.totalPotentialSavings
   );
 
-  const highSeverityCount = anomalies.filter((a) => a.severity === 'HIGH').length;
-  const mediumSeverityCount = anomalies.filter((a) => a.severity === 'MEDIUM').length;
+  const duplicateCount = anomalies.filter(
+    (a) => a.anomalyType === 'DUPLICATE_CHARGE' || a.anomalyType === 'QUANTITY_OVERBILL'
+  ).length;
+  const unbundledCount = anomalies.filter((a) => a.anomalyType === 'UNBUNDLED_CHARGE').length;
+  const fullWriteOffCount = duplicateCount + unbundledCount;
+  const markupCount = anomalies.filter((a) => a.anomalyType === 'EXCESSIVE_MARKUP').length;
+  const upcodeCount = anomalies.filter((a) => a.anomalyType === 'UPCODING_SEVERITY').length;
 
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
@@ -340,7 +345,7 @@ export default function ResultsPage() {
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
               We have generated a formal Certified Mail letter citing 15 U.S.C. 1666, an itemized
-              schedule of $ {financials.totalPotentialSavings.toFixed(2)} in disputed charges, and a
+              schedule of ${financials.totalPotentialSavings.toFixed(2)} in disputed charges, and a
               phone negotiation playbook.
             </p>
           </div>
@@ -363,15 +368,17 @@ export default function ResultsPage() {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
               <div className="bg-white p-3 rounded-lg border border-rose-200">
-                <span className="font-semibold text-rose-800 block">Critical Discrepancies</span>
+                <span className="font-semibold text-rose-800 block">Unbundled & Duplicates</span>
                 <span className="text-slate-600 mt-0.5 block">
-                  {highSeverityCount} duplicate or unbundled violations requiring full write-off.
+                  {fullWriteOffCount > 0
+                    ? `${fullWriteOffCount} full write-off ${fullWriteOffCount === 1 ? 'charge' : 'charges'} (${duplicateCount} duplicate, ${unbundledCount} unbundled).`
+                    : 'No duplicate or unbundled charges detected.'}
                 </span>
               </div>
               <div className="bg-white p-3 rounded-lg border border-amber-200">
-                <span className="font-semibold text-amber-800 block">Excessive Markups</span>
+                <span className="font-semibold text-amber-800 block">Excessive Markups & Acuity</span>
                 <span className="text-slate-600 mt-0.5 block">
-                  {mediumSeverityCount} line items exceed 250% of CMS regional Medicare allowables.
+                  {markupCount + upcodeCount} {markupCount + upcodeCount === 1 ? 'violation' : 'violations'} exceeding fair benchmarks ({markupCount} markup{upcodeCount > 0 ? `, ${upcodeCount} upcode` : ''}).
                 </span>
               </div>
               <div className="bg-white p-3 rounded-lg border border-slate-200">

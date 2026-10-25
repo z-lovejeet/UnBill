@@ -35,37 +35,72 @@ export function AuditTable({ items, onToggleDispute }: AuditTableProps) {
     setExpandedId((prev) => (prev === id ? null : id));
   };
 
-  const getSeverityBadge = (severity: AnomalySeverity) => {
-    switch (severity) {
-      case 'HIGH':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
-            <AlertTriangle className="w-3 h-3 text-rose-600" />
-            Critical Violation
-          </span>
-        );
-      case 'MEDIUM':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
-            <AlertCircle className="w-3 h-3 text-amber-600" />
-            Excessive Markup
-          </span>
-        );
-      case 'LOW':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-            <Info className="w-3 h-3 text-blue-600" />
-            Review Needed
-          </span>
-        );
-      default:
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-            Fair Rate
-          </span>
-        );
+  const getItemBadge = (item: AuditedLineItem) => {
+    if (!item.anomalies || item.anomalies.length === 0) {
+      return (
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+          Fair Rate
+        </span>
+      );
     }
+
+    const hasDuplicate = item.anomalies.some(
+      (a) => a.anomalyType === 'DUPLICATE_CHARGE' || a.anomalyType === 'QUANTITY_OVERBILL'
+    );
+    if (hasDuplicate) {
+      return (
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+          <AlertTriangle className="w-3 h-3 text-rose-600" />
+          Duplicate Charge
+        </span>
+      );
+    }
+
+    const hasUnbundled = item.anomalies.some((a) => a.anomalyType === 'UNBUNDLED_CHARGE');
+    if (hasUnbundled) {
+      return (
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+          <AlertTriangle className="w-3 h-3 text-rose-600" />
+          Unbundled (NCCI)
+        </span>
+      );
+    }
+
+    const hasUpcode = item.anomalies.some((a) => a.anomalyType === 'UPCODING_SEVERITY');
+    if (hasUpcode) {
+      return (
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200">
+          <AlertCircle className="w-3 h-3 text-purple-600" />
+          Suspected Upcoding
+        </span>
+      );
+    }
+
+    const hasMarkup = item.anomalies.some((a) => a.anomalyType === 'EXCESSIVE_MARKUP');
+    if (hasMarkup) {
+      const markupAnomaly = item.anomalies.find((a) => a.anomalyType === 'EXCESSIVE_MARKUP');
+      const isExtreme = markupAnomaly?.severity === 'HIGH';
+      return (
+        <span
+          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+            isExtreme
+              ? 'bg-amber-50 text-amber-900 border border-amber-300'
+              : 'bg-amber-50 text-amber-800 border border-amber-200'
+          }`}
+        >
+          <AlertCircle className="w-3 h-3 text-amber-600" />
+          {isExtreme ? 'Severe Markup' : 'Excessive Markup'}
+        </span>
+      );
+    }
+
+    return (
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+        <Info className="w-3 h-3 text-blue-600" />
+        Review Needed
+      </span>
+    );
   };
 
   return (
@@ -212,7 +247,7 @@ export function AuditTable({ items, onToggleDispute }: AuditTableProps) {
 
                     {/* Status Badge */}
                     <td className="py-3.5 px-4 whitespace-nowrap">
-                      {getSeverityBadge(item.status)}
+                      {getItemBadge(item)}
                     </td>
 
                     {/* Billed Amount */}
