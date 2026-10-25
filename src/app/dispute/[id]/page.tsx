@@ -62,9 +62,14 @@ export default function DisputePage() {
     loadReport();
   }, [id, currentReport, setCurrentReport]);
 
+  const cleanLetter = (text: string) => {
+    if (!text) return '';
+    return text.replace(/\*\*(.*?)\*\*/g, '$1');
+  };
+
   const handleCopyText = () => {
     if (report?.disputePackage?.formalLetterText) {
-      navigator.clipboard.writeText(report.disputePackage.formalLetterText);
+      navigator.clipboard.writeText(cleanLetter(report.disputePackage.formalLetterText));
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     }
@@ -188,7 +193,7 @@ export default function DisputePage() {
             {/* Letter Paper Container */}
             <div className="bg-white rounded-xl border border-slate-200/90 shadow-sm p-8 sm:p-14 print:p-0 print:border-none print:shadow-none">
               <div className="max-w-3xl mx-auto font-mono text-xs sm:text-sm leading-relaxed text-slate-800 whitespace-pre-wrap select-text">
-                {disputePackage.formalLetterText}
+                {cleanLetter(disputePackage.formalLetterText)}
               </div>
             </div>
           </div>

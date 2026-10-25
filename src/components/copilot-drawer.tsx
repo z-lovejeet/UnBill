@@ -173,6 +173,34 @@ export function CopilotDrawer({ report }: CopilotDrawerProps = {}) {
     }
   };
 
+  const renderFormattedMessage = (content: string, isUser: boolean) => {
+    const lines = content.split('\n');
+    return lines.map((line, lIdx) => {
+      if (!line.trim()) {
+        return <div key={lIdx} className="h-2" />;
+      }
+      const parts = line.split(/(\*\*[^*]+\*\*)/g);
+      return (
+        <div key={lIdx} className="leading-relaxed">
+          {parts.map((part, pIdx) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+              const boldText = part.slice(2, -2);
+              return (
+                <strong
+                  key={pIdx}
+                  className={isUser ? 'font-bold text-white' : 'font-semibold text-slate-950'}
+                >
+                  {boldText}
+                </strong>
+              );
+            }
+            return <span key={pIdx}>{part}</span>;
+          })}
+        </div>
+      );
+    });
+  };
+
   const promptSuggestions = activeReport
     ? [
         `What do I say if ${activeReport.facility.name} says "Our rates are fixed"?`,
@@ -287,8 +315,8 @@ export function CopilotDrawer({ report }: CopilotDrawerProps = {}) {
                     : 'bg-slate-100 text-slate-800 rounded-bl-xs'
                 }`}
               >
-                <div className="text-xs sm:text-sm whitespace-pre-wrap leading-relaxed space-y-2">
-                  {msg.content}
+                <div className="text-xs sm:text-sm leading-relaxed space-y-1.5">
+                  {renderFormattedMessage(msg.content, msg.role === 'user')}
                 </div>
               </div>
               <span className="text-[10px] text-slate-400 mt-1 px-1">
