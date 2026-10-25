@@ -14,7 +14,7 @@ export interface RawBillData {
   items: RawLineItem[];
 }
 
-const DEFAULT_GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
+const DEFAULT_GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
 
 function getGeminiClient() {
   const apiKey = process.env.GEMINI_API_KEY;
