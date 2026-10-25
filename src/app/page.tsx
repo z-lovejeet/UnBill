@@ -369,56 +369,123 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. Federal Statutory Protections Strip */}
-      <section className="py-16 bg-white border-y border-slate-200/80">
+      {/* 6. Federal Statutory Protections Strip - The Big Four */}
+      <section className="py-20 bg-white border-y border-slate-200/80">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider text-center mb-6 font-mono">
-            Federal Consumer Protection Statutes Embedded in Every Audit
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
-              <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 inline-flex items-center whitespace-nowrap">
-                15 U.S.C. 1666
-              </span>
-              <h4 className="font-bold text-slate-900 text-sm">Fair Credit Billing Act</h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Requires creditors to acknowledge disputes within 30 days and legally prohibits
-                reporting accounts to credit bureaus during active investigations.
-              </p>
+          <div className="text-center max-w-2xl mx-auto mb-14 space-y-2">
+            <span className="text-xs font-mono uppercase font-bold text-emerald-700 tracking-wider">
+              The Big Four Federal Safeguards
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 tracking-[-0.035em]">
+              Grounded in Federal Law, Not AI Guesswork
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Hospital billing departments count on patient confusion. UnBill anchors every discrepancy
+              in the four foundational federal statutes and CMS coding mandates that govern American healthcare:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* Statute 1: FCBA */}
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3.5 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 inline-flex items-center whitespace-nowrap">
+                    15 U.S.C. 1666
+                  </span>
+                  <span className="text-[10px] font-mono font-semibold text-blue-800 bg-blue-100/70 px-1.5 py-0.5 rounded">
+                    Freeze Collections
+                  </span>
+                </div>
+                <h4 className="font-bold text-slate-900 text-sm">
+                  1. Fair Credit Billing Act & Reg Z
+                </h4>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Requires hospital billing departments to acknowledge written dispute notices within 30 days.
+                  Legally prohibits negative credit bureau reporting or debt collection while an investigation is underway.
+                </p>
+              </div>
+              <div className="pt-2 border-t border-slate-200/60 text-[11px] font-medium text-slate-500">
+                Remedy: Immediate statutory hold & ledger correction.
+              </div>
             </div>
 
-            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
-              <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center whitespace-nowrap">
-                P.L. 116-260
-              </span>
-              <h4 className="font-bold text-slate-900 text-sm">Federal No Surprises Act</h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Bans out-of-network surprise balance billing for emergency room encounters and
-                involuntary ancillary physician services.
-              </p>
+            {/* Statute 2: CMS NCCI */}
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3.5 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-800 border border-slate-300 inline-flex items-center whitespace-nowrap">
+                    CMS NCCI Policy
+                  </span>
+                  <span className="text-[10px] font-mono font-semibold text-slate-800 bg-slate-200 px-1.5 py-0.5 rounded">
+                    $0.00 Write-Off
+                  </span>
+                </div>
+                <h4 className="font-bold text-slate-900 text-sm">
+                  2. National Correct Coding Initiative
+                </h4>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Enforces federal Procedure-to-Procedure (PTP) bundling rules. Hospitals are strictly prohibited
+                  from unbundling diagnostic panels (e.g. charging separately for Albumin when a CMP is already billed).
+                </p>
+              </div>
+              <div className="pt-2 border-t border-slate-200/60 text-[11px] font-medium text-slate-500">
+                Remedy: Component charges written off to $0.00.
+              </div>
             </div>
 
-            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
-              <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 inline-flex items-center whitespace-nowrap">
-                26 U.S.C. 501(r)
-              </span>
-              <h4 className="font-bold text-slate-900 text-sm">Amounts Generally Billed (AGB)</h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Mandates that non-profit hospitals discount charges for eligible patients to average
-                Medicare and commercial negotiated rates rather than gross chargemaster.
-              </p>
+            {/* Statute 3: IRC 501(r) */}
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3.5 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 inline-flex items-center whitespace-nowrap">
+                    26 U.S.C. 501(r)
+                  </span>
+                  <span className="text-[10px] font-mono font-semibold text-amber-900 bg-amber-100/70 px-1.5 py-0.5 rounded">
+                    AGB Price Caps
+                  </span>
+                </div>
+                <h4 className="font-bold text-slate-900 text-sm">
+                  3. Nonprofit Charity Care Mandate
+                </h4>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Affects ~60% of all US hospitals. Prohibits billing eligible uninsured or self-pay patients gross chargemaster
+                  rates, legally capping charges to Amounts Generally Billed (AGB) based on regional Medicare averages.
+                </p>
+              </div>
+              <div className="pt-2 border-t border-slate-200/60 text-[11px] font-medium text-slate-500">
+                Remedy: 50% to 85% price recalculation via AGB formula.
+              </div>
             </div>
 
-            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
-              <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-800 border border-slate-300 inline-flex items-center whitespace-nowrap">
-                CMS NCCI Edits
-              </span>
-              <h4 className="font-bold text-slate-900 text-sm">Correct Coding Initiative</h4>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Official federal procedure-to-procedure bundling rules that prohibit billing component
-                tests that are already included in comprehensive panels.
-              </p>
+            {/* Statute 4: No Surprises Act */}
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3.5 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center whitespace-nowrap">
+                    42 U.S.C. 300gg-111
+                  </span>
+                  <span className="text-[10px] font-mono font-semibold text-emerald-800 bg-emerald-100/70 px-1.5 py-0.5 rounded">
+                    Balance Billing Ban
+                  </span>
+                </div>
+                <h4 className="font-bold text-slate-900 text-sm">
+                  4. Federal No Surprises Act
+                </h4>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Bans surprise out-of-network balance billing for emergency department encounters and involuntary
+                  ancillary physicians (radiologists, anesthesiologists, pathologists) at in-network facilities.
+                </p>
+              </div>
+              <div className="pt-2 border-t border-slate-200/60 text-[11px] font-medium text-slate-500">
+                Remedy: Patient responsibility capped at in-network rates.
+              </div>
             </div>
+          </div>
+
+          {/* Complementary Protections Strip */}
+          <div className="mt-8 p-4 rounded-xl bg-slate-50/80 border border-slate-200/80 text-center text-xs text-slate-500 font-sans">
+            <span className="font-semibold text-slate-700">Additional Embedded Protections:</span> Enforces the $400 Good Faith Estimate (GFE) dispute threshold (45 C.F.R. 149.610), CFPB Debt Validation requirements, and the nationwide credit bureau $500 medical debt removal rules.
           </div>
         </div>
       </section>
