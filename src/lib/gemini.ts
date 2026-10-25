@@ -193,11 +193,13 @@ INSTRUCTIONS:
 3. Include an itemized table or list detailing each CPT violation (duplicate, unbundled, excessive markup).
 4. Demand an itemized statement with CMS Revenue Codes and National Drug Codes (NDCs).
 5. Conclude with a conditional settlement offer for the undisputed amount upon full reconciliation.
+6. Do NOT use markdown bold asterisks (**) anywhere in the letter. Use standard uppercase for section headers and clean plain text suitable for formal typed certified mail.
 Return ONLY the formatted letter text.
 `;
 
     const result = await model.generateContent(prompt);
-    return result.response.text();
+    const rawText = result.response.text();
+    return rawText.replace(/\*\*(.*?)\*\*/g, '$1');
   } catch (error) {
     console.warn('Gemini dispute letter generation fallback to deterministic:', error);
     return ''; // Caller will use deterministic fallback
