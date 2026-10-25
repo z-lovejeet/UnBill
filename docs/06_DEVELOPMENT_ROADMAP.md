@@ -29,7 +29,7 @@
 ### Phase 2: Multi-Agent AI Engine & Rules Logic (Hours 12 – 28)
 * **Goal:** A working serverless API endpoint that takes an image/PDF or sample ID and returns an audited, error-flagged JSON report.
 * **Tasks:**
-  1. Build `lib/gemini.ts`: Configure Gemini 3.8 Flash multimodal vision client with structured JSON schema output and fallback to Gemini 3.5 Flash Lite.
+  1. Build `lib/gemini.ts`: Configure Gemini 3.8 Flash multimodal vision client with structured JSON schema output and deterministic fallback.
   2. Build `lib/rules-engine.ts`:
      * Duplicate detection algorithm.
      * Correct Coding Initiative (CCI) unbundling detector matching `cpt_benchmarks.json`.

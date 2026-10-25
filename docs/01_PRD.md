@@ -118,7 +118,7 @@
 
 * **NFR-1 (Performance & Latency):** Full multi-agent bill audit execution must complete in $<6$ seconds on standard broadband. Copilot chat responses must begin streaming in $<400$ms.
 * **NFR-2 (Privacy & HIPAA Alignment):** Ephemeral server-side processing: bill image buffers must be processed in RAM and discarded immediately after inference. Zero persistent storage of Protected Health Information (PHI) on any central server.
-* **NFR-3 (Reliability & Failover):** Automated fallback from Gemini 3.8 Flash to Gemini 3.5 Flash Lite if rate limits or 503 errors occur. Automated fallback from Groq 70b to Groq 8b.
+* **NFR-3 (Reliability & Failover):** Automated fallback from Gemini 3.8 Flash to lightweight extraction if rate limits or 503 errors occur. Automated fallback from Groq 70b to Groq 8b.
 * **NFR-4 (Device Responsiveness):** Flawless presentation across desktop (1440px), laptop (1024px), tablet (768px), and mobile (375px) viewports.
 * **NFR-5 (Accessibility):** WCAG 2.1 AA compliant contrast ratios, full keyboard navigability across the dashboard, and ARIA labels on all modal and table expansions.
 

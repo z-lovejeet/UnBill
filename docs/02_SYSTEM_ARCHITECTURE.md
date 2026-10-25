@@ -31,7 +31,7 @@ graph TD
 
     subgraph AI_Providers["AI Inference Engines"]
         GeminiPrimary["Google Gemini 3.8 Flash<br/>(Multimodal Vision + Forensic Auditing)"]
-        GeminiFallback["Google Gemini 3.5 Flash Lite<br/>(Failover Engine)"]
+        GeminiFallback["Google Gemini 3.8 Flash<br/>(Vision Ingestion Engine)"]
         GroqPrimary["Groq Llama-3.3-70b / gptoss-120b<br/>(Sub-Second Copilot Stream)"]
         GroqFallback["Groq Llama-3.1-8b / gptoss-20b<br/>(Failover Chat)"]
     end
