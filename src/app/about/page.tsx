@@ -84,7 +84,7 @@ export default function AboutPage() {
                 <Brain className="w-5 h-5 text-emerald-400" />
               </div>
               <h3 className="font-bold text-slate-950 text-base tracking-tight">
-                Agent 1: Clinical Ingestion (Gemini 3.5 Flash Lite)
+                Agent 1: Clinical Ingestion (Gemini 3.8 Flash)
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Reads raw photos, patient portal PDFs, and OCR statements. Extracts facility names,

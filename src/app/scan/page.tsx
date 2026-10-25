@@ -425,7 +425,7 @@ export default function ScanPage() {
                           Agent 1: Clinical Ingestion & Multimodal OCR
                         </h4>
                         <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200/70">
-                          Gemini 2.5 Flash Vision
+                          Gemini 3.8 Flash Vision
                         </span>
                       </div>
                       <p className="text-xs text-slate-600 mt-1 leading-relaxed">

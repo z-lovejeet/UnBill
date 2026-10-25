@@ -214,7 +214,7 @@ export default function HomePage() {
                   1. Clinical Ingestion
                 </h3>
                 <span className="text-[10px] font-mono bg-slate-200 px-1.5 py-0.5 rounded font-semibold text-slate-700 whitespace-nowrap shrink-0 inline-flex items-center">
-                  Gemini 3.5
+                  Gemini 3.8 Flash
                 </span>
               </div>
               <p className="text-xs text-slate-500 leading-relaxed">
