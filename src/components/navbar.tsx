@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { History, ArrowUpRight, Scale } from 'lucide-react';
+import { History, ArrowUpRight } from 'lucide-react';
 import { useAuditStore } from '@/lib/store';
 
 export function Navbar() {
@@ -21,8 +22,15 @@ export function Navbar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-xl bg-slate-950 flex items-center justify-center text-white shadow-xs group-hover:bg-slate-900 transition-colors">
-            <Scale className="w-5 h-5 text-emerald-400" />
+          <div className="relative w-8 h-8 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-200">
+            <Image
+              src="/logo.png"
+              alt="UnBill Logo"
+              width={32}
+              height={32}
+              className="w-full h-full object-contain"
+              priority
+            />
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-lg text-slate-950 tracking-[-0.03em] leading-none flex items-center gap-1.5 font-sans">
