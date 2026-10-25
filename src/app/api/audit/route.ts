@@ -96,12 +96,79 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(auditedReport, { status: 200 });
   } catch (error: any) {
     console.error('Audit API error:', error);
+
+    const msg = (error?.message || '').toLowerCase();
+    const status = error?.status || error?.statusCode;
+
+    let errorCode = 'GEMINI_PROCESSING_ERROR';
+    let errorTitle = 'Gemini 3.8 Flash Extraction Failed';
+    let errorDescription =
+      error?.message || 'An unexpected error occurred during forensic document ingestion.';
+    let statusCode = 500;
+
+    if (
+      status === 429 ||
+      msg.includes('429') ||
+      msg.includes('quota') ||
+      msg.includes('resource_exhausted') ||
+      msg.includes('too many requests') ||
+      msg.includes('rate limit')
+    ) {
+      errorCode = 'GEMINI_QUOTA_EXCEEDED';
+      errorTitle = 'Gemini API Rate Limit / Quota Exceeded (429)';
+      errorDescription =
+        'Google Gemini 3.8 Flash has reached its per-minute rate limit or free-tier quota. Please wait a few moments and click Retry, or test instantly with one of our synthetic sample bills.';
+      statusCode = 429;
+    } else if (
+      status === 503 ||
+      status === 504 ||
+      msg.includes('503') ||
+      msg.includes('504') ||
+      msg.includes('unavailable') ||
+      msg.includes('overloaded') ||
+      msg.includes('busy') ||
+      msg.includes('server error')
+    ) {
+      errorCode = 'GEMINI_SERVER_BUSY';
+      errorTitle = 'Gemini Server Busy / Temporarily Overloaded (503)';
+      errorDescription =
+        'Google Gemini AI servers are currently experiencing high global traffic or transient overload. Please retry in a moment.';
+      statusCode = 503;
+    } else if (
+      status === 401 ||
+      status === 403 ||
+      msg.includes('401') ||
+      msg.includes('403') ||
+      msg.includes('api_key') ||
+      msg.includes('permission_denied') ||
+      msg.includes('unauthorized')
+    ) {
+      errorCode = 'GEMINI_AUTH_ERROR';
+      errorTitle = 'Gemini API Key / Permission Error (403)';
+      errorDescription =
+        'The configured GEMINI_API_KEY was rejected by Google Cloud or lacks permissions. Please check server configuration.';
+      statusCode = 403;
+    } else if (
+      msg.includes('not valid json') ||
+      msg.includes('json') ||
+      msg.includes('parse')
+    ) {
+      errorCode = 'GEMINI_PARSE_ERROR';
+      errorTitle = 'Gemini Document Parsing Incomplete';
+      errorDescription =
+        'The vision model returned an incomplete response. Retrying or ensuring the image is clear and well-lit will resolve this.';
+      statusCode = 502;
+    }
+
     return NextResponse.json(
       {
-        error: 'Audit processing failed',
-        message: error?.message || 'An unexpected error occurred during forensic bill audit.',
+        error: errorTitle,
+        errorCode,
+        message: errorDescription,
+        rawDetails: error?.message || undefined,
+        agentFailed: 1, // Agent 1: Clinical Ingestion
       },
-      { status: 500 }
+      { status: statusCode }
     );
   }
 }
