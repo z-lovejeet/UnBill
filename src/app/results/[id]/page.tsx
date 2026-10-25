@@ -166,192 +166,238 @@ export default function ResultsPage() {
   const upcodeCount = anomalies.filter((a) => a.anomalyType === 'UPCODING_SEVERITY').length;
 
   return (
-    <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto space-y-8">
-        {/* Top Breadcrumb & Actions Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="min-h-screen bg-[#fcfcfd] py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto space-y-7">
+        {/* Top Header & Actions Bar */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/60">
           <div>
-            <div className="flex items-center gap-2 text-xs text-slate-500 mb-1">
-              <Link href="/" className="hover:text-slate-900">
+            <div className="flex items-center gap-2 text-xs text-slate-500 mb-1.5 font-mono">
+              <Link href="/" className="hover:text-slate-900 transition-colors">
                 Home
               </Link>
-              <span>/</span>
-              <Link href="/scan" className="hover:text-slate-900">
-                Audit Intake
+              <span className="text-slate-300">/</span>
+              <Link href="/scan" className="hover:text-slate-900 transition-colors">
+                Intake
               </Link>
-              <span>/</span>
-              <span className="text-slate-800 font-medium">Audit #{id.slice(0, 12)}</span>
+              <span className="text-slate-300">/</span>
+              <span className="text-slate-800 font-semibold">Audit #{id.slice(0, 10)}</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-[-0.03em]">
-              Forensic Audit Dossier
-            </h1>
+            <div className="flex items-center gap-3 flex-wrap">
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-[-0.03em]">
+                Forensic Audit Dossier
+              </h1>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                Deterministic Pass
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              Statutory clinical coding review cross-referenced with CMS fee schedules and NCCI edits.
+            </p>
           </div>
 
           {/* Quick Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => openCopilot()}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium text-xs sm:text-sm shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-medium text-xs sm:text-sm shadow-xs transition-all active:scale-[0.98]"
             >
-              <MessageSquare className="w-4 h-4" />
+              <MessageSquare className="w-4 h-4 text-emerald-400" />
               <span>Ask Copilot</span>
             </button>
             <button
               onClick={handleShare}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium transition-colors shadow-2xs"
             >
-              <Share2 className="w-4 h-4" />
+              <Share2 className="w-4 h-4 text-slate-500" />
               <span>{shareSuccess ? 'Link Copied!' : 'Share'}</span>
             </button>
             <button
               onClick={() => window.print()}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium transition-colors shadow-2xs"
             >
-              <Printer className="w-4 h-4" />
+              <Printer className="w-4 h-4 text-slate-500" />
               <span>Print</span>
             </button>
           </div>
         </div>
 
-        {/* Patient & Facility Summary Header Bar */}
-        <div className="bg-white rounded-xl border border-slate-200/90 p-4 sm:p-5 shadow-2xs">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs sm:text-sm">
-            <div>
-              <span className="text-slate-400 font-medium flex items-center gap-1">
-                <Building className="w-3.5 h-3.5" /> Healthcare Facility
+        {/* Patient & Facility Summary Header Bar (Executive Strip) */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-2xs">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 text-xs sm:text-sm">
+            <div className="space-y-1">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
+                <Building className="w-3.5 h-3.5 text-slate-400" /> Healthcare Facility
               </span>
-              <p className="font-semibold text-slate-900 mt-1">{facility.name}</p>
+              <p className="font-semibold text-slate-950 truncate" title={facility.name}>
+                {facility.name}
+              </p>
+              <p className="text-[11px] text-slate-500 font-mono truncate">
+                {facility.billingPhone || facility.address || 'Financial Services Dept'}
+              </p>
             </div>
-            <div>
-              <span className="text-slate-400 font-medium flex items-center gap-1">
-                <User className="w-3.5 h-3.5" /> Patient / Account #
+
+            <div className="space-y-1">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5 text-slate-400" /> Patient / Account #
               </span>
-              <p className="font-mono font-semibold text-slate-900 mt-1">
+              <p className="font-mono font-bold text-slate-950">
                 {patient.accountNumber || 'ACC-99281'}
               </p>
-            </div>
-            <div>
-              <span className="text-slate-400 font-medium flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5" /> Statement Date
-              </span>
-              <p className="font-semibold text-slate-900 mt-1">
-                {patient.statementDate || 'Recent'}
+              <p className="text-[11px] text-slate-500 truncate">
+                {patient.patientName || 'Primary Account Holder'}
               </p>
             </div>
-            <div>
-              <span className="text-slate-400 font-medium flex items-center gap-1">
-                <Scale className="w-3.5 h-3.5" /> Audit Verification
+
+            <div className="space-y-1">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-slate-400" /> Statement Date
               </span>
-              <p className="font-semibold text-emerald-700 mt-1 flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Deterministic Pass
+              <p className="font-semibold text-slate-950">
+                {patient.statementDate || 'Recent Statement'}
+              </p>
+              <p className="text-[11px] text-slate-500">
+                Encounter Period Verified
+              </p>
+            </div>
+
+            <div className="space-y-1">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
+                <Scale className="w-3.5 h-3.5 text-slate-400" /> Statutory Dispute Window
+              </span>
+              <p className="font-semibold text-emerald-800 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                Active (FCBA 15 U.S.C. 1666)
+              </p>
+              <p className="text-[11px] text-slate-500">
+                30-day collection stay in effect
               </p>
             </div>
           </div>
         </div>
 
-        {/* 4 Forensic Financial KPI Cards */}
+        {/* 4 Forensic Financial KPI Cards (Harmonized, Minimalist, High-Impact) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Card 1: Gross Billed */}
-          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Total Hospital Charge
-            </span>
-            <div className="mt-2 flex items-baseline justify-between">
-              <span className="text-2xl sm:text-3xl font-mono font-bold text-slate-900">
-                ${financials.totalBilledGross.toFixed(2)}
+          <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
+            <div>
+              <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 block">
+                Total Hospital Charge
               </span>
-              <span className="text-xs text-slate-400 font-mono">Gross Billed</span>
+              <div className="mt-2.5 flex items-baseline gap-2">
+                <span className="text-2xl sm:text-3xl font-mono font-bold text-slate-950 tracking-tight">
+                  ${financials.totalBilledGross.toFixed(2)}
+                </span>
+                <span className="text-[11px] text-slate-400 font-mono">Gross</span>
+              </div>
             </div>
-            <p className="text-xs text-slate-500 mt-1">Pre-dispute total across {items.length} line items.</p>
+            <p className="text-xs text-slate-500 mt-2 pt-2 border-t border-slate-100">
+              Pre-dispute total across {items.length} line items.
+            </p>
           </div>
 
-          {/* Card 2: Disputed Overcharges */}
-          <div className="bg-white p-5 rounded-xl border border-rose-200/90 shadow-2xs bg-rose-50/20">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-rose-700">
-                Disputed Overcharges
-              </span>
-              <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-200">
-                Save {savingsPct}%
-              </span>
+          {/* Card 2: Disputed Overcharges (Hero) */}
+          <div className="bg-white p-5 rounded-2xl border border-rose-200/80 shadow-2xs flex flex-col justify-between relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-rose-500/80" />
+            <div>
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-rose-800">
+                  Disputed Overcharges
+                </span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                  Save {savingsPct}%
+                </span>
+              </div>
+              <div className="mt-2.5">
+                <span className="text-2xl sm:text-3xl font-mono font-bold text-rose-600 tracking-tight">
+                  -${financials.totalPotentialSavings.toFixed(2)}
+                </span>
+              </div>
             </div>
-            <div className="mt-2">
-              <span className="text-2xl sm:text-3xl font-mono font-bold text-rose-600">
-                -${financials.totalPotentialSavings.toFixed(2)}
-              </span>
-            </div>
-            <p className="text-xs text-rose-800 mt-1">
-              {anomalies.length} billing errors & markups flagged.
+            <p className="text-xs text-rose-700 mt-2 pt-2 border-t border-slate-100 font-medium">
+              {anomalies.length} statutory errors & markups flagged.
             </p>
           </div>
 
           {/* Card 3: Revised Fair Total */}
-          <div className="bg-white p-5 rounded-xl border border-emerald-200/90 shadow-2xs bg-emerald-50/20">
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-800">
-              Revised Fair Market Total
-            </span>
-            <div className="mt-2 flex items-baseline justify-between">
-              <span className="text-2xl sm:text-3xl font-mono font-bold text-emerald-700">
-                ${revisedFairTotal.toFixed(2)}
-              </span>
-              <span className="text-xs font-semibold text-emerald-700">Medicare Basis</span>
+          <div className="bg-white p-5 rounded-2xl border border-emerald-200/80 shadow-2xs flex flex-col justify-between relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-500/80" />
+            <div>
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-emerald-900">
+                  Revised Fair Market Total
+                </span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  Medicare Basis
+                </span>
+              </div>
+              <div className="mt-2.5">
+                <span className="text-2xl sm:text-3xl font-mono font-bold text-emerald-700 tracking-tight">
+                  ${revisedFairTotal.toFixed(2)}
+                </span>
+              </div>
             </div>
-            <p className="text-xs text-emerald-800 mt-1">Undisputed median fair-market balance.</p>
+            <p className="text-xs text-emerald-800 mt-2 pt-2 border-t border-slate-100 font-medium">
+              Undisputed median fair-market balance.
+            </p>
           </div>
 
           {/* Card 4: Overcharge Risk Score */}
-          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Audit Risk Score
-              </span>
-              <span
-                className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                  financials.riskScore >= 70
-                    ? 'bg-rose-100 text-rose-800 border border-rose-200'
-                    : 'bg-amber-100 text-amber-800 border border-amber-200'
-                }`}
-              >
-                {financials.riskScore >= 70 ? 'HIGH RISK' : 'MODERATE'}
-              </span>
+          <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500">
+                  Audit Risk Score
+                </span>
+                <span
+                  className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                    financials.riskScore >= 70
+                      ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                      : 'bg-amber-50 text-amber-800 border border-amber-200'
+                  }`}
+                >
+                  {financials.riskScore >= 70 ? 'HIGH RISK' : 'MODERATE'}
+                </span>
+              </div>
+              <div className="mt-2.5 flex items-baseline gap-1.5">
+                <span className="text-2xl sm:text-3xl font-mono font-bold text-slate-950 tracking-tight">
+                  {financials.riskScore}
+                </span>
+                <span className="text-xs text-slate-400 font-mono">/ 100</span>
+              </div>
             </div>
-            <div className="mt-2 flex items-baseline gap-2">
-              <span className="text-2xl sm:text-3xl font-mono font-bold text-slate-900">
-                {financials.riskScore}
-              </span>
-              <span className="text-xs text-slate-400">/ 100</span>
-            </div>
-            {/* Progress bar */}
-            <div className="mt-2 w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-              <div
-                className={`h-2 rounded-full ${
-                  financials.riskScore >= 70 ? 'bg-rose-600' : 'bg-amber-500'
-                }`}
-                style={{ width: `${financials.riskScore}%` }}
-              />
+            <div className="mt-2 pt-2 border-t border-slate-100 space-y-1.5">
+              <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${
+                    financials.riskScore >= 70
+                      ? 'bg-rose-600'
+                      : 'bg-amber-500'
+                  }`}
+                  style={{ width: `${financials.riskScore}%` }}
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Primary Call-to-Action Bar */}
-        <div className="p-6 bg-slate-900 text-white rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-500/20 text-rose-300 border border-rose-500/30 mb-2">
-              <ShieldAlert className="w-3.5 h-3.5" />
-              Statutory 30-Day Fair Credit Billing Act Window Active
+        {/* Primary Call-to-Action Bar (Clean Executive Card) */}
+        <div className="p-6 sm:p-7 bg-slate-950 text-white rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-5 shadow-lg border border-slate-800">
+          <div className="space-y-2 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <ShieldAlert className="w-3.5 h-3.5 text-emerald-400" />
+              15 U.S.C. 1666 Statutory Protection Active
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold">
-              Ready to challenge this bill with your legal dispute kit?
+            <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white">
+              Ready to challenge this bill with your formal legal dispute kit?
             </h3>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
-              We have generated a formal Certified Mail letter citing 15 U.S.C. 1666, an itemized
-              schedule of ${financials.totalPotentialSavings.toFixed(2)} in disputed charges, and a
-              phone negotiation playbook.
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+              We have compiled an official Certified Mail legal package citing 15 U.S.C. 1666, an itemized schedule of ${financials.totalPotentialSavings.toFixed(2)} in disputed charges, and a 4-scenario hospital negotiation script.
             </p>
           </div>
           <Link
             href={`/dispute/${report.id}`}
-            className="shrink-0 px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition-all flex items-center gap-2 shadow-sm active:scale-[0.98]"
+            className="shrink-0 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] whitespace-nowrap"
           >
             <FileText className="w-4 h-4" />
             <span>Generate Dispute Kit</span>
@@ -359,33 +405,59 @@ export default function ResultsPage() {
           </Link>
         </div>
 
-        {/* Anomaly Alerts Banner */}
+        {/* Forensic Violations Findings Overview */}
         {anomalies.length > 0 && (
-          <div className="bg-rose-50/70 border border-rose-200 rounded-xl p-4 sm:p-5">
-            <h3 className="text-sm font-semibold text-rose-900 flex items-center gap-2 mb-2">
-              <AlertTriangle className="w-4 h-4 text-rose-600" />
-              Forensic Violations Detected ({anomalies.length} Total)
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div className="bg-white p-3 rounded-lg border border-rose-200">
-                <span className="font-semibold text-rose-800 block">Unbundled & Duplicates</span>
-                <span className="text-slate-600 mt-0.5 block">
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-2xs space-y-4">
+            <div className="flex items-center justify-between gap-3 flex-wrap border-b border-slate-100 pb-3">
+              <h3 className="text-sm font-bold text-slate-950 flex items-center gap-2 tracking-tight">
+                <AlertTriangle className="w-4 h-4 text-rose-600" />
+                Forensic Violations Detected ({anomalies.length} Total)
+              </h3>
+              <span className="text-[11px] font-mono text-slate-500">
+                Audited against CMS NCCI Edits & MPFS Regional Medians
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs">
+              {/* Module 1 */}
+              <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-1.5 relative overflow-hidden">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="font-semibold text-slate-900 block">Unbundled & Duplicates</span>
+                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200">
+                    Full Write-Off
+                  </span>
+                </div>
+                <p className="text-slate-600 leading-relaxed">
                   {fullWriteOffCount > 0
                     ? `${fullWriteOffCount} full write-off ${fullWriteOffCount === 1 ? 'charge' : 'charges'} (${duplicateCount} duplicate, ${unbundledCount} unbundled).`
                     : 'No duplicate or unbundled charges detected.'}
-                </span>
+                </p>
               </div>
-              <div className="bg-white p-3 rounded-lg border border-amber-200">
-                <span className="font-semibold text-amber-800 block">Excessive Markups & Acuity</span>
-                <span className="text-slate-600 mt-0.5 block">
+
+              {/* Module 2 */}
+              <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-1.5 relative overflow-hidden">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="font-semibold text-slate-900 block">Excessive Markups & Acuity</span>
+                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
+                    Price Caps
+                  </span>
+                </div>
+                <p className="text-slate-600 leading-relaxed">
                   {markupCount + upcodeCount} {markupCount + upcodeCount === 1 ? 'violation' : 'violations'} exceeding fair benchmarks ({markupCount} markup{upcodeCount > 0 ? `, ${upcodeCount} upcode` : ''}).
-                </span>
+                </p>
               </div>
-              <div className="bg-white p-3 rounded-lg border border-slate-200">
-                <span className="font-semibold text-slate-800 block">Statutory Protection</span>
-                <span className="text-slate-600 mt-0.5 block">
-                  FCBA Section 1666 stay prohibits negative credit reporting during dispute.
-                </span>
+
+              {/* Module 3 */}
+              <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-1.5 relative overflow-hidden">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="font-semibold text-slate-900 block">Statutory Protection</span>
+                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+                    FCBA Stay
+                  </span>
+                </div>
+                <p className="text-slate-600 leading-relaxed">
+                  FCBA Section 1666 stay legally prohibits negative credit reporting during active dispute.
+                </p>
               </div>
             </div>
           </div>
@@ -397,7 +469,7 @@ export default function ResultsPage() {
         </div>
       </div>
 
-      {/* Copilot Drawer (Rendered exclusively on Results page with full audit dossier context) */}
+      {/* Copilot Drawer */}
       <CopilotDrawer report={report} />
     </div>
   );
