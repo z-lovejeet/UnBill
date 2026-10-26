@@ -82,7 +82,7 @@ export default function ScanPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-        signal: AbortSignal.any([controller.signal, AbortSignal.timeout(60000)]),
+        signal: AbortSignal.any([controller.signal, AbortSignal.timeout(125000)]),
       });
       let data;
       try {

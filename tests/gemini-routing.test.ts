@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { extractBillFromText } from '../src/lib/gemini';
+import { extractBillFromImage, extractBillFromText } from '../src/lib/gemini';
 import { reserveGeminiPrimaryAttempt } from '../src/lib/gemini-budget';
 
 const bill = {
@@ -23,6 +23,137 @@ const success = () =>
   new Response(
     JSON.stringify({ candidates: [{ content: { parts: [{ text: JSON.stringify(bill) }] } }] }),
   );
+
+test('an image review can finish a slow fallback after the primary immediately reports busy', async (t) => {
+  const previous = { ...process.env };
+  const realFetch = globalThis.fetch;
+  const realWarn = console.warn;
+  Object.assign(process.env, {
+    GEMINI_API_KEY: 'synthetic-test-key',
+    GEMINI_QUOTA_SCOPE: 'slow-image-fallback-regression',
+    ALLOW_LOCAL_RATE_LIMIT: 'true',
+  });
+  for (const key of [
+    'GEMINI_MODEL',
+    'GEMINI_FALLBACK_MODEL',
+    'UPSTASH_REDIS_REST_URL',
+    'UPSTASH_REDIS_REST_TOKEN',
+  ])
+    delete process.env[key];
+  t.mock.timers.enable({ apis: ['Date', 'setTimeout'], now: new Date('2026-10-26T12:00:00Z') });
+  t.mock.method(AbortSignal, 'timeout', (delay: number) => {
+    const controller = new AbortController();
+    setTimeout(
+      () => controller.abort(new DOMException('Deadline exceeded', 'TimeoutError')),
+      delay,
+    );
+    return controller.signal;
+  });
+  let started!: () => void;
+  const fallbackStarted = new Promise<void>((resolve) => {
+    started = resolve;
+  });
+  const models: string[] = [];
+  globalThis.fetch = async (url, init) => {
+    const model = new URL(String(url)).pathname.split('/').pop()!.split(':')[0];
+    models.push(model);
+    if (model === 'gemini-3.8-flash') return new Response('{}', { status: 503 });
+    return new Promise<Response>((resolve, reject) => {
+      const timer = setTimeout(() => resolve(success()), 40000);
+      init?.signal?.addEventListener(
+        'abort',
+        () => {
+          clearTimeout(timer);
+          reject(init.signal!.reason);
+        },
+        { once: true },
+      );
+      started();
+    });
+  };
+  console.warn = () => {};
+  try {
+    const pending = extractBillFromImage('iVBORw0KGgo=', 'image/png');
+    await fallbackStarted;
+    t.mock.timers.tick(40000);
+    const result = await pending;
+    assert.equal(result.financials.totalBilledGross, 200);
+    assert.deepEqual(models, ['gemini-3.8-flash', 'gemini-3.5-flash-lite']);
+  } finally {
+    globalThis.fetch = realFetch;
+    console.warn = realWarn;
+    for (const key of Object.keys(process.env)) if (!(key in previous)) delete process.env[key];
+    Object.assign(process.env, previous);
+  }
+});
+
+test('stalled primary and fallback requests share one 90-second deadline', async (t) => {
+  const previous = { ...process.env };
+  const realFetch = globalThis.fetch;
+  const realWarn = console.warn;
+  Object.assign(process.env, {
+    GEMINI_API_KEY: 'synthetic-test-key',
+    GEMINI_QUOTA_SCOPE: 'overall-deadline-regression',
+    ALLOW_LOCAL_RATE_LIMIT: 'true',
+  });
+  for (const key of [
+    'GEMINI_MODEL',
+    'GEMINI_FALLBACK_MODEL',
+    'UPSTASH_REDIS_REST_URL',
+    'UPSTASH_REDIS_REST_TOKEN',
+  ])
+    delete process.env[key];
+  t.mock.timers.enable({ apis: ['Date', 'setTimeout'], now: new Date('2026-10-26T12:00:00Z') });
+  t.mock.method(AbortSignal, 'timeout', (delay: number) => {
+    const controller = new AbortController();
+    setTimeout(
+      () => controller.abort(new DOMException('Deadline exceeded', 'TimeoutError')),
+      delay,
+    );
+    return controller.signal;
+  });
+  let primaryReady!: () => void;
+  let fallbackReady!: () => void;
+  const primaryStarted = new Promise<void>((resolve) => {
+    primaryReady = resolve;
+  });
+  const fallbackStarted = new Promise<void>((resolve) => {
+    fallbackReady = resolve;
+  });
+  const models: string[] = [];
+  globalThis.fetch = async (url, init) => {
+    const model = new URL(String(url)).pathname.split('/').pop()!.split(':')[0];
+    models.push(model);
+    return new Promise<Response>((_resolve, reject) => {
+      init?.signal?.addEventListener('abort', () => reject(init.signal!.reason), { once: true });
+      if (model === 'gemini-3.8-flash') primaryReady();
+      else fallbackReady();
+    });
+  };
+  console.warn = () => {};
+  try {
+    let settled = false;
+    const pending = extractBillFromImage('iVBORw0KGgo=', 'image/png');
+    const rejected = assert.rejects(pending, { code: 'GEMINI_TIMEOUT', status: 504 });
+    pending.catch(() => {
+      settled = true;
+    });
+    await primaryStarted;
+    t.mock.timers.tick(18000);
+    await fallbackStarted;
+    t.mock.timers.tick(71999);
+    await new Promise<void>((resolve) => setImmediate(resolve));
+    assert.equal(settled, false);
+    t.mock.timers.tick(1);
+    await rejected;
+    assert.deepEqual(models, ['gemini-3.8-flash', 'gemini-3.5-flash-lite']);
+  } finally {
+    globalThis.fetch = realFetch;
+    console.warn = realWarn;
+    for (const key of Object.keys(process.env)) if (!(key in previous)) delete process.env[key];
+    Object.assign(process.env, previous);
+  }
+});
 
 test('concurrent reviews send at most 18 daily attempts to Flash 3.8 and route the rest to Flash-Lite 3.5', async () => {
   const previous = { ...process.env };

@@ -32,3 +32,15 @@ Google's quota day and project scope are documented at https://ai.google.dev/gem
 The production overall AI_DAILY_REQUEST_LIMIT had been changed to 18 and its shared counter was at 21. That application-wide setting blocked both extraction models and the coach. It was restored to the previously configured 200 while the dedicated 3.8 primary cap remains 18. The existing counter was preserved.
 
 The subsequent PDF request still exhausted both 18-second provider windows. The fallback window is extended to 32 seconds while the primary stays at 18; total provider wait is bounded to 50 seconds under the 60-second route/client limit. This allows a slower valid provider response without changing the quota policy.
+
+## Image timeout follow-up
+
+The contributor supplied a readable 1,463,325-byte, 1086×1448 synthetic PNG with five charges totaling $2,305. The failed production request logged a primary HTTP 503 after 1,972 ms, followed by the fallback's fixed 32,001 ms timeout. Replaying that exact image against the same production deployment succeeded with HTTP 200 and five items in 21.10 seconds. The evidence points to variable provider response time rather than file validation or arithmetic rejection.
+
+The fixed fallback cutoff discarded time even when the primary failed almost immediately. Both attempts now share one 90-second extraction deadline, with the primary still limited to 18 seconds and the fallback receiving the remainder. The route is bounded to 120 seconds and the browser to 125 seconds. There are still at most two provider attempts per review; daily quota accounting, cancellation, document validation and error handling are preserved. Provider delays beyond this bound can still return a timeout.
+
+An offline image-extraction regression reproduces the old timeout for an otherwise valid fallback response at 40 seconds, then passes after the change. A second regression verifies that two stalled model attempts stop at the shared 90-second deadline. These simulate provider timing, not OCR accuracy or provider uptime.
+
+References: [Google thinking levels](https://ai.google.dev/gemini-api/docs/thinking) and [Vercel function duration](https://vercel.com/docs/functions/configuring-functions/duration). No model switch or temperature change was needed for this issue.
+
+Verification before publication: lint, TypeScript, all 25 offline tests and production build passed. The exact contributor PNG was successfully processed by the live deployment before this patch; the new deadline behavior is covered by deterministic timing regressions.

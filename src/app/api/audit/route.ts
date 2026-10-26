@@ -6,7 +6,7 @@ import { ApiError, apiFailure, guard, json, readJson } from '@/lib/api-utils';
 import { sampleReport } from '@/lib/samples';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
+export const maxDuration = 120;
 export async function POST(req: NextRequest) {
   try {
     const body = await readJson(req);

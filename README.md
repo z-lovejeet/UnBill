@@ -38,7 +38,7 @@ The **19-code illustrative catalog is not an official CMS fee schedule**, market
 ## Verify
 
 ```bash
-npm run check             # lint, types, 23 offline regression tests, production build
+npm run check             # lint, types, 25 offline regression tests, production build
 npm audit --audit-level=moderate
 ```
 
