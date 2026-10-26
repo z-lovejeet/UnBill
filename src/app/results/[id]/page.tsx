@@ -7,6 +7,8 @@ import { useAuditStore } from '@/lib/store';
 import { formatCurrency } from '@/lib/utils';
 import { AuditTable } from '@/components/audit-table';
 import { CopilotDrawer } from '@/components/copilot-drawer';
+import { GuideSteps } from '@/components/page-content';
+import { ArrowUpRight } from 'lucide-react';
 export default function ResultsPage() {
   const { id } = useParams<{ id: string }>();
   const { report, loading, error } = useReport(id);
@@ -62,7 +64,7 @@ export default function ResultsPage() {
     );
   const selected = report.items.filter((i) => i.isDisputed).length;
   return (
-    <div className="max-w-6xl mx-auto p-4 sm:p-6 py-10 space-y-7">
+    <div className="page-shell space-y-8 sm:space-y-10">
       <header className="flex flex-wrap gap-5 justify-between items-start">
         <div>
           <p className="text-xs text-slate-500 uppercase tracking-widest">
@@ -72,9 +74,15 @@ export default function ResultsPage() {
                 ? 'Redacted shared copy'
                 : 'Statement review'}
           </p>
-          <h1 className="text-3xl font-bold tracking-tight mt-2">Billing Review Report</h1>
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-[-0.04em] mt-3">
+            Your billing review
+          </h1>
           <p className="text-sm text-slate-600 mt-2">
             {report.facility.name} · Account {report.patient.accountNumber}
+          </p>
+          <p className="text-sm leading-7 text-slate-500 mt-3 max-w-xl">
+            Start with the numbers, explore the line items and choose the questions you want to take
+            to the billing team.
           </p>
         </div>
         <div className="flex gap-3 print:hidden">
@@ -117,7 +125,7 @@ export default function ResultsPage() {
             'Heuristic findings, not confirmed violations',
           ],
         ].map(([label, value, detail]) => (
-          <div key={label} className="rounded-xl bg-white border p-5">
+          <div key={label} className="surface p-5 sm:p-6">
             <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
               {label}
             </h2>
@@ -131,32 +139,85 @@ export default function ResultsPage() {
           </div>
         ))}
       </div>
-      <aside className="rounded-xl border border-amber-200 bg-amber-50 p-5 space-y-2">
-        <h2 className="text-sm font-semibold">Read These Limits Before Acting</h2>
-        {report.warnings.map((w) => (
-          <p className="text-xs text-amber-950 leading-relaxed" key={w}>
-            {w}
+      <section className="grid md:grid-cols-[0.7fr_1.5fr] gap-6 rounded-2xl bg-emerald-50/60 border border-emerald-100 p-6 sm:p-8">
+        <div>
+          <p className="eyebrow">Reading this report</p>
+          <h2 className="text-xl font-semibold tracking-tight mt-3">
+            The numbers tell
+            <br />
+            different parts of the story.
+          </h2>
+        </div>
+        <div className="text-sm leading-7 text-slate-600 space-y-3">
+          <p>
+            Gross charges describe the statement before adjustments. The patient balance is the
+            amount reported on the source, when available. The selected review amount reflects the
+            findings you have included below; it is not an estimate of what you legally owe or will
+            save.
           </p>
-        ))}
-        <p className="text-xs font-semibold">
-          No collection or credit-reporting protection is activated by this audit.
-        </p>
-      </aside>
+          <p>
+            Expand a service to read its supporting detail. Use the filters to focus on findings,
+            price comparisons or codes without a reference. Change a selection whenever you want the
+            letter and phone guide to cover a different set of questions.
+          </p>
+        </div>
+      </section>
+      <details className="surface p-5 sm:p-6">
+        <summary className="text-sm font-semibold cursor-pointer">
+          Review context and methodology notes
+        </summary>
+        <div className="pt-4 space-y-3">
+          {report.warnings.map((w) => (
+            <p className="text-xs text-slate-600 leading-6" key={w}>
+              {w}
+            </p>
+          ))}
+          <p className="text-xs text-slate-600 leading-6">
+            No collection or credit-reporting protection is activated by this audit.
+          </p>
+          <Link href="/about" className="text-link">
+            Read the review methodology <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </details>
       <AuditTable items={report.items} onToggleDispute={toggle} />
-      <section className="rounded-2xl bg-slate-950 text-white p-6 sm:p-8 flex flex-wrap items-center justify-between gap-5">
+      <section className="next-step">
         <div>
           <h2 className="text-xl font-semibold">Turn selected findings into clear questions.</h2>
-          <p className="text-sm text-slate-300 mt-2">
+          <p className="text-sm text-slate-600 mt-2 max-w-2xl leading-7">
             The letter and phone guide use the same selected amount. Verify them before sending or
             agreeing to payment.
           </p>
         </div>
-        <Link
-          href={`/dispute/${report.id}`}
-          className="bg-emerald-400 text-slate-950 px-5 py-3 rounded-xl font-semibold text-sm hover:bg-emerald-300"
-        >
+        <Link href={`/dispute/${report.id}`} className="action-primary">
           Open Review Letter & Phone Guide
         </Link>
+      </section>
+      <section className="editorial-section print:hidden">
+        <div>
+          <p className="eyebrow">After the review</p>
+          <h2 className="section-title mt-4">
+            A practical plan
+            <br />
+            for the conversation.
+          </h2>
+        </div>
+        <GuideSteps
+          items={[
+            {
+              title: 'Confirm the source details',
+              copy: 'Compare extracted codes, dates, quantities and amounts with the itemized statement. Keep the insurer explanation of benefits nearby if one is available.',
+            },
+            {
+              title: 'Ask about the selected charges',
+              copy: 'Use the letter and four phone prompts to request an explanation or corrected statement. The optional coach can help you phrase a follow-up question.',
+            },
+            {
+              title: 'Keep a record of the response',
+              copy: 'During the call, note the date, representative and any reference number outside the app. Reopen this report from the vault when you need the original context.',
+            },
+          ]}
+        />
       </section>
       <section className="bg-white border rounded-2xl p-6 space-y-4 print:hidden">
         <h2 className="text-lg font-semibold">Share a Redacted Copy</h2>

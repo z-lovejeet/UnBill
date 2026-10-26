@@ -1,5 +1,7 @@
 # UI, accessibility and export
 
+The frontend content refresh is recorded in [its verification note](audits/2026-10-26/FRONTEND.md). Shared editorial headings, section spacing, surfaces and action styles connect home, About, Privacy, scan, vault, results and the preparation kit. The page-content component supplies introductions, practical step guides and next actions; processing-status reflects actual input/request/save phases.
+
 The release keeps the existing slate/emerald billing-tool visual direction, with clear amounts and explicit uncertainty rather than unsupported statistical/legal promises.
 
 Routes: `/`, `/scan`, `/results/[id]`, `/dispute/[id]`, `/history`, `/about`, `/privacy`. Shared reports use `/results/share_<token>`; the hook resolves the exact identifier.

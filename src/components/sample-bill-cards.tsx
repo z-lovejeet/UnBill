@@ -33,10 +33,12 @@ export function SampleBillCards() {
   return (
     <section id="sample-tests" className="space-y-5 scroll-mt-24">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Try a synthetic statement</h2>
-        <p className="mt-2 text-sm text-slate-600">
-          No personal records or API keys needed. These examples run the rules engine; they do not
-          call document AI.
+        <p className="eyebrow">Explore the complete workflow</p>
+        <h2 className="section-title mt-3">A real walkthrough. Synthetic details.</h2>
+        <p className="mt-3 text-sm text-slate-600 leading-7 max-w-2xl">
+          Open an example, explore its itemized findings and build a selected-charge review letter.
+          No personal records, login or API keys needed. Examples run the review rules without
+          calling document extraction.
         </p>
       </div>
       <div className="grid gap-5 md:grid-cols-2">
@@ -51,7 +53,10 @@ export function SampleBillCards() {
             className="double-bezel text-left group disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-700"
           >
             <span className="double-bezel-inner block p-6 space-y-4">
-              <FileText className="h-7 w-7 text-emerald-700" />
+              <div className="flex justify-between items-center">
+                <FileText className="h-7 w-7 text-emerald-700" />
+                <span className="font-mono text-[10px] text-slate-500">Synthetic statement</span>
+              </div>
               <span className="block text-lg font-semibold">{sample.title}</span>
               <span className="block text-sm text-slate-600">
                 {formatCurrency(sample.report.financials.totalBilledGross)} in gross charges ·{' '}
@@ -65,6 +70,10 @@ export function SampleBillCards() {
           </button>
         ))}
       </div>
+      <p className="text-xs leading-6 text-slate-500">
+        Want to test document reading too? Download the synthetic files on the scan page and upload
+        them through the regular intake flow.
+      </p>
       {error && (
         <p role="alert" className="text-sm text-rose-700">
           {error}

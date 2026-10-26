@@ -13,7 +13,7 @@ These documents describe the released UnBill billing-review demonstration. Start
 
 ## Current release
 
-Code release: `1069dfb`. The contributor confirmed that this revision deployed successfully to [UnBill on Vercel](https://unbill-delta.vercel.app) on 26 October 2026. The public repository is [z-lovejeet/UnBill](https://github.com/z-lovejeet/UnBill).
+Production baseline: `1069dfb`, confirmed successfully deployed by the contributor on 26 October 2026. Current source also includes the [frontend content refresh](../docs/audits/2026-10-26/FRONTEND.md), with expanded pages and verified license links. The public repository is [z-lovejeet/UnBill](https://github.com/z-lovejeet/UnBill); the existing app is [UnBill on Vercel](https://unbill-delta.vercel.app).
 
 [Release evidence](../docs/audits/2026-10-26/RELEASE.md) records the application checks and repairs. Older audits describe earlier revisions and remain available for traceability.
 

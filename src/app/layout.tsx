@@ -47,9 +47,17 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable} ${instrumentSerif.variable} ${jetBrainsMono.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-100 selection:text-emerald-950">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-4 focus:z-50 focus:bg-white focus:p-3 focus:rounded-lg"
+        >
+          Skip to content
+        </a>
         <Navbar />
         <VaultNotice />
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

@@ -64,9 +64,11 @@ The readiness audit exposed stale letters, wrong-record fallback, misleading pri
 ## Shipping
 
 - [x] Existing public repository URL verified in the audit.
+- [x] MIT license text checked against the standard; GitHub identifies MIT and the public license URL is recorded.
+- [x] Demo access requires no login; synthetic examples are available from home and scan.
 - [x] Hardening commit `cdb81ed` and follow-up lockfile correction `1069dfb` published to main.
 - [x] Repaired deployment confirmed by contributor: https://unbill-delta.vercel.app .
 - [ ] Final video recorded/uploaded by contributor and public access verified.
-- [ ] Actual submission fields and age confirmation completed by contributor.
+- [ ] Actual submission fields, license URL, “Try it out” repository URL and both age/eligibility confirmations completed by contributor.
 - [ ] Exit survey completed by contributor.
 - [ ] Devpost submission confirmation verified.

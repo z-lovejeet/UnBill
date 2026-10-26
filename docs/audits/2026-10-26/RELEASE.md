@@ -1,5 +1,7 @@
 # UnBill repaired-release verification
 
+The later [frontend content refresh](FRONTEND.md) records the expanded pages, responsive browser checks, refreshed production build and license verification. The original hardening evidence below remains available.
+
 26 October 2026. This is the current release record. `READINESS.md`, `skillpack-review.md`, original `evidence.json` and `current-*` files preserve the earlier pre-repair audit; their failures are not current release results.
 
 ## Verified locally

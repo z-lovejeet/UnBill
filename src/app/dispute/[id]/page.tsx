@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useReport } from '@/hooks/use-report';
 import { formatCurrency } from '@/lib/utils';
 import resources from '../../../../data/legal_statutes.json';
+import { GuideSteps } from '@/components/page-content';
 export default function DisputePage() {
   const { id } = useParams<{ id: string }>();
   const { report, loading, error } = useReport(id);
@@ -38,16 +39,24 @@ export default function DisputePage() {
       </div>
     );
   return (
-    <div className="max-w-5xl mx-auto p-4 sm:p-6 py-10 space-y-6 print:p-0">
+    <div className="page-shell max-w-5xl space-y-7 sm:space-y-10 print:p-0">
       <header className="print:hidden space-y-3">
         <Link className="text-xs underline text-slate-500" href={`/results/${id}`}>
           Back to This Report
         </Link>
-        <h1 className="text-3xl font-bold tracking-tight">Dispute Preparation Kit</h1>
+        <p className="eyebrow pt-3">Prepare the next conversation</p>
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-[-0.04em]">
+          Your review letter & phone guide
+        </h1>
         <p className="text-sm text-slate-600">
           Account {report.patient.accountNumber} ·{' '}
           {formatCurrency(report.financials.totalPotentialSavings)} selected for review. This is a
           draft request for clarification, not a legal notice establishing a collection stay.
+        </p>
+        <p className="text-sm text-slate-600 leading-7 max-w-2xl">
+          Use the letter to organize your request, the phone guide to keep the conversation focused
+          and the resource links to understand where further help may be available. Changes to the
+          report selection update this package automatically.
         </p>
         <div className="flex flex-wrap gap-3">
           <button
@@ -88,6 +97,17 @@ export default function DisputePage() {
           </button>
         ))}
       </div>
+      <aside className="quiet-panel grid sm:grid-cols-[0.6fr_1.4fr] gap-5 print:hidden">
+        <h2 className="text-lg font-semibold tracking-tight">
+          Before you use
+          <br className="hidden sm:block" /> the package
+        </h2>
+        <p className="text-sm leading-7 text-slate-600">
+          Check the account and selected services against the original statement. Add any missing
+          recipient details and your preferred contact information after copying or printing. UnBill
+          prepares the text; it does not send a letter or contact the billing office for you.
+        </p>
+      </aside>
       {tab === 'LETTER' ? (
         <article
           aria-label="Billing review letter"
@@ -102,7 +122,12 @@ export default function DisputePage() {
         </article>
       ) : tab === 'PHONE' ? (
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Four Questions for the Billing Team</h2>
+          <h2 className="text-xl font-semibold">Four questions for the billing team</h2>
+          <p className="text-sm leading-7 text-slate-600 max-w-2xl">
+            Have the statement and any insurer explanation of benefits beside you. Ask the
+            representative to explain one selected item at a time, and note their name, the date and
+            any reference number in your own records.
+          </p>
           {report.disputePackage.phoneNegotiationPoints.map((point, index) => (
             <p className="p-5 bg-white border rounded-xl text-sm leading-relaxed" key={index}>
               {point}
@@ -130,6 +155,31 @@ export default function DisputePage() {
           ))}
         </section>
       )}
+      <section className="editorial-section print:hidden">
+        <div>
+          <p className="eyebrow">Make the follow-up easier</p>
+          <h2 className="section-title mt-4">
+            A clear request.
+            <br />A useful record.
+          </h2>
+        </div>
+        <GuideSteps
+          items={[
+            {
+              title: 'Verify before sending',
+              copy: 'Review every figure and explanation, then edit the copied letter to match what you can support from the source statement.',
+            },
+            {
+              title: 'Ask for the underlying explanation',
+              copy: 'Request an itemized clarification or corrected statement where appropriate. Repeated-looking services can be legitimate, so keep the question specific to the record.',
+            },
+            {
+              title: 'Keep the response with your records',
+              copy: 'Save a copy of what you send and any response outside the app. Return to the report or local vault when preparing another conversation.',
+            },
+          ]}
+        />
+      </section>
     </div>
   );
 }

@@ -7,6 +7,60 @@
     --background: #f8fafc;
     --foreground: #0f172a;
   }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  .page-shell {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16;
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-800;
+  }
+  .page-title {
+    @apply max-w-4xl text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.045em] leading-[1.1];
+  }
+  .page-lede {
+    @apply max-w-2xl text-base sm:text-lg leading-8 text-slate-600;
+  }
+  .surface {
+    @apply rounded-2xl border border-slate-200/80 bg-white;
+    box-shadow: 0 3px 18px -10px rgb(15 23 42 / 0.1);
+  }
+  .action-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 disabled:opacity-50;
+  }
+  .action-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition-colors hover:border-emerald-300 hover:bg-emerald-50/40 disabled:opacity-50;
+  }
+  .text-link {
+    @apply inline-flex items-center gap-2 text-sm font-semibold text-emerald-800 underline underline-offset-4 decoration-emerald-800/30 transition-colors hover:text-emerald-950;
+  }
+  .editorial-section {
+    @apply grid gap-8 md:grid-cols-[0.75fr_1.6fr] border-t border-slate-200 pt-10 sm:pt-14;
+  }
+  .section-title {
+    @apply text-2xl sm:text-3xl font-semibold tracking-[-0.03em] leading-tight;
+  }
+  .step-number {
+    @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 font-mono text-xs text-emerald-800;
+  }
+  .guide-steps {
+    @apply grid gap-7;
+  }
+  .next-step {
+    @apply flex flex-wrap items-center justify-between gap-7 rounded-2xl bg-emerald-50/70 border border-emerald-100 p-7 sm:p-10;
+  }
+  .quiet-panel {
+    @apply rounded-2xl bg-slate-100/80 p-6 sm:p-8;
+  }
 }
 
 body {
@@ -76,6 +130,12 @@ body {
 :focus-visible {
   outline: 2px solid #047857;
   outline-offset: 3px;
+}
+.lucide {
+  stroke-width: 1.7;
+}
+section[id] {
+  scroll-margin-top: 6rem;
 }
 @media (prefers-reduced-motion: reduce) {
   *,

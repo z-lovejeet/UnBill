@@ -30,10 +30,12 @@ If the recording is too long, prioritize intake → review → selection → mat
 - [ ] Only synthetic/de-identified input shown.
 - [ ] Letter selection is consistent and readable.
 - [ ] Audio and screen text are clear; no credentials or unrelated windows shown.
-- [ ] Video publicly visible on YouTube/Vimeo; verified while signed out.
+- [ ] Video is under three minutes, shows the complete flow and is publicly visible on YouTube/Vimeo; verified while signed out.
 - [ ] Video URL recorded in `shipping-status.md` and the actual submission form.
 
 After upload, add the public video URL to [shipping status](shipping-status.md). Devpost submission is handled by the contributor.
+
+For the form, use the public repository in “Try it out” and https://github.com/z-lovejeet/UnBill/blob/main/LICENSE in the license field. Complete the Skill Pack explanation and both age-of-majority and eligibility checkboxes. The app requires no login; the synthetic examples provide immediate access.
 
 ## Actual feedback
 

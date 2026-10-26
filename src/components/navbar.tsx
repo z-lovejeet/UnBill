@@ -49,6 +49,7 @@ export function Navbar() {
         <div className="flex items-center gap-2 sm:gap-4 text-xs font-medium font-sans">
           <Link
             href="/about"
+            aria-current={pathname === '/about' ? 'page' : undefined}
             className={`hidden sm:inline-block px-2.5 py-1.5 rounded-lg transition-colors ${
               pathname === '/about'
                 ? 'text-slate-950 font-bold bg-slate-100'
@@ -60,6 +61,7 @@ export function Navbar() {
 
           <Link
             href="/privacy"
+            aria-current={pathname === '/privacy' ? 'page' : undefined}
             className={`px-2.5 py-1.5 rounded-lg transition-colors hidden sm:inline-block ${
               pathname === '/privacy'
                 ? 'text-slate-950 font-bold bg-slate-100'
@@ -71,6 +73,7 @@ export function Navbar() {
 
           <Link
             href="/history"
+            aria-current={pathname === '/history' ? 'page' : undefined}
             aria-label="Open local vault"
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg transition-colors ${
               pathname === '/history'
@@ -91,7 +94,7 @@ export function Navbar() {
             href="/scan"
             className="flex items-center gap-1.5 bg-slate-950 hover:bg-slate-900 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-xs transition-all active:scale-[0.98]"
           >
-            <span className="hidden sm:inline">Audit a Bill</span>
+            <span className="hidden sm:inline">Review a Bill</span>
             <span className="sm:hidden">Review</span>
             <div className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center">
               <ArrowUpRight className="w-3 h-3 text-slate-300" />

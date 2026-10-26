@@ -75,3 +75,5 @@ Remaining external steps are tracked in [shipping status](devpost/shipping-statu
 ## License
 
 Project code: [MIT](LICENSE). Included Skill Pack material retains its MIT notice. See [third-party notices](THIRD_PARTY_NOTICES.md).
+
+Public license URL for the submission form: https://github.com/z-lovejeet/UnBill/blob/main/LICENSE . GitHub recognizes the repository license as MIT. No login is needed to try the app; two synthetic examples provide the complete review flow.

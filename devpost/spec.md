@@ -62,6 +62,8 @@ The canonical interfaces live in `src/types/audit.ts`; runtime schemas live in `
 
 ## Components and Actual Source Map
 
+Shared page content lives in src/components/page-content.tsx: introductions, step guides and next actions. The processing-status.tsx component presents actual input/request/save phases without simulated progress.
+
 - `src/app/page.tsx`, `src/components/sample-bill-cards.tsx`: home/example entry.
 - `src/app/scan/page.tsx`: intake and waiting/error/recovery UI.
 - `src/app/api/{audit,chat,share,health}/route.ts`: API boundaries.

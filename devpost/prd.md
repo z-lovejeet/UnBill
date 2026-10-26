@@ -67,6 +67,8 @@ Keep the existing slate/emerald billing-tool character, clear typography and tab
 
 ## Product Decisions
 
+The page refresh uses shared editorial headings, restrained emerald surfaces and consistent action styles. Home introduces the complete workflow with actual synthetic figures; About explains the review features; Privacy follows each data boundary. Scan adds source-preparation guidance and actual request progress; results explain the different amounts and next steps; the vault explains continuity and independent revocation. Preparation guidance is excluded from printed letters.
+
 - Preserve the existing workflow and visual identity while correcting release defects.
 - Keep statement facts, calculations and letter figures in one authoritative model so different screens cannot disagree.
 - Provide provider-independent examples for a repeatable demonstration.
