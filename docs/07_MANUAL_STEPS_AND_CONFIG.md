@@ -4,7 +4,7 @@
 
 Use Node.js 22 LTS; `npm ci`; copy `.env.example` to `.env.local`; fill only server-side keys. Run `npm run dev` and open http://localhost:3000 . Synthetic examples work without providers. Never publish `.env.local`, credentials or the private learner profile.
 
-Gemini defaults: `gemini-3.5-flash-lite`, fallback `gemini-3.1-flash-lite`. Groq defaults: `openai/gpt-oss-120b`, fallback `openai/gpt-oss-20b`. Verify current model access/quota in provider accounts; no fixed free-tier limits or latency guarantees are assumed.
+Gemini defaults: `gemini-3.8-flash`, fallback `gemini-3.5-flash-lite`. Groq defaults: `openai/gpt-oss-120b`, fallback `openai/gpt-oss-20b`. Verify current model access/quota in provider accounts; no fixed free-tier limits or latency guarantees are assumed.
 
 `npm run check` runs lint, type checks, offline regressions and production build. `npm audit --audit-level=moderate` checks current advisory metadata. `npm run samples` regenerates JSON/text/SVG fixtures from the same source. PDF generation uses ReportLab; PNGs are renders of those PDFs.
 
@@ -41,3 +41,11 @@ Use the [Skill Pack document index](../devpost/README.md), [recording guide](../
 ## Reproducible clean installs
 
 Deployment is pinned to Node 22.x. The exact `@emnapi/core` and `@emnapi/runtime` development pins intentionally retain the WebAssembly toolchain entries needed by cross-platform optional dependencies. Do not remove those lock records based only on a successful cached macOS install; use a fresh `npm ci` when changing dependencies.
+
+## Gemini primary quota routing
+
+The primary is Gemini 3.8 Flash, with Gemini 3.5 Flash-Lite fallback. Redis atomically reserves at most 18 primary provider attempts per America/Los_Angeles calendar day across all workers. Failed primary attempts count conservatively. The next request uses the fallback directly after the cap; a confirmed daily/zero-quota provider response also stops further primary attempts for that day. Normal transient busy/rate/timeout responses can fall back within the bounded request.
+
+Keep GEMINI_QUOTA_SCOPE stable across deployments and key rotations for the same Google project; default: unbill. Public extraction skips the primary when its shared ledger cannot be used. Local development may use a process-local counter. This ledger covers UnBill attempts, not other tools sharing the Google project. The separate application-wide 200-request UTC-day AI budget still applies. Google quotas are per project, not per key, and reset at Pacific midnight: https://ai.google.dev/gemini-api/docs/rate-limits .
+
+Provider logs contain only model, HTTP status, safe error category and elapsed time. Missing models, rate limits, daily quota, busy responses, timeout and network failure are distinguished without printing documents, keys or raw provider responses.

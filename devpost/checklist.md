@@ -20,6 +20,13 @@ Build mode: fast. The contributor requested the readiness repairs and final repo
 - [x] Request/body/rate/budget guards, safe errors, headers and dependency advisory remediation.
 - [x] Offline regression suite, type checks, configured lint, production build, CI and deployment configuration.
 
+## Gemini routing update
+
+- [x] Gemini 3.8 Flash primary and Gemini 3.5 Flash-Lite fallback configured.
+- [x] Shared atomic 18-attempt Pacific-day cap and early daily-quota cutoff verified.
+- [x] Five new regressions pass; full suite now has 23 passing tests.
+- [x] Isolated real Redis test admits exactly 18 of 40 concurrent reservations without making provider calls.
+
 ## Mechanical verification
 
 - [x] `npm test`: 18 offline regressions passed during hardening.

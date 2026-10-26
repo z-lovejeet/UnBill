@@ -1,5 +1,6 @@
 import { extractionSchema, validationMessage, MAX_FILE_BYTES } from './validation';
 import { ApiError } from './api-utils';
+import { reserveGeminiPrimaryAttempt, exhaustGeminiPrimaryBudget } from './gemini-budget';
 export interface RawBillData {
   isMedicalBill: boolean;
   rejectionReason?: string | null;
@@ -65,6 +66,58 @@ const schema = {
   },
   required: ['isMedicalBill', 'facility', 'patient', 'financials', 'items'],
 };
+async function providerFailure(response: Response): Promise<ApiError> {
+  if (response.status === 401 || response.status === 403)
+    return new ApiError(
+      503,
+      'The extraction provider rejected the server configuration. Use an example or contact the operator.',
+      'GEMINI_AUTH',
+    );
+  if (response.status === 404)
+    return new ApiError(
+      503,
+      'The configured extraction model is unavailable. Contact the operator or use a synthetic example.',
+      'GEMINI_MODEL_UNAVAILABLE',
+    );
+  if (response.status === 429) {
+    const body = await response.json().catch(() => null);
+    const details = body?.error?.details;
+    const dailyQuota =
+      Array.isArray(details) &&
+      details.some(
+        (detail) =>
+          Array.isArray(detail?.violations) &&
+          detail.violations.some(
+            (violation: { quotaId?: string; quotaValue?: string | number }) =>
+              String(violation?.quotaValue) === '0' ||
+              (typeof violation?.quotaId === 'string' && /per.?day|rpd/i.test(violation.quotaId)),
+          ),
+      );
+    return dailyQuota
+      ? new ApiError(
+          429,
+          'Gemini has no daily document-processing quota available for this project/model. Check API quota or use a synthetic example.',
+          'GEMINI_DAILY_QUOTA',
+        )
+      : new ApiError(
+          429,
+          'Gemini is temporarily rate-limiting document processing. Wait before retrying or use a synthetic example.',
+          'GEMINI_RATE_LIMIT',
+        );
+  }
+  if (response.status >= 500)
+    return new ApiError(
+      503,
+      'Gemini is temporarily busy. Retry shortly or use a synthetic example.',
+      'GEMINI_BUSY',
+    );
+  return new ApiError(
+    502,
+    'The provider could not process this document. Try a clearer supported file or paste the itemized text.',
+    'GEMINI_DOCUMENT_ERROR',
+  );
+}
+
 async function extract(parts: unknown[], signal?: AbortSignal): Promise<RawBillData> {
   const key = process.env.GEMINI_API_KEY;
   if (!key)
@@ -74,19 +127,22 @@ async function extract(parts: unknown[], signal?: AbortSignal): Promise<RawBillD
       'GEMINI_NOT_CONFIGURED',
     );
   const models = [
-    process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite',
-    process.env.GEMINI_FALLBACK_MODEL || 'gemini-3.1-flash-lite',
+    process.env.GEMINI_MODEL || 'gemini-3.8-flash',
+    process.env.GEMINI_FALLBACK_MODEL || 'gemini-3.5-flash-lite',
   ].filter((m, i, a) => a.indexOf(m) === i);
   let last = new ApiError(
     503,
     'Document extraction is temporarily unavailable. Try again or use a synthetic example.',
     'GEMINI_UNAVAILABLE',
   );
-  for (const model of models) {
+  for (const [index, model] of models.entries()) {
     if (!/^[a-zA-Z0-9._-]+$/.test(model))
       throw new ApiError(503, 'The configured extraction model is invalid.');
+    if (signal?.aborted) throw new ApiError(499, 'Request cancelled.', 'CANCELLED');
+    if (index === 0 && !(await reserveGeminiPrimaryAttempt(model))) continue;
     const timeout = AbortSignal.timeout(18000);
     const requestSignal = signal ? AbortSignal.any([signal, timeout]) : timeout;
+    const started = Date.now();
     try {
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
@@ -99,7 +155,9 @@ async function extract(parts: unknown[], signal?: AbortSignal): Promise<RawBillD
             generationConfig: {
               responseMimeType: 'application/json',
               responseJsonSchema: schema,
-              temperature: 0,
+              ...(model.startsWith('gemini-3.8-')
+                ? { thinkingConfig: { thinkingLevel: 'low' } }
+                : { temperature: 0 }),
               maxOutputTokens: 12000,
             },
           }),
@@ -108,25 +166,20 @@ async function extract(parts: unknown[], signal?: AbortSignal): Promise<RawBillD
         },
       );
       if (!response.ok) {
-        if (response.status === 401 || response.status === 403)
-          throw new ApiError(
-            503,
-            'The extraction provider rejected the server configuration. Use an example or contact the operator.',
-            'GEMINI_AUTH',
-          );
+        const failure = await providerFailure(response);
+        console.warn('[unbill:extraction]', {
+          model,
+          status: response.status,
+          code: failure.code,
+          elapsedMs: Date.now() - started,
+        });
+        if (index === 0 && failure.code === 'GEMINI_DAILY_QUOTA')
+          await exhaustGeminiPrimaryBudget(model);
         if (response.status === 429 || response.status >= 500 || response.status === 404) {
-          last = new ApiError(
-            response.status === 429 ? 429 : 503,
-            'The extraction provider is busy or quota-limited. Retry shortly or use a synthetic example.',
-            'GEMINI_UNAVAILABLE',
-          );
+          last = failure;
           continue;
         }
-        throw new ApiError(
-          502,
-          'The provider could not process this document. Try a clearer supported file or paste the itemized text.',
-          'GEMINI_DOCUMENT_ERROR',
-        );
+        throw failure;
       }
       const output = await response.json();
       const content = output.candidates?.[0]?.content?.parts
@@ -160,11 +213,20 @@ async function extract(parts: unknown[], signal?: AbortSignal): Promise<RawBillD
     } catch (error) {
       if (signal?.aborted) throw new ApiError(499, 'Request cancelled.', 'CANCELLED');
       if (error instanceof ApiError) throw error;
+      const timedOut =
+        requestSignal.aborted || (error instanceof Error && error.name === 'TimeoutError');
       last = new ApiError(
-        504,
-        'Document extraction timed out or lost connection. Retry, paste the text, or use a synthetic example.',
-        'GEMINI_TIMEOUT',
+        timedOut ? 504 : 502,
+        timedOut
+          ? 'Document extraction timed out. Retry, paste the text, or use a synthetic example.'
+          : 'The extraction provider could not be reached. Retry shortly or use a synthetic example.',
+        timedOut ? 'GEMINI_TIMEOUT' : 'GEMINI_NETWORK',
       );
+      console.warn('[unbill:extraction]', {
+        model,
+        code: last.code,
+        elapsedMs: Date.now() - started,
+      });
     }
   }
   throw last;

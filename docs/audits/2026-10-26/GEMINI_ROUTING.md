@@ -1,0 +1,28 @@
+# Gemini routing and quota guard
+
+26 October 2026. The contributor requested Gemini 3.8 Flash as primary, Gemini 3.5 Flash-Lite as fallback, and a cutoff before a nineteenth primary attempt in a quota day. They reported zero prior 3.8 requests for the Google project at the start of this change.
+
+## Observed failure
+
+The baseline production deployment was ready and newer than the key update. A synthetic PDF request and a minimal text statement both returned GEMINI_TIMEOUT after approximately 37 seconds. The previous implementation used 3.5 Flash-Lite and 3.1 Flash-Lite and grouped missing models, busy responses and quota errors under one message. Key presence alone did not establish provider availability.
+
+## Change
+
+- Default primary: gemini-3.8-flash, using supported low thinking without a custom temperature.
+- Default fallback: gemini-3.5-flash-lite.
+- Redis atomically reserves a maximum of 18 primary attempts per Pacific calendar day across workers. Failed attempts count conservatively. Subsequent reviews use the fallback directly.
+- Confirmed daily/zero-quota responses stop further primary attempts for that day. Public extraction skips the primary if its shared quota ledger cannot be used.
+- The stable quota scope survives deployment and key rotation. It tracks UnBill attempts; other applications using the Google project are independent consumers.
+- Model availability, rate limits, daily quota, busy responses, timeout and network failure have distinct safe errors. Logs include model, HTTP status/error category and elapsed time, without provider response bodies, document text or credentials.
+
+## Verification
+
+- New routing test reproduced the old incorrect defaults before the fix.
+- Twenty-four concurrent offline reviews produce exactly 18 primary calls and six fallback calls.
+- A confirmed provider daily-quota response sends the next review directly to the fallback.
+- Pacific reset, missing-model classification/privacy and public missing-ledger behavior are covered.
+- Isolated real Redis test: 40 concurrent reservations, 18 admitted, 22 blocked, zero provider calls; its test key was deleted.
+- Live provider PDF check: 3.8 Flash returned HTTP 503 in 3.26 seconds; 3.5 Flash-Lite succeeded in 15.05 seconds, producing eight items and a $3,820 gross total. That primary attempt was included in the shared ledger.
+- Full lint, TypeScript, 23-test suite and production build passed before publication.
+
+Google's quota day and project scope are documented at https://ai.google.dev/gemini-api/docs/rate-limits . Project-specific model quotas must be read from the operator's AI Studio; the configured 18-attempt policy does not assert a universal free-tier allowance or guarantee provider uptime.

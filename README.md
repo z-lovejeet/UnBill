@@ -18,7 +18,9 @@ npm run dev
 
 Open http://localhost:3000. Both synthetic examples work without AI keys or Redis. The examples run the same deterministic engine as extracted statements; they do not call document AI.
 
-For document extraction, set `GEMINI_API_KEY`. Defaults are `gemini-3.5-flash-lite`, with `gemini-3.1-flash-lite` fallback. For the coach, set `GROQ_API_KEY`; the configured primary is `openai/gpt-oss-120b`, with `openai/gpt-oss-20b` fallback. Provider availability and latency vary. No fixed latency guarantee is made.
+For document extraction, set `GEMINI_API_KEY`. Defaults are `gemini-3.8-flash`, with `gemini-3.5-flash-lite` fallback. For the coach, set `GROQ_API_KEY`; the configured primary is `openai/gpt-oss-120b`, with `openai/gpt-oss-20b` fallback. Provider availability and latency vary. No fixed latency guarantee is made.
+
+The primary has a shared cap of **18 provider attempts per Pacific-time day**. After that, requests go directly to Flash-Lite. A confirmed daily-quota response also disables primary attempts for the rest of that quota day. The cap includes failed attempts and survives deployment/key rotation through Redis; other applications using the Google project consume quota independently.
 
 ## Features and limits
 
@@ -36,7 +38,7 @@ The **19-code illustrative catalog is not an official CMS fee schedule**, market
 ## Verify
 
 ```bash
-npm run check             # lint, types, 18 offline regression tests, production build
+npm run check             # lint, types, 23 offline regression tests, production build
 npm audit --audit-level=moderate
 ```
 
