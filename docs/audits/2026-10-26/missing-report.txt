@@ -1,0 +1,278 @@
+Browser tab: 1, Title: "UnBill — Forensic Hospital Bill Auditor & Statutory Dispute Engine", URL: "http://127.0.0.1:3107/results/audit_missing_synthetic_check".
+1 AXWebArea UnBill — Forensic Hospital Bill Auditor & Statutory Dispute Engine, URL: 127.0.0.1:3107/results/audit_missing_synthetic_check
+	2 container
+		3 link Description: UnBill Logo UnBill FORENSIC AI Patient Financial Defense, Value: 127.0.0.1:3107/
+		4 link Description: About, Value: 127.0.0.1:3107/about
+		5 link Description: Privacy, Value: 127.0.0.1:3107/privacy
+		6 link Description: Vault 2, Value: 127.0.0.1:3107/history
+		7 link Description: Audit a Bill, Value: 127.0.0.1:3107/scan
+	8 container
+		9 link Description: Home, Value: 127.0.0.1:3107/
+		10 text /
+		11 link Description: Intake, Value: 127.0.0.1:3107/scan
+		12 text / Audit # audit_miss
+		13 heading Forensic Audit Dossier, Value: 1
+			14 text Forensic Audit Dossier
+		15 text Deterministic Pass Statutory clinical coding review cross-referenced with CMS fee schedules and NCCI edits.
+		16 button Ask Copilot
+			17 image
+			18 text Ask Copilot
+		19 button Share
+			20 image
+			21 text Share
+		22 button Print
+			23 image
+			24 text Print
+		25 image
+		26 text HEALTHCARE FACILITY Mercy General Hospital & Trauma Center 1-800-555-4321
+		27 image
+		28 text PATIENT / ACCOUNT # ACC-99284-883 Sarah Jenkins
+		29 image
+		30 text STATEMENT DATE 2026-10-14 Encounter Period Verified
+		31 image
+		32 text STATUTORY DISPUTE WINDOW Active (FCBA 15 U.S.C. 1666) 30-day collection stay in effect TOTAL HOSPITAL CHARGE $ 4820.00 Gross Pre-dispute total across  8  line items.
+		33 text DISPUTED OVERCHARGES Save  34 %
+		34 container
+			35 text -$ 1650.00
+		36 container
+			37 text 4  statutory errors & markups flagged.
+		38 text REVISED FAIR MARKET TOTAL Medicare Basis
+		39 container
+			40 text $ 3170.00
+		41 text Undisputed median fair-market balance.
+		42 text AUDIT RISK SCORE HIGH RISK 78 / 100
+		43 image
+		44 text 15 U.S.C. 1666 Statutory Protection Active
+		45 heading Ready to challenge this bill with your formal legal dispute kit?, Value: 3
+			46 text Ready to challenge this bill with your formal legal dispute kit?
+		47 text We have compiled an official Certified Mail legal package citing 15 U.S.C. 1666, an itemized schedule of $ 1650.00  in disputed charges, and a 4-scenario hospital negotiation script.
+		48 link Description: Generate Dispute Kit, Value: 127.0.0.1:3107/dispute/audit_missing_synthetic_check
+		49 heading Forensic Violations Detected (4 Total), Value: 3
+			50 image
+			51 text Forensic Violations Detected ( 4  Total)
+		52 text Audited against CMS NCCI Edits & MPFS Regional Medians Unbundled & Duplicates Full Write-Off
+		53 text 2 full write-off charges (2 duplicate, 0 unbundled).
+		54 text Excessive Markups & Acuity Price Caps
+		55 container
+			56 text 2 violations  exceeding fair benchmarks ( 2  markup ).
+		57 text Statutory Protection FCBA Stay
+		58 text FCBA Section 1666 stay legally prohibits negative credit reporting during active dispute.
+		59 heading Itemized Clinical Ledger & Forensic Benchmarks, Value: 3
+			60 image
+			61 text Itemized Clinical Ledger & Forensic Benchmarks
+		62 text Cross-referenced against CMS Medicare Physician Fee Schedule (MPFS) and NCCI edits.
+		63 button All Items (8)
+			64 text All Items (
+			65 text 8
+			66 text )
+		67 button Flagged (4)
+			68 text Flagged (
+			69 text 4
+			70 text )
+		71 button Full Write-Offs (1)
+			72 text Full Write-Offs (
+			73 text 1
+			74 text )
+		75 button Excessive Markups (2)
+			76 text Excessive Markups (
+			77 text 2
+			78 text )
+		79 table
+			80 row
+				81 cell
+					82 text DISPUTE
+				83 cell
+					84 text CPT CODE & DESCRIPTION
+				85 cell
+					86 text CLINICAL STATUS
+				87 cell
+					88 text BILLED CHARGE
+				89 cell
+					90 text CMS MEDIAN
+				91 cell
+					92 text POTENTIAL SAVINGS
+			93 row
+				94 cell
+					95 checkbox (settable, integer) Description: Toggle inclusion in formal dispute package, Value: 1
+				96 cell
+					97 text 99284 EMERGENCY DEPT VISIT LEVEL 4 Date:  2026-10-12 Qty:  1 • Evaluation and Management
+				98 cell
+					99 image
+					100 text Excessive Markup
+				101 cell
+					102 text $ 1850.00
+				103 cell
+					104 text $ 480.00
+				105 cell
+					106 text -$ 1100.00
+			107 row
+				108 cell
+					109 heading PLAIN-ENGLISH CLINICAL TRANSLATION, Value: 4
+						110 image
+						111 text PLAIN-ENGLISH CLINICAL TRANSLATION
+					112 text Emergency room physician and facility fee for high-severity evaluation without immediate threat to life.
+					113 heading CMS PRICING BENCHMARK VS HOSPITAL CHARGE, Value: 4
+						114 image
+						115 text CMS PRICING BENCHMARK VS HOSPITAL CHARGE
+					116 text Medicare Allowable Median: $ 480.00 Fair Market Range (50th - 80th %): $ 380.00  – $ 750.00 Hospital Billed Rate: $ 1850.00 3.9 x Medicare
+					117 container
+						118 image
+						119 heading Severe Facility Markup, Value: 5
+							120 text Severe Facility Markup
+						121 text Dispute: -$ 1100.00 Billed at $1,850.00, which is 3.8x the regional Medicare allowable median ($480.00). Actionable Remedy: Demand recalculation based on hospital's Amount Generally Billed (AGB) percentage. Statutory Basis: IRC Section 501(r)(6)
+			122 row
+				123 cell
+					124 checkbox (settable, integer) Description: Toggle inclusion in formal dispute package, Value: 0
+				125 cell
+					126 text 73110 RADIOLOGIC EXAM WRIST COMPLETE 3+ VIEWS Date:  2026-10-12 Qty:  1 • Radiology
+				127 cell
+					128 image
+					129 text Fair Rate
+				130 cell
+					131 text $ 420.00
+				132 cell
+					133 text $ 62.00
+				134 cell
+					135 text $0.00
+			136 row
+				137 cell
+					138 checkbox (settable, integer) Description: Toggle inclusion in formal dispute package, Value: 0
+				139 cell
+					140 text 80053 COMPREHENSIVE METABOLIC PANEL Date:  2026-10-12 Qty:  1 • Laboratory
+				141 cell
+					142 image
+					143 text Fair Rate
+				144 cell
+					145 text $ 280.00
+				146 cell
+					147 text $ 52.00
+				148 cell
+					149 text $0.00
+			150 row
+				151 cell
+					152 checkbox (settable, integer) Description: Toggle inclusion in formal dispute package, Value: 1
+				153 cell
+					154 text 80053 COMPREHENSIVE METABOLIC PANEL Date:  2026-10-12 Qty:  1 • Laboratory
+				155 cell
+					156 image
+					157 text Duplicate Charge
+				158 cell
+					159 text $ 280.00
+				160 cell
+					161 text $ 52.00
+				162 cell
+					163 text -$ 280.00
+			164 row
+				165 cell
+					166 checkbox (settable, integer) Description: Toggle inclusion in formal dispute package, Value: 0
+				167 cell
+					168 text 36415 ROUTINE VENIPUNCTURE BLOOD DRAW Date:  2026-10-12 Qty:  1 • Phlebotomy
+				169 cell
+					170 image
+					171 text Fair Rate
+				172 cell
+					173 text $ 70.00
+				174 cell
+					175 text $ 12.00
+				176 cell
+					177 text $0.00
+			178 row
+				179 cell
+					180 checkbox (settable, integer) Description: Toggle inclusion in formal dispute package, Value: 1
+				181 cell
+					182 text 36415 ROUTINE VENIPUNCTURE BLOOD DRAW Date:  2026-10-12 Qty:  1 • Phlebotomy
+				183 cell
+					184 image
+					185 text Duplicate Charge
+				186 cell
+					187 text $ 70.00
+				188 cell
+					189 text $ 12.00
+				190 cell
+					191 text -$ 70.00
+			192 row
+				193 cell
+					194 checkbox (settable, integer) Description: Toggle inclusion in formal dispute package, Value: 1
+				195 cell
+					196 text 29125 APPL SHORT ARM SPLINT STATIC FOREARM-HAND Date:  2026-10-12 Qty:  1 • Orthopedic & Surgery
+				197 cell
+					198 image
+					199 text Excessive Markup
+				200 cell
+					201 text $ 650.00
+				202 cell
+					203 text $ 115.00
+				204 cell
+					205 text -$ 200.00
+			206 row
+				207 cell
+					208 checkbox (settable, integer) Description: Toggle inclusion in formal dispute package, Value: 0
+				209 cell
+					210 text J7030 INFUSION NORMAL SALINE 1000CC Date:  2026-10-12 Qty:  1 • Pharmacy & Supplies
+				211 cell
+					212 image
+					213 text Fair Rate
+				214 cell
+					215 text $ 200.00
+				216 cell
+					217 text $ 14.00
+				218 cell
+					219 text $0.00
+		220 button Open UnBill Copilot Assistant
+			221 image
+			222 text Ask Copilot
+		223 container UnBill Copilot Drawer
+			224 image
+			225 heading UnBill Copilot, Value: 3
+				226 text UnBill Copilot
+			227 text Groq sub-350ms
+			228 text Statutory Negotiation Advocate
+			229 button Clear conversation
+				230 image
+			231 button
+				232 image
+			233 image
+			234 text Mercy General Hospital & Trauma Center ( ACC-99284-883 ) $ 1650  Disputed
+			235 container
+				236 text Hello! I'm your 
+				237 text UnBill Copilot
+				238 text , powered by Groq's ultra-low latency engine. I have loaded the full forensic audit for 
+				239 text Mercy General Hospital & Trauma Center
+				240 text  (Account #ACC-99284-883). - 
+				241 text Gross Billed:
+				242 text  $4820.00 - 
+				243 text Disputed Overcharges:
+				244 text  $1650.00 across 4 flagged discrepancies - 
+				245 text Fair Market Rate:
+				246 text  $3170.00 What would you like help with? I can roleplay phone negotiation scripts, clarify legal citations under FCBA Section 1666, or help negotiate a one-time cash settlement. Copilot
+			247 text SUGGESTED QUESTIONS FOR THIS BILL
+			248 button “What do I say if Mercy General Hospital & Trauma Center says "Our rates are fixed"?”
+				249 text “
+				250 text What do I say if Mercy General Hospital & Trauma Center says "Our rates are fixed"?
+				251 text ”
+			252 button “How do I formally dispute the $1650 in flagged charges?”
+				253 text “
+				254 text How do I formally dispute the $1650 in flagged charges?
+				255 text ”
+			256 button “Can Mercy General Hospital & Trauma Center send Account #ACC-99284-883 to collections while in dispute?”
+				257 text “
+				258 text Can Mercy General Hospital & Trauma Center send Account #ACC-99284-883 to collections while in dispute?
+				259 text ”
+			260 button “Help me negotiate a lump-sum settlement of $3170.”
+				261 text “
+				262 text Help me negotiate a lump-sum settlement of $3170.
+				263 text ”
+			264 text field (settable)
+			265 text Educational patient advocacy intelligence. Not formal legal counsel.
+	266 container
+		267 image
+		268 text Zero-Storage Architecture Documents processed ephemerally in RAM and purged immediately. Your bills stay 100% in your local browser vault.
+		269 image
+		270 text Statutory Rights Grounding Disputes compiled strictly in compliance with the Fair Credit Billing Act (15 U.S.C. 1666) & the federal No Surprises Act.
+		271 image
+		272 text Informational Advocacy Tool UnBill is a forensic audit aid and consumer empowerment tool, not a substitute for licensed legal or clinical advice. © 2026 UnBill AI. Built for the  Build With AI: Basics  hackathon on Devpost.
+		273 link Description: Methodology, Value: 127.0.0.1:3107/about
+		274 link Description: Privacy Guarantee, Value: 127.0.0.1:3107/privacy
+		275 link Description: Skill Pack Verified, Value: github.com/challengepost/learn-ai-basics
+
+The focused UI element is 1 AXWebArea UnBill — Forensic Hospital Bill Auditor & Statutory Dispute Engine, URL: 127.0.0.1:3107/results/audit_missing_synthetic_check

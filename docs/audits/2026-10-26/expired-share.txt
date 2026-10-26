@@ -1,0 +1,7 @@
+Browser tab: 1, Title: "UnBill — Forensic Hospital Bill Auditor & Statutory Dispute Engine", URL: "http://127.0.0.1:3107/results/share_expired_synthetic_check".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~1 AXWebArea UnBill — Forensic Hospital Bill Auditor & Statutory Dispute Engine, URL: 127.0.0.1:3107/results/share_expired_synthetic_check
+~		6 link Description: Vault 3, Value: 127.0.0.1:3107/history
+~		12 text / Audit # share_expi
+~		48 link Description: Generate Dispute Kit, Value: 127.0.0.1:3107/dispute/share_expired_synthetic_check
+The focused UI element is 1 AXWebArea UnBill — Forensic Hospital Bill Auditor & Statutory Dispute Engine, URL: 127.0.0.1:3107/results/share_expired_synthetic_check

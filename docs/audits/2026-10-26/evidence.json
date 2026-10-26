@@ -1,0 +1,222 @@
+{
+  "auditedAt": "2026-10-26",
+  "baseline": "8165bb6",
+  "syntheticOnly": true,
+  "liveProvidersUsed": false,
+  "checks": [
+    {
+      "name": "control: exact duplicate detected",
+      "pass": true,
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "name": "control: same-day configured bundle detected",
+      "pass": true,
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "name": "unbundling must not join different service dates",
+      "pass": false,
+      "expected": 0,
+      "actual": 1
+    },
+    {
+      "name": "unbundling must examine every matching component row",
+      "pass": false,
+      "expected": [
+        "synthetic-child-1",
+        "synthetic-child-2"
+      ],
+      "actual": [
+        "synthetic-child-1"
+      ]
+    },
+    {
+      "name": "markup comparison must account for quantity",
+      "pass": false,
+      "expected": 0,
+      "actual": 1
+    },
+    {
+      "name": "equivalent service dates must match for duplicates",
+      "pass": false,
+      "expected": 1,
+      "actual": 0
+    },
+    {
+      "name": "inferred CPT suffix must preserve benchmark lookup",
+      "pass": false,
+      "expected": "80053",
+      "actual": null
+    },
+    {
+      "name": "unknown codes must not acquire an invented benchmark",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "unknown-code report must not assert regional price conformity",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "extracted patient balance must reach financial report",
+      "pass": false,
+      "expected": 100,
+      "actual": 1000
+    },
+    {
+      "name": "extracted insurance amount must reach financial report",
+      "pass": false,
+      "expected": 900,
+      "actual": 0
+    },
+    {
+      "name": "high-decision-making ED care alone is not proof of upcoding",
+      "pass": false,
+      "expected": 0,
+      "actual": 1
+    },
+    {
+      "name": "control: compiled savings cannot exceed gross charges",
+      "pass": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "negotiation parent and child CPT codes must differ",
+      "pass": false,
+      "expected": true,
+      "actual": false
+    },
+    {
+      "name": "zero patient balance must remain zero after extraction",
+      "pass": false,
+      "expected": 0,
+      "actual": 1000
+    },
+    {
+      "name": "missing facility and account must not become fabricated identifiers",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "empty model object must not be accepted as a medical bill",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "parse failures must not log raw patient-containing model output",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "store savings must not double-count overlapping anomalies",
+      "pass": false,
+      "expected": 200,
+      "actual": 322
+    },
+    {
+      "name": "store selection must update saved history",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "selected totals and exported letter total must agree",
+      "pass": false,
+      "expected": true,
+      "actual": false
+    },
+    {
+      "name": "vault advertised as encrypted must not expose patient name as plaintext JSON",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "er_visit_broken_wrist: item charges must reconcile to reported gross",
+      "pass": false,
+      "expected": 4820,
+      "actual": 3820
+    },
+    {
+      "name": "er_visit_broken_wrist: selected per-item savings must reconcile to total",
+      "pass": true,
+      "expected": 1650,
+      "actual": 1650
+    },
+    {
+      "name": "er_visit_broken_wrist: displayed sample savings must match current engine",
+      "pass": false,
+      "expected": 1650,
+      "actual": 2717.5
+    },
+    {
+      "name": "outpatient_surgery: item charges must reconcile to reported gross",
+      "pass": false,
+      "expected": 8420,
+      "actual": 2360
+    },
+    {
+      "name": "outpatient_surgery: selected per-item savings must reconcile to total",
+      "pass": false,
+      "expected": 2350,
+      "actual": 1450
+    },
+    {
+      "name": "outpatient_surgery: displayed sample savings must match current engine",
+      "pass": false,
+      "expected": 2350,
+      "actual": 1964
+    },
+    {
+      "name": "control: valid structured intake accepted",
+      "pass": true,
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "name": "invalid line amount must be rejected as client input",
+      "pass": false,
+      "expected": 400,
+      "actual": 500
+    },
+    {
+      "name": "empty itemized statement must not produce a successful audit",
+      "pass": false,
+      "expected": 400,
+      "actual": 200
+    },
+    {
+      "name": "unknown sample ID must not return an ER sample",
+      "pass": false,
+      "expected": 404,
+      "actual": 200
+    },
+    {
+      "name": "disabled cloud sharing must return failure instead of a link",
+      "pass": false,
+      "expected": 503,
+      "actual": 200
+    },
+    {
+      "name": "successful share creation must produce a retrievable link",
+      "pass": false,
+      "expected": 200,
+      "actual": 503
+    }
+  ],
+  "summary": {
+    "total": 34,
+    "passed": 5,
+    "failed": 29
+  }
+}

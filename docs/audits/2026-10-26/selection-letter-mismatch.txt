@@ -1,0 +1,89 @@
+Browser tab: 1, Title: "UnBill — Forensic Hospital Bill Auditor & Statutory Dispute Engine", URL: "http://127.0.0.1:3107/dispute/sample_er_wrist_2026".
+1 AXWebArea UnBill — Forensic Hospital Bill Auditor & Statutory Dispute Engine, URL: 127.0.0.1:3107/dispute/sample_er_wrist_2026
+	2 container
+		3 link Description: UnBill Logo UnBill FORENSIC AI Patient Financial Defense, Value: 127.0.0.1:3107/
+		4 link Description: About, Value: 127.0.0.1:3107/about
+		5 link Description: Privacy, Value: 127.0.0.1:3107/privacy
+		6 link Description: Vault 3, Value: 127.0.0.1:3107/history
+		7 link Description: Audit a Bill, Value: 127.0.0.1:3107/scan
+	8 container
+		276 link Description: Home, Value: 127.0.0.1:3107/
+		277 text /
+		278 link Description: Audit Dossier, Value: 127.0.0.1:3107/results/sample_er_wrist_2026
+		279 text / Dispute Toolkit
+		280 heading Statutory Dispute & Negotiation Kit, Value: 1
+			281 text Statutory Dispute & Negotiation Kit
+		282 text Certified Mail dispute package under 15 U.S.C. 1666 for Account # ACC-99284-883  ($ 550.00  in disputed charges).
+		283 button Copy Letter
+			284 image
+			285 text Copy Letter
+		286 button Print / Save as PDF
+			287 image
+			288 text Print / Save as PDF
+		289 button Certified FCBA Dispute Letter
+			290 image
+			291 text Certified FCBA Dispute Letter
+		292 button Phone Negotiation Playbook (4 Scripts)
+			293 image
+			294 text Phone Negotiation Playbook (4 Scripts)
+		295 button Federal Statutory Protections
+			296 image
+			297 text Federal Statutory Protections
+		298 image
+		299 heading Critical Step for Legal Protection: Send via USPS Certified Mail, Value: 4
+			300 text Critical Step for Legal Protection: Send via USPS Certified Mail
+		301 text To legally trigger the mandatory credit reporting freeze under the Fair Credit Billing Act (15 U.S.C. 1666), this written notice should be sent via
+		302 text USPS Certified Mail with Return Receipt Requested (PS Form 3800)
+		303 text . Keep the postmarked receipt and green return card in your records. Date: October 24, 2026
+
+To:
+Patient Financial Services & Billing Department
+Mercy General Hospital & Trauma Center
+1200 Healthcare Blvd, Metro City, NY 10001
+
+RE: Formal Notice of Disputed Billing Errors and Statutory Dispute
+Patient Name: Sarah Jenkins
+Account Number: ACC-99284-883
+Statement Date: October 14, 2026
+Disputed Amount: $1,650.00
+
+Dear Billing Director,
+
+Pursuant to the Fair Credit Billing Act (15 U.S.C. § 1666), Regulation Z (12 C.F.R. § 1026.13), and Internal Revenue Code Section 501(r), I am formally notifying your office of mathematical billing discrepancies, unauthorized duplicate charges, and excessive pricing markups on the above-referenced account.
+
+Following a forensic review of the itemized statement, the following line items are formally disputed:
+
+1. CPT 80053 (Comprehensive Metabolic Panel) - $280.00
+   Grievance: Duplicate charge. This identical laboratory panel was billed twice on October 12, 2026. Under federal billing rules, duplicate billing is prohibited.
+
+2. CPT 36415 (Routine Venipuncture) - $70.00
+   Grievance: Quantity overbill. Venipuncture fees may only be billed once per clinical blood draw encounter according to CMS NCCI standards.
+
+3. CPT 99284 (Emergency Department Level 4) - $1,850.00
+   Grievance: Excessive markup. This fee exceeds 380% of the Medicare allowable median ($480.00). I request an adjustment reflecting your hospital's Amount Generally Billed (AGB) percentage under IRC § 501(r).
+
+4. CPT 29125 (Application of Short Arm Splint) - $650.00
+   Grievance: Excessive supply and application fee exceeding regional fair market benchmarks ($85 - $210).
+
+STATUTORY DEMANDS:
+1. Acknowledge receipt of this dispute letter within 30 days as mandated by federal law.
+2. In accordance with 15 U.S.C. § 1666, immediately suspend all collection activity and withhold reporting this disputed balance to any credit reporting agency while this investigation remains pending.
+3. Provide a revised itemized billing statement detailing standard CMS Revenue Codes and National Drug Codes (NDCs).
+4. Provide a copy of your hospital's Plain Language Financial Assistance Policy (FAP) application.
+
+Sincerely,
+
+Sarah Jenkins
+Account #ACC-99284-883
+	266 container
+		267 image
+		268 text Zero-Storage Architecture Documents processed ephemerally in RAM and purged immediately. Your bills stay 100% in your local browser vault.
+		269 image
+		270 text Statutory Rights Grounding Disputes compiled strictly in compliance with the Fair Credit Billing Act (15 U.S.C. 1666) & the federal No Surprises Act.
+		271 image
+		272 text Informational Advocacy Tool UnBill is a forensic audit aid and consumer empowerment tool, not a substitute for licensed legal or clinical advice. © 2026 UnBill AI. Built for the  Build With AI: Basics  hackathon on Devpost.
+		273 link Description: Methodology, Value: 127.0.0.1:3107/about
+		274 link Description: Privacy Guarantee, Value: 127.0.0.1:3107/privacy
+		275 link Description: Skill Pack Verified, Value: github.com/challengepost/learn-ai-basics
+
+The focused UI element is 1 AXWebArea UnBill — Forensic Hospital Bill Auditor & Statutory Dispute Engine, URL: 127.0.0.1:3107/dispute/sample_er_wrist_2026
