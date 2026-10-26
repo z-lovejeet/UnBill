@@ -1,0 +1,12 @@
+{
+  "version": "2026-10-26-demo-v2",
+  "title": "UnBill illustrative reference catalog",
+  "kind": "illustrative",
+  "coverage": 19,
+  "notice": "These manually curated demonstration values are not official CMS reimbursement, hospital-specific prices, market percentiles, insurer allowances, or legal price limits. Price differences are prompts for a billing review, not proof of an error or money owed.",
+  "codingReferences": [
+    "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-faq-library",
+    "https://www.ama-assn.org/system/files/2023-e-m-descriptors-guidelines.pdf"
+  ],
+  "productionDataRequirement": "Replace illustrative values with appropriately licensed, dated, sourced payer/facility/locality data before making official reimbursement or comprehensive coverage claims."
+}

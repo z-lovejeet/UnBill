@@ -1,517 +1,202 @@
 'use client';
-
-import React, { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { useReport } from '@/hooks/use-report';
 import { useAuditStore } from '@/lib/store';
-import { AuditReport } from '@/types/audit';
+import { formatCurrency } from '@/lib/utils';
 import { AuditTable } from '@/components/audit-table';
 import { CopilotDrawer } from '@/components/copilot-drawer';
-import {
-  ShieldAlert,
-  ArrowRight,
-  Printer,
-  Share2,
-  FileText,
-  DollarSign,
-  AlertTriangle,
-  Scale,
-  Building,
-  Calendar,
-  User,
-  CheckCircle2,
-  MessageSquare,
-  Sparkles,
-} from 'lucide-react';
-
 export default function ResultsPage() {
-  const params = useParams();
-  const router = useRouter();
-  const id = params?.id as string;
-
-  const { currentReport, setCurrentReport, toggleItemDispute, openCopilot } = useAuditStore();
-  const [report, setReport] = useState<AuditReport | null>(currentReport);
-  const [isLoading, setIsLoading] = useState(!currentReport);
-  const [shareSuccess, setShareSuccess] = useState(false);
-
-  useEffect(() => {
-    // If state already has the matching report, use it
-    if (currentReport && currentReport.id === id) {
-      setReport(currentReport);
-      setIsLoading(false);
-      return;
-    }
-
-    // Otherwise, attempt to load from sample API, local vault history, or shared link
-    const loadReport = async () => {
-      setIsLoading(true);
-      try {
-        // Check local vault history first
-        const historyMatch = useAuditStore.getState().history.find((h) => h.id === id);
-        if (historyMatch) {
-          setReport(historyMatch);
-          setCurrentReport(historyMatch);
-          setIsLoading(false);
-          return;
-        }
-
-        // If it's a shared link, check Upstash cloud
-        if (id.startsWith('share_')) {
-          const shareRes = await fetch(`/api/share?id=${id}`);
-          if (shareRes.ok) {
-            const sharedData = await shareRes.json();
-            setReport(sharedData);
-            setCurrentReport(sharedData);
-            setIsLoading(false);
-            return;
-          }
-          setIsLoading(false);
-          return;
-        }
-
-        // If it's explicitly a sample request
-        if (id.startsWith('sample_') || id === 'outpatient_surgery' || id === 'er_visit_broken_wrist') {
-          const sampleId = id.includes('surgery') ? 'outpatient_surgery' : 'er_visit_broken_wrist';
-          const res = await fetch('/api/audit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sampleId }),
-          });
-          if (res.ok) {
-            const data = await res.json();
-            data.id = id;
-            setReport(data);
-            setCurrentReport(data);
-          }
-        }
-      } catch (err) {
-        console.error('Failed to load audit report:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadReport();
-  }, [id, currentReport, setCurrentReport]);
-
-  const handleToggleDispute = (itemId: string) => {
-    toggleItemDispute(itemId);
-    if (report) {
-      const updatedItems = report.items.map((item) =>
-        item.id === itemId ? { ...item, isDisputed: !item.isDisputed } : item
-      );
-
-      // Recalculate dynamic disputed savings
-      let newSavings = 0;
-      for (const item of updatedItems) {
-        if (item.isDisputed && item.anomalies.length > 0) {
-          const maxDispute = Math.max(...item.anomalies.map((a) => a.disputedAmount));
-          newSavings += maxDispute;
-        }
-      }
-
-      const updatedReport = {
-        ...report,
-        items: updatedItems,
-        financials: {
-          ...report.financials,
-          totalPotentialSavings: Math.round(newSavings * 100) / 100,
-        },
-      };
-
-      setReport(updatedReport);
-      setCurrentReport(updatedReport);
-    }
-  };
-
-  const handleShare = async () => {
+  const { id } = useParams<{ id: string }>();
+  const { report, loading, error } = useReport(id);
+  const toggle = useAuditStore((s) => s.toggleItemDispute);
+  const [shareConsent, setShareConsent] = useState(false);
+  const [shareBusy, setShareBusy] = useState(false);
+  const [shareMessage, setShareMessage] = useState('');
+  const [shareUrl, setShareUrl] = useState('');
+  async function share() {
+    if (!report || !shareConsent || shareBusy) return;
+    setShareBusy(true);
+    setShareMessage('');
     try {
-      if (report) {
-        const res = await fetch('/api/share', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ auditReport: report }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.shareUrl) {
-            await navigator.clipboard.writeText(data.shareUrl);
-            setShareSuccess(true);
-            setTimeout(() => setShareSuccess(false), 2500);
-            return;
-          }
-        }
+      const response = await fetch('/api/share', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ auditReport: report, consent: true }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Sharing failed.');
+      useAuditStore.getState().addOwnedShare(data);
+      setShareUrl(data.shareUrl);
+      try {
+        await navigator.clipboard.writeText(data.shareUrl);
+        setShareMessage('Redacted link created and copied. Revoke it from your vault.');
+      } catch {
+        setShareMessage('Link created. Copy the URL below; revoke it from your vault.');
       }
     } catch (e) {
-      console.warn('Share API fallback to current URL:', e);
+      setShareMessage(e instanceof Error ? e.message : 'The share link could not be created.');
+    } finally {
+      setShareBusy(false);
     }
-    navigator.clipboard.writeText(window.location.href);
-    setShareSuccess(true);
-    setTimeout(() => setShareSuccess(false), 2500);
-  };
-
-  if (isLoading) {
+  }
+  if (loading)
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
-        <div className="w-10 h-10 border-4 border-slate-300 border-t-slate-900 rounded-full animate-spin mb-4" />
-        <h2 className="text-base font-semibold text-slate-800">Loading Forensic Audit Dossier...</h2>
-        <p className="text-xs text-slate-500 mt-1">Reconstructing clinical ledger and benchmarks.</p>
+      <div role="status" className="max-w-5xl mx-auto p-12">
+        Opening Report…
       </div>
     );
-  }
-
-  if (!report) {
+  if (error || !report)
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 text-center">
-        <div className="p-3 bg-amber-50 rounded-2xl border border-amber-200 text-amber-700 mb-3 inline-block">
-          <ShieldAlert className="w-7 h-7 mx-auto" />
-        </div>
-        <h2 className="text-lg font-bold text-slate-900">Audit Dossier Not Found or Expired</h2>
-        <p className="text-xs text-slate-500 max-w-sm mt-1 mb-6">
-          This audit report is no longer in your local browser vault or the shared cloud link has expired.
-        </p>
-        <div className="flex items-center justify-center gap-3">
-          <Link
-            href="/scan"
-            className="px-4 py-2 bg-slate-950 text-white rounded-xl text-xs font-semibold hover:bg-slate-900 transition-colors"
-          >
-            Audit a New Bill
-          </Link>
-          <Link
-            href="/history"
-            className="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-semibold hover:bg-slate-50 transition-colors"
-          >
-            View Vault History
-          </Link>
-        </div>
+      <div className="max-w-xl mx-auto p-12 space-y-4">
+        <h1 className="text-2xl font-bold">Report Not Found or Unavailable</h1>
+        <p className="text-slate-600">{error || 'This report is not available in this browser.'}</p>
+        <Link href="/scan" className="underline">
+          Start a New Review
+        </Link>
+        <Link href="/history" className="underline ml-4">
+          Open Vault
+        </Link>
       </div>
     );
-  }
-
-  const { facility, patient, financials, items, anomalies } = report;
-  const savingsPct =
-    financials.totalBilledGross > 0
-      ? Math.round((financials.totalPotentialSavings / financials.totalBilledGross) * 100)
-      : 0;
-
-  const revisedFairTotal = Math.max(
-    0,
-    financials.totalBilledGross - financials.totalPotentialSavings
-  );
-
-  const duplicateCount = anomalies.filter(
-    (a) => a.anomalyType === 'DUPLICATE_CHARGE' || a.anomalyType === 'QUANTITY_OVERBILL'
-  ).length;
-  const unbundledCount = anomalies.filter((a) => a.anomalyType === 'UNBUNDLED_CHARGE').length;
-  const fullWriteOffCount = duplicateCount + unbundledCount;
-  const markupCount = anomalies.filter((a) => a.anomalyType === 'EXCESSIVE_MARKUP').length;
-  const upcodeCount = anomalies.filter((a) => a.anomalyType === 'UPCODING_SEVERITY').length;
-
+  const selected = report.items.filter((i) => i.isDisputed).length;
   return (
-    <div className="min-h-screen bg-[#fcfcfd] py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto space-y-7">
-        {/* Top Header & Actions Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/60">
-          <div>
-            <div className="flex items-center gap-2 text-xs text-slate-500 mb-1.5 font-mono">
-              <Link href="/" className="hover:text-slate-900 transition-colors">
-                Home
-              </Link>
-              <span className="text-slate-300">/</span>
-              <Link href="/scan" className="hover:text-slate-900 transition-colors">
-                Intake
-              </Link>
-              <span className="text-slate-300">/</span>
-              <span className="text-slate-800 font-semibold">Audit #{id.slice(0, 10)}</span>
-            </div>
-            <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-[-0.03em]">
-                Forensic Audit Dossier
-              </h1>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                Deterministic Pass
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Statutory clinical coding review cross-referenced with CMS fee schedules and NCCI edits.
-            </p>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              onClick={() => openCopilot()}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-medium text-xs sm:text-sm shadow-xs transition-all active:scale-[0.98]"
-            >
-              <MessageSquare className="w-4 h-4 text-emerald-400" />
-              <span>Ask Copilot</span>
-            </button>
-            <button
-              onClick={handleShare}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium transition-colors shadow-2xs"
-            >
-              <Share2 className="w-4 h-4 text-slate-500" />
-              <span>{shareSuccess ? 'Link Copied!' : 'Share'}</span>
-            </button>
-            <button
-              onClick={() => window.print()}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium transition-colors shadow-2xs"
-            >
-              <Printer className="w-4 h-4 text-slate-500" />
-              <span>Print</span>
-            </button>
-          </div>
+    <div className="max-w-6xl mx-auto p-4 sm:p-6 py-10 space-y-7">
+      <header className="flex flex-wrap gap-5 justify-between items-start">
+        <div>
+          <p className="text-xs text-slate-500 uppercase tracking-widest">
+            {report.source === 'sample'
+              ? 'Synthetic example'
+              : report.source === 'shared'
+                ? 'Redacted shared copy'
+                : 'Statement review'}
+          </p>
+          <h1 className="text-3xl font-bold tracking-tight mt-2">Billing Review Report</h1>
+          <p className="text-sm text-slate-600 mt-2">
+            {report.facility.name} · Account {report.patient.accountNumber}
+          </p>
         </div>
-
-        {/* Patient & Facility Summary Header Bar (Executive Strip) */}
-        <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-2xs">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 text-xs sm:text-sm">
-            <div className="space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
-                <Building className="w-3.5 h-3.5 text-slate-400" /> Healthcare Facility
-              </span>
-              <p className="font-semibold text-slate-950 truncate" title={facility.name}>
-                {facility.name}
-              </p>
-              <p className="text-[11px] text-slate-500 font-mono truncate">
-                {facility.billingPhone || facility.address || 'Financial Services Dept'}
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5 text-slate-400" /> Patient / Account #
-              </span>
-              <p className="font-mono font-bold text-slate-950">
-                {patient.accountNumber || 'ACC-99281'}
-              </p>
-              <p className="text-[11px] text-slate-500 truncate">
-                {patient.patientName || 'Primary Account Holder'}
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-slate-400" /> Statement Date
-              </span>
-              <p className="font-semibold text-slate-950">
-                {patient.statementDate || 'Recent Statement'}
-              </p>
-              <p className="text-[11px] text-slate-500">
-                Encounter Period Verified
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-1.5">
-                <Scale className="w-3.5 h-3.5 text-slate-400" /> Statutory Dispute Window
-              </span>
-              <p className="font-semibold text-emerald-800 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                Active (FCBA 15 U.S.C. 1666)
-              </p>
-              <p className="text-[11px] text-slate-500">
-                30-day collection stay in effect
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* 4 Forensic Financial KPI Cards (Harmonized, Minimalist, High-Impact) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Card 1: Gross Billed */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
-            <div>
-              <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 block">
-                Total Hospital Charge
-              </span>
-              <div className="mt-2.5 flex items-baseline gap-2">
-                <span className="text-2xl sm:text-3xl font-mono font-bold text-slate-950 tracking-tight">
-                  ${financials.totalBilledGross.toFixed(2)}
-                </span>
-                <span className="text-[11px] text-slate-400 font-mono">Gross</span>
-              </div>
-            </div>
-            <p className="text-xs text-slate-500 mt-2 pt-2 border-t border-slate-100">
-              Pre-dispute total across {items.length} line items.
-            </p>
-          </div>
-
-          {/* Card 2: Disputed Overcharges (Hero) */}
-          <div className="bg-white p-5 rounded-2xl border border-rose-200/80 shadow-2xs flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-rose-500/80" />
-            <div>
-              <div className="flex items-center justify-between gap-1">
-                <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-rose-800">
-                  Disputed Overcharges
-                </span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200">
-                  Save {savingsPct}%
-                </span>
-              </div>
-              <div className="mt-2.5">
-                <span className="text-2xl sm:text-3xl font-mono font-bold text-rose-600 tracking-tight">
-                  -${financials.totalPotentialSavings.toFixed(2)}
-                </span>
-              </div>
-            </div>
-            <p className="text-xs text-rose-700 mt-2 pt-2 border-t border-slate-100 font-medium">
-              {anomalies.length} statutory errors & markups flagged.
-            </p>
-          </div>
-
-          {/* Card 3: Revised Fair Total */}
-          <div className="bg-white p-5 rounded-2xl border border-emerald-200/80 shadow-2xs flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-500/80" />
-            <div>
-              <div className="flex items-center justify-between gap-1">
-                <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-emerald-900">
-                  Revised Fair Market Total
-                </span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
-                  Medicare Basis
-                </span>
-              </div>
-              <div className="mt-2.5">
-                <span className="text-2xl sm:text-3xl font-mono font-bold text-emerald-700 tracking-tight">
-                  ${revisedFairTotal.toFixed(2)}
-                </span>
-              </div>
-            </div>
-            <p className="text-xs text-emerald-800 mt-2 pt-2 border-t border-slate-100 font-medium">
-              Undisputed median fair-market balance.
-            </p>
-          </div>
-
-          {/* Card 4: Overcharge Risk Score */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between gap-1">
-                <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500">
-                  Audit Risk Score
-                </span>
-                <span
-                  className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
-                    financials.riskScore >= 70
-                      ? 'bg-rose-50 text-rose-700 border border-rose-200'
-                      : 'bg-amber-50 text-amber-800 border border-amber-200'
-                  }`}
-                >
-                  {financials.riskScore >= 70 ? 'HIGH RISK' : 'MODERATE'}
-                </span>
-              </div>
-              <div className="mt-2.5 flex items-baseline gap-1.5">
-                <span className="text-2xl sm:text-3xl font-mono font-bold text-slate-950 tracking-tight">
-                  {financials.riskScore}
-                </span>
-                <span className="text-xs text-slate-400 font-mono">/ 100</span>
-              </div>
-            </div>
-            <div className="mt-2 pt-2 border-t border-slate-100 space-y-1.5">
-              <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all duration-500 ${
-                    financials.riskScore >= 70
-                      ? 'bg-rose-600'
-                      : 'bg-amber-500'
-                  }`}
-                  style={{ width: `${financials.riskScore}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Primary Call-to-Action Bar (Clean Executive Card) */}
-        <div className="p-6 sm:p-7 bg-slate-950 text-white rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-5 shadow-lg border border-slate-800">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <ShieldAlert className="w-3.5 h-3.5 text-emerald-400" />
-              15 U.S.C. 1666 Statutory Protection Active
-            </div>
-            <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white">
-              Ready to challenge this bill with your formal legal dispute kit?
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
-              We have compiled an official Certified Mail legal package citing 15 U.S.C. 1666, an itemized schedule of ${financials.totalPotentialSavings.toFixed(2)} in disputed charges, and a 4-scenario hospital negotiation script.
-            </p>
-          </div>
+        <div className="flex gap-3 print:hidden">
+          <button
+            onClick={() => useAuditStore.getState().openCopilot()}
+            className="rounded-lg border bg-white px-4 py-2 text-sm hover:bg-slate-50"
+          >
+            Ask Billing Coach
+          </button>
           <Link
             href={`/dispute/${report.id}`}
-            className="shrink-0 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] whitespace-nowrap"
+            className="rounded-lg bg-slate-950 text-white px-4 py-2 text-sm font-semibold hover:bg-slate-800"
           >
-            <FileText className="w-4 h-4" />
-            <span>Generate Dispute Kit</span>
-            <ArrowRight className="w-4 h-4" />
+            Generate Dispute Kit
           </Link>
         </div>
-
-        {/* Forensic Violations Findings Overview */}
-        {anomalies.length > 0 && (
-          <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-2xs space-y-4">
-            <div className="flex items-center justify-between gap-3 flex-wrap border-b border-slate-100 pb-3">
-              <h3 className="text-sm font-bold text-slate-950 flex items-center gap-2 tracking-tight">
-                <AlertTriangle className="w-4 h-4 text-rose-600" />
-                Forensic Violations Detected ({anomalies.length} Total)
-              </h3>
-              <span className="text-[11px] font-mono text-slate-500">
-                Audited against CMS NCCI Edits & MPFS Regional Medians
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs">
-              {/* Module 1 */}
-              <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-1.5 relative overflow-hidden">
-                <div className="flex items-center justify-between gap-1">
-                  <span className="font-semibold text-slate-900 block">Unbundled & Duplicates</span>
-                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200">
-                    Full Write-Off
-                  </span>
-                </div>
-                <p className="text-slate-600 leading-relaxed">
-                  {fullWriteOffCount > 0
-                    ? `${fullWriteOffCount} full write-off ${fullWriteOffCount === 1 ? 'charge' : 'charges'} (${duplicateCount} duplicate, ${unbundledCount} unbundled).`
-                    : 'No duplicate or unbundled charges detected.'}
-                </p>
-              </div>
-
-              {/* Module 2 */}
-              <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-1.5 relative overflow-hidden">
-                <div className="flex items-center justify-between gap-1">
-                  <span className="font-semibold text-slate-900 block">Excessive Markups & Acuity</span>
-                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
-                    Price Caps
-                  </span>
-                </div>
-                <p className="text-slate-600 leading-relaxed">
-                  {markupCount + upcodeCount} {markupCount + upcodeCount === 1 ? 'violation' : 'violations'} exceeding fair benchmarks ({markupCount} markup{upcodeCount > 0 ? `, ${upcodeCount} upcode` : ''}).
-                </p>
-              </div>
-
-              {/* Module 3 */}
-              <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-1.5 relative overflow-hidden">
-                <div className="flex items-center justify-between gap-1">
-                  <span className="font-semibold text-slate-900 block">Statutory Protection</span>
-                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
-                    FCBA Stay
-                  </span>
-                </div>
-                <p className="text-slate-600 leading-relaxed">
-                  FCBA Section 1666 stay legally prohibits negative credit reporting during active dispute.
-                </p>
-              </div>
-            </div>
+      </header>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          [
+            'Gross Charges',
+            formatCurrency(report.financials.totalBilledGross),
+            'Before insurance or a billing review',
+          ],
+          [
+            'Selected Review Amount',
+            formatCurrency(report.financials.totalPotentialSavings),
+            `${selected} selected line items; no guaranteed reduction`,
+          ],
+          [
+            'Reported Patient Balance',
+            report.financials.patientResponsibility === null
+              ? 'Not Provided'
+              : formatCurrency(report.financials.patientResponsibility),
+            'As extracted; verify against your insurer EOB',
+          ],
+          [
+            'Review Notes',
+            String(report.anomalies.length),
+            'Heuristic findings, not confirmed violations',
+          ],
+        ].map(([label, value, detail]) => (
+          <div key={label} className="rounded-xl bg-white border p-5">
+            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              {label}
+            </h2>
+            <p
+              className="font-mono text-2xl font-semibold mt-3"
+              data-testid={label === 'Selected Review Amount' ? 'review-total' : undefined}
+            >
+              {value}
+            </p>
+            <p className="text-xs text-slate-500 mt-2 leading-relaxed">{detail}</p>
           </div>
-        )}
-
-        {/* Interactive Itemized Table */}
-        <div>
-          <AuditTable items={items} onToggleDispute={handleToggleDispute} />
-        </div>
+        ))}
       </div>
-
-      {/* Copilot Drawer */}
+      <aside className="rounded-xl border border-amber-200 bg-amber-50 p-5 space-y-2">
+        <h2 className="text-sm font-semibold">Read These Limits Before Acting</h2>
+        {report.warnings.map((w) => (
+          <p className="text-xs text-amber-950 leading-relaxed" key={w}>
+            {w}
+          </p>
+        ))}
+        <p className="text-xs font-semibold">
+          No collection or credit-reporting protection is activated by this audit.
+        </p>
+      </aside>
+      <AuditTable items={report.items} onToggleDispute={toggle} />
+      <section className="rounded-2xl bg-slate-950 text-white p-6 sm:p-8 flex flex-wrap items-center justify-between gap-5">
+        <div>
+          <h2 className="text-xl font-semibold">Turn selected findings into clear questions.</h2>
+          <p className="text-sm text-slate-300 mt-2">
+            The letter and phone guide use the same selected amount. Verify them before sending or
+            agreeing to payment.
+          </p>
+        </div>
+        <Link
+          href={`/dispute/${report.id}`}
+          className="bg-emerald-400 text-slate-950 px-5 py-3 rounded-xl font-semibold text-sm hover:bg-emerald-300"
+        >
+          Open Review Letter & Phone Guide
+        </Link>
+      </section>
+      <section className="bg-white border rounded-2xl p-6 space-y-4 print:hidden">
+        <h2 className="text-lg font-semibold">Share a Redacted Copy</h2>
+        <p className="text-sm text-slate-600">
+          Patient/account identifiers, facility contact details and service dates are removed.
+          Procedure descriptions and amounts remain visible to anyone with the link for up to 30
+          days. Keep this browser&apos;s vault to retain your revocation control.
+        </p>
+        <label className="flex gap-3 text-sm">
+          <input
+            type="checkbox"
+            checked={shareConsent}
+            onChange={(e) => setShareConsent(e.target.checked)}
+          />
+          <span>I authorize sharing the remaining procedure details and amounts.</span>
+        </label>
+        <button
+          disabled={!shareConsent || shareBusy}
+          onClick={share}
+          className="rounded-lg border px-4 py-2 text-sm font-semibold hover:bg-slate-50 disabled:opacity-50"
+        >
+          {shareBusy ? 'Creating…' : 'Create Share Link'}
+        </button>
+        {shareMessage && (
+          <p role="status" className="text-sm">
+            {shareMessage}
+          </p>
+        )}
+        {shareUrl && (
+          <label className="block text-xs text-slate-500">
+            Share URL
+            <input
+              readOnly
+              value={shareUrl}
+              onFocus={(e) => e.currentTarget.select()}
+              className="block w-full border rounded p-3 mt-1 text-sm text-slate-900"
+            />
+          </label>
+        )}
+      </section>
       <CopilotDrawer report={report} />
     </div>
   );

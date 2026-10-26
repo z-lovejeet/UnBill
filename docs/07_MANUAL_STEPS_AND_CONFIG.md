@@ -1,111 +1,33 @@
-# UnBill — Manual Setup & Builder Action Guide
+# Setup, deployment and operating guide
 
-**Document Version:** 1.0.0  
-**Status:** Actionable Guide for You (The Builder)  
-**Last Updated:** October 2026  
-**Author:** UnBill Engineering Core  
+## Local setup
+Use Node.js 22+; `npm ci`; copy `.env.example` to `.env.local`; fill only server-side keys. Run `npm run dev` and open http://localhost:3000 . Synthetic examples work without providers. Never publish `.env.local`, credentials or the private learner profile.
 
----
+Gemini defaults: `gemini-3.5-flash-lite`, fallback `gemini-3.1-flash-lite`. Groq defaults: `openai/gpt-oss-120b`, fallback `openai/gpt-oss-20b`. Verify current model access/quota in provider accounts; no fixed free-tier limits or latency guarantees are assumed.
 
-## 1. What YOU Need to Do Manually
+`npm run check` runs lint, type checks, offline regressions and production build. `npm audit --audit-level=moderate` checks current advisory metadata. `npm run samples` regenerates JSON/text/SVG fixtures from the same source. PDF generation uses ReportLab; PNGs are renders of those PDFs.
 
-To build and deploy **UnBill**, you only have to complete **3 simple manual tasks**. Everything else (writing the code, datasets, rule algorithms, and UI) is handled by your AI coding partner (Antigravity).
+## Public deployment (Vercel configuration included)
+1. Review the exact release diff and secret/privacy scan before public publication.
+2. Use the existing public GitHub repository and deploy this Node.js Next.js app. The repository has `vercel.json`; no separate database migration is required.
+3. Set `GEMINI_API_KEY`, optional model overrides, `GROQ_API_KEY`, its optional overrides, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `AI_DAILY_REQUEST_LIMIT` and the actual HTTPS `APP_URL` in the deployment's server environment. Keep `ALLOW_LOCAL_RATE_LIMIT=false` publicly.
+4. Vercel forwarding is detected automatically. For another reverse proxy, enable `TRUST_PROXY` only if that proxy strips/sanitizes incoming forwarded headers. Otherwise all requests share the fallback network bucket.
+5. Rebuild after environment/configuration changes. Check `/api/health`; this only establishes configuration presence, not live provider health.
+6. Run `UNBILL_SMOKE_URL=https://your-verified-origin npm run test:live` from the release checkout. It sends synthetic data only and deletes its own share. Verify a link in a separate browser, reload the dispute, and revoke it.
+7. Review provider quota/spend, Redis availability, error rates and current deployment logs without logging documents. Record the verified origin and release revision in `devpost/shipping-status.md`.
 
-### Task 1: Get Your Free Gemini API Key (2 minutes)
-1. Go to [Google AI Studio](https://aistudio.google.com/).
-2. Sign in with any Google account.
-3. Click **"Get API key"** in the top left.
-4. Click **"Create API key in new project"**.
-5. Copy the generated key (starts with `AIza...`).
-6. *Cost:* 100% Free (15 requests per minute, which is more than enough for our entire build and demo).
+The chosen 2.5 MB raw file maximum fits under Vercel's 4.5 MB function body limit after Base64/JSON overhead. Increasing Server Actions limits would not change this Route Handler constraint. Source: https://vercel.com/docs/functions/limitations#request-body-size .
 
-### Task 2: Get Your Free Groq API Key (Optional but Recommended for Chat, 2 minutes)
-1. Go to [Groq Console](https://console.groq.com/).
-2. Sign in with Google or GitHub.
-3. In the left sidebar, click **"API Keys"**.
-4. Click **"Create API Key"**, give it a name like `unbill-hackathon`, and copy it.
-5. *Cost:* 100% Free tier (generous rate limits, ultra-fast Llama-3.3-70b streaming).
+## Runtime controls
+Per-network limits: document audits 6/minute, coach 20/minute, share creation 5/minute, share reads 60/minute, revocation 20/minute. Default global AI budget: 200 accepted requests/day, configurable. Provider retries can consume more than one provider call per accepted request. Counters expire; current policies protect spend but are not authentication or a complete abuse-prevention service.
 
-### Task 3: (Optional) Upstash Redis for Share Links (3 minutes)
-*If you want cloud shareable links (`/share/[uuid]`):*
-1. Go to [Upstash Console](https://console.upstash.io/) (or add it directly from your Vercel Dashboard Marketplace with 1 click).
-2. Create a Free Serverless Redis Database.
-3. Copy the `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`.
-*(Note: If you skip this, our fallback URL-hash compression still gives you 100% working share links with zero configuration!)*
+Production AI endpoints require working distributed Redis protection. Local production testing may explicitly use `ALLOW_LOCAL_RATE_LIMIT=true`; do not apply that setting to public hosting. Samples and direct validated structured intake do not call AI providers.
 
----
+## Data and privacy operation
+The public release expects synthetic/de-identified input. Review Gemini paid/unpaid data terms, Groq retention/ZDR controls and hosting/Redis arrangements before accepting sensitive records. No blanket zero retention or HIPAA certification is claimed. Device encryption is not password protection. Explicitly shared redacted reports still contain procedures/amounts, expire after 30 days and are revoked separately from local report deletion.
 
-## 2. Environment Configuration (`.env.local`)
+## Rollback and incident handling
+Retain the prior hosting deployment for rollback. If a provider or privacy issue appears, disable the relevant AI key/feature at the hosting environment and serve synthetic mode while investigating; rotate any exposed credential through its provider. Do not expose tokens in diagnostics or rewrite Git history without a deliberate recovery plan. Roll back to a verified source revision, rerun the offline/live gates and update the status record.
 
-In the root of the `unbill/` directory, create a `.env.local` file with the following variables:
-
-```bash
-# ==============================================================================
-# UnBill Environment Configuration
-# ==============================================================================
-
-# 1. Google Gemini API (Required - Multimodal Vision & Forensic Audit)
-# Get yours free at https://aistudio.google.com/
-GEMINI_API_KEY="AIzaSyYourGeminiApiKeyHere"
-
-# 2. Groq API (Required for Real-time Sub-350ms Copilot Chat)
-# Get yours free at https://console.groq.com/
-GROQ_API_KEY="gsk_YourGroqApiKeyHere"
-
-# 3. Upstash Redis (Optional - for Anonymous Report Share links & Global Stats)
-# Leave empty if using client-side URL compression fallback
-UPSTASH_REDIS_REST_URL=""
-UPSTASH_REDIS_REST_TOKEN=""
-
-# 4. App Base URL
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
-
----
-
-## 3. Terminal Commands Quick Reference
-
-### Install Dependencies
-```bash
-cd "/Users/lovejeetsingh1/Documents/Hackathons/Build With AI/unbill"
-npm install
-```
-
-### Start Local Development Server
-```bash
-npm run dev
-```
-Open your browser to [http://localhost:3000](http://localhost:3000).
-
-### Run Production Build Test
-```bash
-npm run build
-```
-Verify that the build outputs static and serverless edge routes with zero errors.
-
----
-
-## 4. Winning Demo Video Script (150 Seconds)
-
-A great demo wins the hackathon. Devpost judges watch dozens of submissions; keep the energy high, hook them in the first 15 seconds, and show real software in action.
-
-| Timestamp | Screen Display | Voiceover Script |
-|---|---|---|
-| **0:00 – 0:20** | **Landing Page Hero:** Show stats (\$88B debt, 80% error rate). Hover over a real-looking, cryptic hospital bill PDF. | *"Over 80% of US medical bills contain errors—duplicate charges, unbundled blood tests, and inflated room markups. Americans hold $88 billion in medical debt, and most never dispute because bills are written in cryptic codes. This is UnBill: an open, private forensic bill auditor and statutory dispute engine."* |
-| **0:20 – 0:40** | Click **"Test with Sample ER Bill"** (or upload a bill photo). Show the **Multi-Agent Radar screen** animating. | *"Let's test this real-world emergency room statement totaling $4,820. Our multi-agent pipeline immediately engages: Agent 1 parses clinical codes with Gemini 3.8 Flash; Agent 2 runs deterministic duplicate and CMS benchmark audits; Agent 3 matches federal consumer protection statutes."* |
-| **0:40 – 1:10** | **Audit Dashboard:** Pan across the KPI cards (\$1,650 Potential Overcharge) and zoom into the **Itemized Table**. | *"Look at the results: UnBill decoded every line item into plain English. Notice CPT 80053: it was billed twice at 9:14 AM and 9:15 AM—a $280 duplicate charge. And the Level 4 ER facility fee is billed at $1,850, more than triple the regional Medicare allowable median. Total potential savings: $1,650."* |
-| **1:10 – 1:35** | Click **"Generate Dispute Kit"**. Show the formal **Fair Credit Billing Act Letter** with certified mail formatting. | *"With one click, UnBill generates an enforceable, formal dispute package under the Fair Credit Billing Act (15 U.S.C. § 1666) and the federal No Surprises Act. It itemizes the exact billing errors, demands a 30-day investigation pause on collections, and prepares an interactive phone negotiation checklist for when you call hospital billing."* |
-| **1:35 – 2:05** | Open the **Copilot Chat Drawer**. Ask: *"What if the billing rep says this price is non-negotiable?"* Watch Groq stream in real-time. | *"Need help negotiating? Our Groq-powered Copilot gives sub-second tactical advice, telling you the exact script to read to a hospital supervisor and citing Section 501(r) charity care rules."* |
-| **2:05 – 2:30** | Click **History Vault** (`/history`) and show the **Privacy statement**. | *"Best of all, UnBill is architected as a Local-First privacy application. Your medical bills are never stored on a cloud database. No logins, no tracking. Just immediate consumer financial justice. Built with Antigravity, Gemini 3.8 Flash, and Groq."* |
-
----
-
-## 5. Devpost Submission Checklist
-
-Before submitting on Devpost (Deadline: October 26, 5:00 PM EDT / Oct 27 2:30 AM IST):
-
-- [ ] Repository is set to **Public** on GitHub.
-- [ ] Vercel live deployment link added to the "Try it out" field.
-- [ ] 2.5-minute demo video uploaded to YouTube or Vimeo and link added.
-- [ ] Verified that clicking "Test Sample Bill" works seamlessly on the live deployment.
-- [ ] Confirmed age of majority and answered the Skill Pack usage questions on Devpost.
+## Submission and recording
+Use `devpost/recording.md`, `submission.md`, `checklist.md` and `shipping-status.md`. Technical preparation is agent-supported; personal eligibility, reflections and actual publication/submission must be truthful. The Skill Pack's final public-authorship requirement needs contributor review. Deployment is optional for this hackathon; it does not replace the required public demonstration video.

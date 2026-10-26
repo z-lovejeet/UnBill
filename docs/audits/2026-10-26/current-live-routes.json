@@ -1,0 +1,21 @@
+[
+  {
+    "test": "actual chat route",
+    "status": 200,
+    "firstNonemptyChunkMs": 725,
+    "totalMs": 795,
+    "bytes": 152
+  },
+  {
+    "test": "actual share route",
+    "status": 200,
+    "shareUrl": "http://localhost:3000/results/share_mvp1lpje_5j40x",
+    "readback": {
+      "status": 200,
+      "containsPatientName": true,
+      "reportId": "synthetic-readiness-1793006208619",
+      "shareId": "share_mvp1lpje_5j40x"
+    },
+    "syntheticTestKeyDeleted": true
+  }
+]

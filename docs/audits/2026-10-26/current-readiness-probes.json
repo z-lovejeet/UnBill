@@ -1,0 +1,68 @@
+{
+  "auditedAt": "2026-10-26",
+  "revision": "3f166888704a758c10fdb6113beb58e06d4a89a4",
+  "syntheticOnly": true,
+  "liveProvidersUsed": false,
+  "checks": [
+    {
+      "name": "missing extracted CPT must not become an asserted 99283 code",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "string false must not be accepted as a true medical-bill flag",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "negative extracted charge and quantity must not be accepted without classification",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "JSON parser error logging must not leak model output snippets",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "vault advertised as encrypted must not be readable by Base64 decoding alone",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "store-only toggle must update the letter closing amount",
+      "pass": false,
+      "expected": true,
+      "actual": false
+    },
+    {
+      "name": "store-only toggle must remove deselected duplicate grievance",
+      "pass": false,
+      "expected": false,
+      "actual": true
+    },
+    {
+      "name": "er_visit_broken_wrist: printed disputed amounts must reconcile with the letter total",
+      "pass": false,
+      "expected": 2717.5,
+      "actual": 2971.5
+    },
+    {
+      "name": "outpatient_surgery: printed disputed amounts must reconcile with the letter total",
+      "pass": false,
+      "expected": 1943,
+      "actual": 2136
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "passed": 0,
+    "failed": 9
+  },
+  "auditedRevision": "3f166888704a758c10fdb6113beb58e06d4a89a4"
+}

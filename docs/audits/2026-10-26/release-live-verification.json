@@ -1,0 +1,99 @@
+{
+  "checkedAt": "2026-10-26T12:26:40.769Z",
+  "base": "http://127.0.0.1:3107",
+  "revision": "3f166888704a758c10fdb6113beb58e06d4a89a4",
+  "workingDiffSha256": "159fb612e9f44fd5077589b4cba1d7bcd8d571b4e841ac82e717cec76852dddb",
+  "syntheticOnly": true,
+  "checks": [
+    {
+      "name": "production health and security headers",
+      "pass": true,
+      "details": {
+        "status": "ok",
+        "configured": {
+          "extraction": true,
+          "coach": true,
+          "sharing": true,
+          "publicHttps": false
+        },
+        "dataMode": "synthetic-or-deidentified",
+        "checks": "Configuration presence only; live service verification requires the smoke suite."
+      }
+    },
+    {
+      "name": "sample rules path: er_visit_broken_wrist",
+      "pass": true,
+      "details": {
+        "items": 8,
+        "gross": 3820,
+        "review": 2717.5
+      }
+    },
+    {
+      "name": "sample rules path: outpatient_surgery",
+      "pass": true,
+      "details": {
+        "items": 7,
+        "gross": 2360,
+        "review": 1943
+      }
+    },
+    {
+      "name": "live Gemini text extraction",
+      "pass": true,
+      "details": {
+        "ms": 5816,
+        "items": 8,
+        "gross": 3820
+      }
+    },
+    {
+      "name": "live Gemini image extraction",
+      "pass": true,
+      "details": {
+        "ms": 4802,
+        "items": 8,
+        "gross": 3820
+      }
+    },
+    {
+      "name": "live Gemini pdf extraction",
+      "pass": true,
+      "details": {
+        "ms": 3540,
+        "items": 8,
+        "gross": 3820
+      }
+    },
+    {
+      "name": "unrelated text rejected with recoverable error",
+      "pass": true,
+      "details": {
+        "status": 422
+      }
+    },
+    {
+      "name": "live Groq streaming through application route",
+      "pass": true,
+      "details": {
+        "firstContentMs": 921,
+        "totalMs": 974,
+        "bytes": 114
+      }
+    },
+    {
+      "name": "redacted share round trip, revocation authorization and expiry state",
+      "pass": true,
+      "details": {
+        "shareOrigin": "http://127.0.0.1:3107",
+        "identifierMatches": true,
+        "revoked": true
+      }
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0
+  }
+}

@@ -1,13 +1,10 @@
 export type AnomalySeverity = 'HIGH' | 'MEDIUM' | 'LOW' | 'NORMAL';
-
-export type AnomalyType = 
-  | 'DUPLICATE_CHARGE' 
-  | 'UNBUNDLED_CHARGE' 
-  | 'EXCESSIVE_MARKUP' 
-  | 'UPCODING_SEVERITY' 
-  | 'QUANTITY_OVERBILL' 
-  | 'OUT_OF_NETWORK_SURPRISE';
-
+export type AnomalyType =
+  | 'DUPLICATE_CHARGE'
+  | 'UNBUNDLED_CHARGE'
+  | 'EXCESSIVE_MARKUP'
+  | 'UPCODING_SEVERITY'
+  | 'QUANTITY_OVERBILL';
 export interface RawLineItem {
   id: string;
   code: string;
@@ -15,18 +12,9 @@ export interface RawLineItem {
   dateOfService: string;
   quantity: number;
   billedAmount: number;
+  modifiers?: string[];
+  providerId?: string;
 }
-
-export interface AuditedLineItem extends RawLineItem {
-  plainEnglishDescription: string;
-  clinicalCategory: string;
-  benchmarkMedian: number;
-  fairMarketRange: [number, number];
-  status: AnomalySeverity;
-  isDisputed: boolean;
-  anomalies: AnomalyReport[];
-}
-
 export interface AnomalyReport {
   itemId: string;
   code: string;
@@ -39,35 +27,40 @@ export interface AnomalyReport {
   remedy: string;
   statutoryBasis?: string;
 }
-
+export interface AuditedLineItem extends RawLineItem {
+  plainEnglishDescription: string;
+  clinicalCategory: string;
+  referenceAmount: number;
+  referenceRange: [number, number];
+  status: AnomalySeverity;
+  isDisputed: boolean;
+  anomalies: AnomalyReport[];
+}
 export interface FacilityMetadata {
   name: string;
   address?: string;
   billingPhone?: string;
 }
-
 export interface PatientMetadata {
   accountNumber: string;
   statementDate: string;
   patientName?: string;
 }
-
 export interface FinancialSummary {
   totalBilledGross: number;
   insuranceAdjustments: number;
-  patientResponsibility: number;
+  patientResponsibility: number | null;
   totalPotentialSavings: number;
   riskScore: number;
 }
-
 export interface DisputePackage {
   formalLetterText: string;
   statutoryCitations: string[];
   phoneNegotiationPoints: string[];
   generatedAt: string;
 }
-
 export interface AuditReport {
+  schemaVersion: 2;
   id: string;
   createdAt: string;
   facility: FacilityMetadata;
@@ -76,4 +69,6 @@ export interface AuditReport {
   items: AuditedLineItem[];
   anomalies: AnomalyReport[];
   disputePackage: DisputePackage;
+  warnings: string[];
+  source?: 'sample' | 'document' | 'structured' | 'shared';
 }

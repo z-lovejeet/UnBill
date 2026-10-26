@@ -1,210 +1,124 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { AuditReport } from '@/types/audit';
-
+import { persist, createJSONStorage } from 'zustand/middleware';
+import type { AuditReport } from '@/types/audit';
+import { recalculateReport } from './rules-engine';
+import { normalizeReport } from './reports';
+import { encryptedStateStorage, clearLegacyArchive } from './vault-storage';
+export interface OwnedShare {
+  shareId: string;
+  revokeToken: string;
+  shareUrl: string;
+  expiresAt: string;
+}
 interface AuditState {
   currentAudit: AuditReport | null;
   currentReport: AuditReport | null;
   history: AuditReport[];
-  isAuditing: boolean;
+  ownedShares: OwnedShare[];
   isCopilotOpen: boolean;
-  auditProgress: {
-    agent: 'AGENT_1' | 'AGENT_2' | 'AGENT_3' | 'COMPLETE';
-    message: string;
-    percent: number;
-  };
+  vaultError: string | null;
   setAudit: (audit: AuditReport) => void;
   setCurrentReport: (audit: AuditReport) => void;
   addReportToHistory: (audit: AuditReport) => void;
-  toggleItemDispute: (itemId: string) => void;
-  startAuditing: () => void;
-  updateAuditProgress: (
-    agent: 'AGENT_1' | 'AGENT_2' | 'AGENT_3' | 'COMPLETE',
-    message: string,
-    percent: number
-  ) => void;
-  finishAuditing: (audit: AuditReport) => void;
+  toggleItemDispute: (id: string) => void;
   deleteAuditFromHistory: (id: string) => void;
   clearHistory: () => void;
   openCopilot: () => void;
   closeCopilot: () => void;
   toggleCopilot: () => void;
+  addOwnedShare: (share: OwnedShare) => void;
+  removeOwnedShare: (id: string) => void;
 }
-
 export const useAuditStore = create<AuditState>()(
   persist(
     (set, get) => ({
       currentAudit: null,
       currentReport: null,
       history: [],
-      isAuditing: false,
+      ownedShares: [],
       isCopilotOpen: false,
-      auditProgress: {
-        agent: 'AGENT_1',
-        message: 'Initializing...',
-        percent: 0,
-      },
-
-      setAudit: (audit: AuditReport) => {
-        const history = get().history;
-        const exists = history.some((h) => h.id === audit.id);
-        const newHistory = exists
-          ? history.map((h) => (h.id === audit.id ? audit : h))
-          : [audit, ...history];
-
+      vaultError: null,
+      setAudit: (audit) => {
+        const canonical = recalculateReport(audit);
         set({
-          currentAudit: audit,
-          currentReport: audit,
-          history: newHistory,
+          currentAudit: canonical,
+          currentReport: canonical,
+          history: [canonical, ...get().history.filter((h) => h.id !== canonical.id)].slice(0, 30),
         });
       },
-
-      setCurrentReport: (audit: AuditReport) => {
-        get().setAudit(audit);
+      setCurrentReport: (audit) => get().setAudit(audit),
+      addReportToHistory: (audit) => get().setAudit(audit),
+      toggleItemDispute: (id) => {
+        const current = get().currentReport;
+        if (current)
+          get().setAudit(
+            recalculateReport({
+              ...current,
+              items: current.items.map((i) =>
+                i.id === id ? { ...i, isDisputed: !i.isDisputed } : i,
+              ),
+            }),
+          );
       },
-
-      addReportToHistory: (audit: AuditReport) => {
-        const history = get().history;
-        if (!history.some((h) => h.id === audit.id)) {
-          set({ history: [audit, ...history] });
-        }
-      },
-
-      toggleItemDispute: (itemId: string) => {
-        const current = get().currentAudit || get().currentReport;
-        if (!current) return;
-
-        const updatedItems = current.items.map((item) => {
-          if (item.id === itemId) {
-            return { ...item, isDisputed: !item.isDisputed };
-          }
-          return item;
-        });
-
-        // Recalculate potential savings from disputed items without double-counting
-        const newSavings = updatedItems
-          .filter((i) => i.isDisputed)
-          .reduce((sum, i) => {
-            if (i.anomalies.length === 0) return sum;
-            const maxDispute = Math.max(...i.anomalies.map((a) => a.disputedAmount));
-            const itemSaving = Math.min(i.billedAmount, maxDispute);
-            return sum + (itemSaving > 0 ? itemSaving : 0);
-          }, 0);
-
-        const roundedSavings = Math.round(newSavings * 100) / 100;
-        const updatedDisputePackage = current.disputePackage
-          ? {
-              ...current.disputePackage,
-              formalLetterText: current.disputePackage.formalLetterText
-                .replace(/Total Disputed Amount: \$[0-9.]+/g, `Total Disputed Amount: $${roundedSavings.toFixed(2)}`)
-                .replace(/contains \$[0-9.]+ in computational/g, `contains $${roundedSavings.toFixed(2)} in computational`),
-            }
-          : current.disputePackage;
-
-        const updatedAudit: AuditReport = {
-          ...current,
-          items: updatedItems,
-          financials: {
-            ...current.financials,
-            totalPotentialSavings: roundedSavings,
-          },
-          disputePackage: updatedDisputePackage,
-        };
-
-        const updatedHistory = get().history.map((h) =>
-          h.id === updatedAudit.id ? updatedAudit : h
-        );
-
-        set({
-          currentAudit: updatedAudit,
-          currentReport: updatedAudit,
-          history: updatedHistory,
-        });
-      },
-
-      startAuditing: () => {
-        set({
-          isAuditing: true,
-          auditProgress: {
-            agent: 'AGENT_1',
-            message: 'Agent 1: Scanning document & extracting clinical CPT codes...',
-            percent: 25,
-          },
-        });
-      },
-
-      updateAuditProgress: (agent, message, percent) => {
-        set({
-          auditProgress: { agent, message, percent },
-        });
-      },
-
-      finishAuditing: (audit: AuditReport) => {
-        const history = get().history;
-        const exists = history.some((h) => h.id === audit.id);
-        const newHistory = exists
-          ? history.map((h) => (h.id === audit.id ? audit : h))
-          : [audit, ...history];
-
-        set({
-          isAuditing: false,
-          currentAudit: audit,
-          currentReport: audit,
-          history: newHistory,
-          auditProgress: {
-            agent: 'COMPLETE',
-            message: 'Audit complete! Rendering forensic report...',
-            percent: 100,
-          },
-        });
-      },
-
-      deleteAuditFromHistory: (id: string) => {
-        set({
-          history: get().history.filter((h) => h.id !== id),
-          currentAudit: get().currentAudit?.id === id ? null : get().currentAudit,
-          currentReport: get().currentReport?.id === id ? null : get().currentReport,
-        });
-      },
-
+      deleteAuditFromHistory: (id) =>
+        set((state) => ({
+          history: state.history.filter((h) => h.id !== id),
+          currentAudit: state.currentAudit?.id === id ? null : state.currentAudit,
+          currentReport: state.currentReport?.id === id ? null : state.currentReport,
+        })),
       clearHistory: () => {
-        set({ history: [], currentAudit: null, currentReport: null });
+        set({ history: [], currentAudit: null, currentReport: null, isCopilotOpen: false });
+        void clearLegacyArchive();
       },
-
       openCopilot: () => set({ isCopilotOpen: true }),
       closeCopilot: () => set({ isCopilotOpen: false }),
-      toggleCopilot: () => set((state) => ({ isCopilotOpen: !state.isCopilotOpen })),
+      toggleCopilot: () => set((s) => ({ isCopilotOpen: !s.isCopilotOpen })),
+      addOwnedShare: (share) =>
+        set((s) => ({ ownedShares: [share, ...s.ownedShares].slice(0, 100) })),
+      removeOwnedShare: (id) =>
+        set((s) => ({ ownedShares: s.ownedShares.filter((x) => x.shareId !== id) })),
     }),
     {
-      name: 'unbill_vault_v1',
-      skipHydration: true, // Prevents SSR window hydration mismatch in Next.js
-      storage: {
-        getItem: (name: string) => {
-          if (typeof window === 'undefined' && typeof globalThis.localStorage === 'undefined') return null;
-          const raw = globalThis.localStorage?.getItem(name);
-          if (!raw) return null;
+      name: 'unbill_vault_v2',
+      version: 2,
+      skipHydration: true,
+      storage: createJSONStorage(() => encryptedStateStorage),
+      partialize: (s) => ({ history: s.history, ownedShares: s.ownedShares }),
+      migrate: (p) => p as { history: AuditReport[]; ownedShares: OwnedShare[] },
+      merge: (persisted, current) => {
+        const saved = persisted as { history?: unknown[]; ownedShares?: OwnedShare[] } | undefined;
+        const history: AuditReport[] = [];
+        for (const report of (saved?.history || []).slice(0, 30)) {
           try {
-            const decoded = typeof Buffer !== 'undefined'
-              ? Buffer.from(raw, 'base64').toString('utf8')
-              : decodeURIComponent(Array.prototype.map.call(atob(raw), (c: string) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-            return JSON.parse(decoded);
+            history.push(normalizeReport(report));
           } catch {
-            try { return JSON.parse(raw); } catch { return null; }
+            /* Keep malformed legacy data out of the active app. */
           }
-        },
-        setItem: (name: string, value: any) => {
-          if (typeof window === 'undefined' && typeof globalThis.localStorage === 'undefined') return;
-          const str = JSON.stringify(value);
-          const encoded = typeof Buffer !== 'undefined'
-            ? Buffer.from(str, 'utf8').toString('base64')
-            : btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
-          globalThis.localStorage?.setItem(name, encoded);
-        },
-        removeItem: (name: string) => {
-          if (typeof window === 'undefined' && typeof globalThis.localStorage === 'undefined') return;
-          globalThis.localStorage?.removeItem(name);
-        },
+        }
+        return {
+          ...current,
+          history,
+          ownedShares: (saved?.ownedShares || [])
+            .filter((s) => /^share_[\w-]{43}$/.test(s.shareId) && /^[\w-]{43}$/.test(s.revokeToken))
+            .slice(0, 100),
+        };
       },
-    }
-  )
+      onRehydrateStorage: () => (_state, error) => {
+        if (error)
+          useAuditStore.setState({
+            vaultError:
+              'Saved history could not be opened. This tab can still run new audits. Export anything you need before resetting browser data.',
+          });
+      },
+    },
+  ),
 );
+let hydration: Promise<void> | undefined;
+export function hydrateVault() {
+  if (!hydration)
+    hydration = Promise.resolve(useAuditStore.persist.rehydrate()).then(() => {
+      if (!useAuditStore.getState().vaultError)
+        useAuditStore.setState({ history: [...useAuditStore.getState().history] });
+    });
+  return hydration;
+}

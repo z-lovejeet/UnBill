@@ -1,29 +1,6 @@
 [
-  {
-    "id": "FCBA",
-    "title": "Fair Credit Billing Act (15 U.S.C. § 1666)",
-    "statutoryCode": "15 U.S.C. § 1666",
-    "category": "Billing Discrepancy & Computational Error",
-    "appliesTo": ["DUPLICATE_CHARGE", "UNBUNDLED_CHARGE", "QUANTITY_OVERBILL"],
-    "formalNoticeClause": "Pursuant to the Fair Credit Billing Act (15 U.S.C. § 1666) and Regulation Z (12 C.F.R. § 1026.13), this document serves as timely written notice of significant billing errors and computational discrepancies on Account #{ACCOUNT_NUMBER}.",
-    "mandatoryDemand": "You are formally required to acknowledge this dispute within 30 days and resolve the identified errors within two billing cycles. Under federal statute, you may not report this disputed balance to any consumer credit reporting agency or initiate collection activities while this dispute remains under active investigation."
-  },
-  {
-    "id": "NSA",
-    "title": "Federal No Surprises Act (Public Law 116-260)",
-    "statutoryCode": "42 U.S.C. § 300gg-111",
-    "category": "Surprise Balance Billing & Out-of-Network Emergency",
-    "appliesTo": ["OUT_OF_NETWORK_SURPRISE", "UPCODING_SEVERITY"],
-    "formalNoticeClause": "Under the federal No Surprises Act (Public Law 116-260, 42 U.S.C. § 300gg-111), balance billing for emergency medical services and ancillary facility services without valid prior written consent is strictly prohibited.",
-    "mandatoryDemand": "All out-of-network and emergency practitioner charges must be recalculated to the Qualifying Payment Amount (QPA), and patient cost-sharing cannot exceed in-network median deductible and copayment limits."
-  },
-  {
-    "id": "ACA_501R",
-    "title": "IRC Section 501(r) - Nonprofit Hospital Financial Assistance",
-    "statutoryCode": "26 U.S.C. § 501(r)",
-    "category": "Excessive Markups & Financial Assistance",
-    "appliesTo": ["EXCESSIVE_MARKUP"],
-    "formalNoticeClause": "Under Internal Revenue Code Section 501(r)(4) and (r)(6), tax-exempt 501(c)(3) hospital organizations are legally obligated to provide a Plain Language Summary of their Financial Assistance Policy (FAP) and are prohibited from charging eligible individuals more than the Amounts Generally Billed (AGB) for emergency or other medically necessary care.",
-    "mandatoryDemand": "I hereby formally request a complete copy of your Financial Assistance Policy application, an itemized statement detailing standard CMS Revenue Codes and National Drug Codes (NDCs), and an immediate recalculation of all charges exceeding the hospital's AGB percentage."
-  }
+  {"id":"BILLING_REVIEW","title":"Request an itemized billing review","statutoryCode":"General billing review","category":"Patient advocacy","appliesTo":["DUPLICATE_CHARGE","UNBUNDLED_CHARGE","QUANTITY_OVERBILL"],"sourceUrl":"https://www.cms.gov/medical-bill-rights","formalNoticeClause":"Please review the identified charges and provide documentation or a corrected statement.","mandatoryDemand":"Please confirm receipt and explain your review process. This request does not itself establish a collection or credit-reporting stay."},
+  {"id":"FCBA","title":"Credit-account billing errors: eligibility matters","statutoryCode":"12 C.F.R. 1026.13","category":"Open-end credit","appliesTo":[],"sourceUrl":"https://www.consumerfinance.gov/rules-policy/regulations/1026/13/","formalNoticeClause":"Specific billing-error rights may apply to qualifying open-end credit accounts and timely notices. An ordinary hospital invoice is not automatically a qualifying credit account.","mandatoryDemand":"Check applicability and notice requirements before relying on these protections. Acknowledgement and resolution deadlines differ."},
+  {"id":"ACA_501R","title":"Nonprofit hospital financial assistance","statutoryCode":"26 U.S.C. 501(r)(4)-(6)","category":"Conditional financial assistance","appliesTo":["EXCESSIVE_MARKUP"],"sourceUrl":"https://www.irs.gov/charities-non-profits/limitation-on-charges-section-501r5","formalNoticeClause":"If applicable, please provide your financial assistance policy, eligibility criteria and the method used to calculate amounts generally billed.","mandatoryDemand":"Charge limits depend on the hospital and financial-assistance eligibility. UnBill's reference values do not calculate your hospital's AGB."},
+  {"id":"NSA","title":"Surprise billing protections","statutoryCode":"Federal No Surprises Act","category":"Coverage-dependent protections","appliesTo":[],"sourceUrl":"https://www.cms.gov/medical-bill-rights","formalNoticeClause":"Certain emergency or out-of-network bills may qualify for federal surprise-billing protections, depending on coverage and circumstances.","mandatoryDemand":"Review the actual insurance, network and service details before asserting a violation."}
 ]

@@ -1,0 +1,6 @@
+{
+  "check": "bounded Gemini generation",
+  "model": "gemini-3.8-flash",
+  "error": "TimeoutError",
+  "ms": 20005
+}

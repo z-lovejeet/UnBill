@@ -1,0 +1,69 @@
+[
+  {
+    "name": "negative charge",
+    "status": 200,
+    "financials": {
+      "totalBilledGross": -100,
+      "insuranceAdjustments": 0,
+      "patientResponsibility": -100,
+      "totalPotentialSavings": -100,
+      "riskScore": 8
+    }
+  },
+  {
+    "name": "negative quantity",
+    "status": 200,
+    "financials": {
+      "totalBilledGross": 52,
+      "insuranceAdjustments": 0,
+      "patientResponsibility": 52,
+      "totalPotentialSavings": 0,
+      "riskScore": 8
+    }
+  },
+  {
+    "name": "missing item id code and description",
+    "status": 200,
+    "financials": {
+      "totalBilledGross": 100,
+      "insuranceAdjustments": 0,
+      "patientResponsibility": 100,
+      "totalPotentialSavings": 0,
+      "riskScore": 8
+    }
+  },
+  {
+    "name": "numeric code",
+    "status": 500,
+    "error": "Gemini 3.8 Flash Extraction Failed",
+    "errorCode": "GEMINI_PROCESSING_ERROR"
+  },
+  {
+    "name": "invalid financial types",
+    "status": 500,
+    "error": "Gemini 3.8 Flash Extraction Failed",
+    "errorCode": "GEMINI_PROCESSING_ERROR"
+  },
+  {
+    "name": "malformed JSON",
+    "status": 502,
+    "data": {
+      "error": "Gemini Document Parsing Incomplete",
+      "errorCode": "GEMINI_PARSE_ERROR",
+      "message": "The vision model returned an incomplete response. Retrying or ensuring the image is clear and well-lit will resolve this.",
+      "rawDetails": "Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+      "agentFailed": 1
+    }
+  },
+  {
+    "name": "security header presence",
+    "headers": {
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "referrer-policy": null,
+      "permissions-policy": null,
+      "x-content-type-options": null,
+      "strict-transport-security": null
+    }
+  }
+]

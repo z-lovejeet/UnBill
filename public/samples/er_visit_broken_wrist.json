@@ -1,6 +1,7 @@
 {
+  "schemaVersion": 2,
   "id": "sample_er_wrist_2026",
-  "createdAt": "2026-10-24T00:00:00Z",
+  "createdAt": "2026-10-26T00:00:00.000Z",
   "facility": {
     "name": "Mercy General Hospital & Trauma Center",
     "address": "1200 Healthcare Blvd, Metro City, NY 10001",
@@ -11,13 +12,12 @@
     "statementDate": "2026-10-14",
     "patientName": "Sarah Jenkins"
   },
-  "financials": {
-    "totalBilledGross": 3820,
-    "insuranceAdjustments": 1200,
-    "patientResponsibility": 2620,
-    "totalPotentialSavings": 2717.5,
-    "riskScore": 98
-  },
+  "source": "sample",
+  "warnings": [
+    "The 19-code price catalog is illustrative, not official CMS, insurer or hospital pricing. Findings require billing-team verification.",
+    "Estimated review amounts concern gross charges, not guaranteed savings or the patient amount due.",
+    "Provider identity, modifiers and medical necessity can explain apparently repeated or overlapping services."
+  ],
   "items": [
     {
       "id": "item_1",
@@ -26,7 +26,7 @@
       "dateOfService": "2026-10-12",
       "quantity": 1,
       "billedAmount": 1850,
-      "plainEnglishDescription": "High severity ER evaluation for urgent conditions without immediate life threat.",
+      "plainEnglishDescription": "Emergency department evaluation. The billed level depends on the documented medical decision making; the code alone does not establish severity or a diagnosis.",
       "clinicalCategory": "Evaluation and Management",
       "benchmarkMedian": 480,
       "fairMarketRange": [
@@ -42,11 +42,15 @@
           "anomalyType": "EXCESSIVE_MARKUP",
           "severity": "MEDIUM",
           "disputedAmount": 1130,
-          "title": "Excessive Markup (3.9x Medicare Benchmark)",
-          "explanation": "Hospital billed $1850.00 for CPT 99284 (Emergency Department Visit - Level 4). The CMS Medicare median allowable fee is $480.00 (Fair market range: $380.00–$750.00). The hospital marked up this service by 285%.",
-          "remedy": "Demand recalculation to the regional fair market standard of $720.00, saving $1130.00.",
-          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+          "title": "Price comparison to discuss",
+          "explanation": "Billed 1850.00 for 1 unit(s); illustrative reference 480.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+          "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
         }
+      ],
+      "referenceAmount": 480,
+      "referenceRange": [
+        380,
+        750
       ]
     },
     {
@@ -63,20 +67,24 @@
         45,
         110
       ],
-      "status": "HIGH",
+      "status": "MEDIUM",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "item_2",
           "code": "73110",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "disputedAmount": 327,
-          "title": "Excessive Markup (6.8x Medicare Benchmark)",
-          "explanation": "Hospital billed $420.00 for CPT 73110 (X-Ray Wrist - Complete (Minimum 3 Views)). The CMS Medicare median allowable fee is $62.00 (Fair market range: $45.00–$110.00). The hospital marked up this service by 577%.",
-          "remedy": "Demand recalculation to the regional fair market standard of $93.00, saving $327.00.",
-          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+          "title": "Price comparison to discuss",
+          "explanation": "Billed 420.00 for 1 unit(s); illustrative reference 62.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+          "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
         }
+      ],
+      "referenceAmount": 62,
+      "referenceRange": [
+        45,
+        110
       ]
     },
     {
@@ -93,20 +101,24 @@
         40,
         75
       ],
-      "status": "HIGH",
+      "status": "MEDIUM",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "item_3",
           "code": "80053",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "disputedAmount": 202,
-          "title": "Excessive Markup (5.4x Medicare Benchmark)",
-          "explanation": "Hospital billed $280.00 for CPT 80053 (Comprehensive Metabolic Panel (CMP)). The CMS Medicare median allowable fee is $52.00 (Fair market range: $40.00–$75.00). The hospital marked up this service by 438%.",
-          "remedy": "Demand recalculation to the regional fair market standard of $78.00, saving $202.00.",
-          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+          "title": "Price comparison to discuss",
+          "explanation": "Billed 280.00 for 1 unit(s); illustrative reference 52.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+          "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
         }
+      ],
+      "referenceAmount": 52,
+      "referenceRange": [
+        40,
+        75
       ]
     },
     {
@@ -132,22 +144,25 @@
           "anomalyType": "DUPLICATE_CHARGE",
           "severity": "HIGH",
           "disputedAmount": 280,
-          "title": "Duplicate Line-Item Detected",
-          "explanation": "CPT 80053 was billed 2 times on the same date (2026-10-12) with identical amounts ($280.00).",
-          "remedy": "Demand complete removal of duplicate charge under Fair Credit Billing Act Section 1666 computational error rules.",
-          "statutoryBasis": "Fair Credit Billing Act (15 U.S.C. 1666)"
+          "title": "Possible duplicate charge",
+          "explanation": "The same code, service date and amount appear 2 times. Repeat services, separate providers or missing modifiers may explain this.",
+          "remedy": "Ask the billing team to identify each distinct service and remove a duplicate only if confirmed."
         },
         {
           "itemId": "item_4",
           "code": "80053",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "disputedAmount": 202,
-          "title": "Excessive Markup (5.4x Medicare Benchmark)",
-          "explanation": "Hospital billed $280.00 for CPT 80053 (Comprehensive Metabolic Panel (CMP)). The CMS Medicare median allowable fee is $52.00 (Fair market range: $40.00–$75.00). The hospital marked up this service by 438%.",
-          "remedy": "Demand recalculation to the regional fair market standard of $78.00, saving $202.00.",
-          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+          "title": "Price comparison to discuss",
+          "explanation": "Billed 280.00 for 1 unit(s); illustrative reference 52.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+          "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
         }
+      ],
+      "referenceAmount": 52,
+      "referenceRange": [
+        40,
+        75
       ]
     },
     {
@@ -164,20 +179,24 @@
         8,
         25
       ],
-      "status": "HIGH",
+      "status": "MEDIUM",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "item_5",
           "code": "36415",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "disputedAmount": 52,
-          "title": "Excessive Markup (5.8x Medicare Benchmark)",
-          "explanation": "Hospital billed $70.00 for CPT 36415 (Routine Venipuncture (Blood Draw)). The CMS Medicare median allowable fee is $12.00 (Fair market range: $8.00–$25.00). The hospital marked up this service by 483%.",
-          "remedy": "Demand recalculation to the regional fair market standard of $18.00, saving $52.00.",
-          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+          "title": "Price comparison to discuss",
+          "explanation": "Billed 70.00 for 1 unit(s); illustrative reference 12.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+          "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
         }
+      ],
+      "referenceAmount": 12,
+      "referenceRange": [
+        8,
+        25
       ]
     },
     {
@@ -203,22 +222,25 @@
           "anomalyType": "DUPLICATE_CHARGE",
           "severity": "HIGH",
           "disputedAmount": 70,
-          "title": "Duplicate Line-Item Detected",
-          "explanation": "CPT 36415 was billed 2 times on the same date (2026-10-12) with identical amounts ($70.00).",
-          "remedy": "Demand complete removal of duplicate charge under Fair Credit Billing Act Section 1666 computational error rules.",
-          "statutoryBasis": "Fair Credit Billing Act (15 U.S.C. 1666)"
+          "title": "Possible duplicate charge",
+          "explanation": "The same code, service date and amount appear 2 times. Repeat services, separate providers or missing modifiers may explain this.",
+          "remedy": "Ask the billing team to identify each distinct service and remove a duplicate only if confirmed."
         },
         {
           "itemId": "item_6",
           "code": "36415",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "disputedAmount": 52,
-          "title": "Excessive Markup (5.8x Medicare Benchmark)",
-          "explanation": "Hospital billed $70.00 for CPT 36415 (Routine Venipuncture (Blood Draw)). The CMS Medicare median allowable fee is $12.00 (Fair market range: $8.00–$25.00). The hospital marked up this service by 483%.",
-          "remedy": "Demand recalculation to the regional fair market standard of $18.00, saving $52.00.",
-          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+          "title": "Price comparison to discuss",
+          "explanation": "Billed 70.00 for 1 unit(s); illustrative reference 12.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+          "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
         }
+      ],
+      "referenceAmount": 12,
+      "referenceRange": [
+        8,
+        25
       ]
     },
     {
@@ -235,20 +257,24 @@
         85,
         210
       ],
-      "status": "HIGH",
+      "status": "MEDIUM",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "item_7",
           "code": "29125",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "disputedAmount": 477.5,
-          "title": "Excessive Markup (5.7x Medicare Benchmark)",
-          "explanation": "Hospital billed $650.00 for CPT 29125 (Application of Short Arm Splint (Forearm to Hand)). The CMS Medicare median allowable fee is $115.00 (Fair market range: $85.00–$210.00). The hospital marked up this service by 465%.",
-          "remedy": "Demand recalculation to the regional fair market standard of $172.50, saving $477.50.",
-          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+          "title": "Price comparison to discuss",
+          "explanation": "Billed 650.00 for 1 unit(s); illustrative reference 115.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+          "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
         }
+      ],
+      "referenceAmount": 115,
+      "referenceRange": [
+        85,
+        210
       ]
     },
     {
@@ -265,20 +291,24 @@
         8,
         35
       ],
-      "status": "HIGH",
+      "status": "MEDIUM",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "item_8",
           "code": "J7030",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "disputedAmount": 179,
-          "title": "Excessive Markup (14.3x Medicare Benchmark)",
-          "explanation": "Hospital billed $200.00 for CPT J7030 (Infusion, Normal Saline Solution, 1,000 cc). The CMS Medicare median allowable fee is $14.00 (Fair market range: $8.00–$35.00). The hospital marked up this service by 1329%.",
-          "remedy": "Demand recalculation to the regional fair market standard of $21.00, saving $179.00.",
-          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+          "title": "Price comparison to discuss",
+          "explanation": "Billed 200.00 for 1 unit(s); illustrative reference 14.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+          "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
         }
+      ],
+      "referenceAmount": 14,
+      "referenceRange": [
+        8,
+        35
       ]
     }
   ],
@@ -289,10 +319,9 @@
       "anomalyType": "DUPLICATE_CHARGE",
       "severity": "HIGH",
       "disputedAmount": 280,
-      "title": "Duplicate Line-Item Detected",
-      "explanation": "CPT 80053 was billed 2 times on the same date (2026-10-12) with identical amounts ($280.00).",
-      "remedy": "Demand complete removal of duplicate charge under Fair Credit Billing Act Section 1666 computational error rules.",
-      "statutoryBasis": "Fair Credit Billing Act (15 U.S.C. 1666)"
+      "title": "Possible duplicate charge",
+      "explanation": "The same code, service date and amount appear 2 times. Repeat services, separate providers or missing modifiers may explain this.",
+      "remedy": "Ask the billing team to identify each distinct service and remove a duplicate only if confirmed."
     },
     {
       "itemId": "item_6",
@@ -300,10 +329,9 @@
       "anomalyType": "DUPLICATE_CHARGE",
       "severity": "HIGH",
       "disputedAmount": 70,
-      "title": "Duplicate Line-Item Detected",
-      "explanation": "CPT 36415 was billed 2 times on the same date (2026-10-12) with identical amounts ($70.00).",
-      "remedy": "Demand complete removal of duplicate charge under Fair Credit Billing Act Section 1666 computational error rules.",
-      "statutoryBasis": "Fair Credit Billing Act (15 U.S.C. 1666)"
+      "title": "Possible duplicate charge",
+      "explanation": "The same code, service date and amount appear 2 times. Repeat services, separate providers or missing modifiers may explain this.",
+      "remedy": "Ask the billing team to identify each distinct service and remove a duplicate only if confirmed."
     },
     {
       "itemId": "item_1",
@@ -311,103 +339,102 @@
       "anomalyType": "EXCESSIVE_MARKUP",
       "severity": "MEDIUM",
       "disputedAmount": 1130,
-      "title": "Excessive Markup (3.9x Medicare Benchmark)",
-      "explanation": "Hospital billed $1850.00 for CPT 99284 (Emergency Department Visit - Level 4). The CMS Medicare median allowable fee is $480.00 (Fair market range: $380.00–$750.00). The hospital marked up this service by 285%.",
-      "remedy": "Demand recalculation to the regional fair market standard of $720.00, saving $1130.00.",
-      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+      "title": "Price comparison to discuss",
+      "explanation": "Billed 1850.00 for 1 unit(s); illustrative reference 480.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+      "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
     },
     {
       "itemId": "item_2",
       "code": "73110",
       "anomalyType": "EXCESSIVE_MARKUP",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "disputedAmount": 327,
-      "title": "Excessive Markup (6.8x Medicare Benchmark)",
-      "explanation": "Hospital billed $420.00 for CPT 73110 (X-Ray Wrist - Complete (Minimum 3 Views)). The CMS Medicare median allowable fee is $62.00 (Fair market range: $45.00–$110.00). The hospital marked up this service by 577%.",
-      "remedy": "Demand recalculation to the regional fair market standard of $93.00, saving $327.00.",
-      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+      "title": "Price comparison to discuss",
+      "explanation": "Billed 420.00 for 1 unit(s); illustrative reference 62.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+      "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
     },
     {
       "itemId": "item_3",
       "code": "80053",
       "anomalyType": "EXCESSIVE_MARKUP",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "disputedAmount": 202,
-      "title": "Excessive Markup (5.4x Medicare Benchmark)",
-      "explanation": "Hospital billed $280.00 for CPT 80053 (Comprehensive Metabolic Panel (CMP)). The CMS Medicare median allowable fee is $52.00 (Fair market range: $40.00–$75.00). The hospital marked up this service by 438%.",
-      "remedy": "Demand recalculation to the regional fair market standard of $78.00, saving $202.00.",
-      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+      "title": "Price comparison to discuss",
+      "explanation": "Billed 280.00 for 1 unit(s); illustrative reference 52.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+      "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
     },
     {
       "itemId": "item_4",
       "code": "80053",
       "anomalyType": "EXCESSIVE_MARKUP",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "disputedAmount": 202,
-      "title": "Excessive Markup (5.4x Medicare Benchmark)",
-      "explanation": "Hospital billed $280.00 for CPT 80053 (Comprehensive Metabolic Panel (CMP)). The CMS Medicare median allowable fee is $52.00 (Fair market range: $40.00–$75.00). The hospital marked up this service by 438%.",
-      "remedy": "Demand recalculation to the regional fair market standard of $78.00, saving $202.00.",
-      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+      "title": "Price comparison to discuss",
+      "explanation": "Billed 280.00 for 1 unit(s); illustrative reference 52.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+      "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
     },
     {
       "itemId": "item_5",
       "code": "36415",
       "anomalyType": "EXCESSIVE_MARKUP",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "disputedAmount": 52,
-      "title": "Excessive Markup (5.8x Medicare Benchmark)",
-      "explanation": "Hospital billed $70.00 for CPT 36415 (Routine Venipuncture (Blood Draw)). The CMS Medicare median allowable fee is $12.00 (Fair market range: $8.00–$25.00). The hospital marked up this service by 483%.",
-      "remedy": "Demand recalculation to the regional fair market standard of $18.00, saving $52.00.",
-      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+      "title": "Price comparison to discuss",
+      "explanation": "Billed 70.00 for 1 unit(s); illustrative reference 12.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+      "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
     },
     {
       "itemId": "item_6",
       "code": "36415",
       "anomalyType": "EXCESSIVE_MARKUP",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "disputedAmount": 52,
-      "title": "Excessive Markup (5.8x Medicare Benchmark)",
-      "explanation": "Hospital billed $70.00 for CPT 36415 (Routine Venipuncture (Blood Draw)). The CMS Medicare median allowable fee is $12.00 (Fair market range: $8.00–$25.00). The hospital marked up this service by 483%.",
-      "remedy": "Demand recalculation to the regional fair market standard of $18.00, saving $52.00.",
-      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+      "title": "Price comparison to discuss",
+      "explanation": "Billed 70.00 for 1 unit(s); illustrative reference 12.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+      "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
     },
     {
       "itemId": "item_7",
       "code": "29125",
       "anomalyType": "EXCESSIVE_MARKUP",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "disputedAmount": 477.5,
-      "title": "Excessive Markup (5.7x Medicare Benchmark)",
-      "explanation": "Hospital billed $650.00 for CPT 29125 (Application of Short Arm Splint (Forearm to Hand)). The CMS Medicare median allowable fee is $115.00 (Fair market range: $85.00–$210.00). The hospital marked up this service by 465%.",
-      "remedy": "Demand recalculation to the regional fair market standard of $172.50, saving $477.50.",
-      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+      "title": "Price comparison to discuss",
+      "explanation": "Billed 650.00 for 1 unit(s); illustrative reference 115.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+      "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
     },
     {
       "itemId": "item_8",
       "code": "J7030",
       "anomalyType": "EXCESSIVE_MARKUP",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "disputedAmount": 179,
-      "title": "Excessive Markup (14.3x Medicare Benchmark)",
-      "explanation": "Hospital billed $200.00 for CPT J7030 (Infusion, Normal Saline Solution, 1,000 cc). The CMS Medicare median allowable fee is $14.00 (Fair market range: $8.00–$35.00). The hospital marked up this service by 1329%.",
-      "remedy": "Demand recalculation to the regional fair market standard of $21.00, saving $179.00.",
-      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+      "title": "Price comparison to discuss",
+      "explanation": "Billed 200.00 for 1 unit(s); illustrative reference 14.00. The comparison uses 1.5× that demonstration value. This is not an official rate, legal cap, or verified overcharge.",
+      "remedy": "Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility."
     }
   ],
+  "financials": {
+    "totalBilledGross": 3820,
+    "insuranceAdjustments": 1200,
+    "patientResponsibility": 2620,
+    "totalPotentialSavings": 2717.5,
+    "riskScore": 100
+  },
   "disputePackage": {
-    "formalLetterText": "SENT VIA CERTIFIED MAIL / WRITTEN DISPUTE SUBMISSION\nDATE: October 26, 2026\n\nTO:\nMercy General Hospital & Trauma Center\nAttn: Patient Financial Services & Billing Dispute Department\n1200 Healthcare Blvd, Metro City, NY 10001\nPhone: 1-800-555-4321\n\nRE: FORMAL NOTICE OF BILLING ERROR, DISPUTE OF OVERCHARGES, AND DEMAND FOR ACCOUNT RECONCILIATION\nPatient Name: Sarah Jenkins\nAccount / Invoice Number: ACC-99284-883\nStatement Date: 2026-10-14\nTotal Disputed Amount: $2717.50\n\nDear Billing Compliance Officer,\n\nPlease accept this letter as formal written notice of billing errors, improper coding discrepancies, and excessive charges regarding the above-referenced account. I am exercising my rights under the Fair Credit Billing Act (15 U.S.C. § 1666), Regulation Z (12 C.F.R. § 1026.13), and federal hospital billing standards.\n\nA comprehensive forensic audit of the itemized statement reveals that the gross billed total of $3820.00 contains $2717.50 in computational inaccuracies, unbundled procedures, duplicate entries, and markups that substantially exceed regional Medicare benchmarks.\n\n============================================================\nITEMIZED SCHEDULE OF DISPUTED CHARGES\n============================================================\n1. CPT 99284 — EMERGENCY DEPT VISIT LEVEL 4\n   • Date of Service: 2026-10-12\n   • Billed Amount: $1850.00 | Benchmark Median: $480.00\n   • Violation: Excessive Markup (3.9x Medicare Benchmark)\n   • Disputed Overcharge: $1130.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $720.00, saving $1130.00.\n\n2. CPT 73110 — RADIOLOGIC EXAM WRIST COMPLETE 3+ VIEWS\n   • Date of Service: 2026-10-12\n   • Billed Amount: $420.00 | Benchmark Median: $62.00\n   • Violation: Excessive Markup (6.8x Medicare Benchmark)\n   • Disputed Overcharge: $327.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $93.00, saving $327.00.\n\n3. CPT 80053 — COMPREHENSIVE METABOLIC PANEL\n   • Date of Service: 2026-10-12\n   • Billed Amount: $280.00 | Benchmark Median: $52.00\n   • Violation: Excessive Markup (5.4x Medicare Benchmark)\n   • Disputed Overcharge: $202.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $78.00, saving $202.00.\n\n4. CPT 80053 — COMPREHENSIVE METABOLIC PANEL\n   • Date of Service: 2026-10-12\n   • Billed Amount: $280.00 | Benchmark Median: $52.00\n   • Violation: Duplicate Line-Item Detected\n   • Disputed Overcharge: $280.00\n   • Forensic Remedy: Demand complete removal of duplicate charge under Fair Credit Billing Act Section 1666 computational error rules.\n\n5. CPT 80053 — COMPREHENSIVE METABOLIC PANEL\n   • Date of Service: 2026-10-12\n   • Billed Amount: $280.00 | Benchmark Median: $52.00\n   • Violation: Excessive Markup (5.4x Medicare Benchmark)\n   • Disputed Overcharge: $202.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $78.00, saving $202.00.\n\n6. CPT 36415 — ROUTINE VENIPUNCTURE BLOOD DRAW\n   • Date of Service: 2026-10-12\n   • Billed Amount: $70.00 | Benchmark Median: $12.00\n   • Violation: Excessive Markup (5.8x Medicare Benchmark)\n   • Disputed Overcharge: $52.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $18.00, saving $52.00.\n\n7. CPT 36415 — ROUTINE VENIPUNCTURE BLOOD DRAW\n   • Date of Service: 2026-10-12\n   • Billed Amount: $70.00 | Benchmark Median: $12.00\n   • Violation: Duplicate Line-Item Detected\n   • Disputed Overcharge: $70.00\n   • Forensic Remedy: Demand complete removal of duplicate charge under Fair Credit Billing Act Section 1666 computational error rules.\n\n8. CPT 36415 — ROUTINE VENIPUNCTURE BLOOD DRAW\n   • Date of Service: 2026-10-12\n   • Billed Amount: $70.00 | Benchmark Median: $12.00\n   • Violation: Excessive Markup (5.8x Medicare Benchmark)\n   • Disputed Overcharge: $52.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $18.00, saving $52.00.\n\n9. CPT 29125 — APPL SHORT ARM SPLINT STATIC FOREARM-HAND\n   • Date of Service: 2026-10-12\n   • Billed Amount: $650.00 | Benchmark Median: $115.00\n   • Violation: Excessive Markup (5.7x Medicare Benchmark)\n   • Disputed Overcharge: $477.50\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $172.50, saving $477.50.\n\n10. CPT J7030 — INFUSION NORMAL SALINE 1000CC\n   • Date of Service: 2026-10-12\n   • Billed Amount: $200.00 | Benchmark Median: $14.00\n   • Violation: Excessive Markup (14.3x Medicare Benchmark)\n   • Disputed Overcharge: $179.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $21.00, saving $179.00.\n\n\n============================================================\nSTATUTORY DEMANDS & PRESERVATION OF RIGHTS\n============================================================\n1. IMMEDIATE STAY ON CREDIT REPORTING & COLLECTIONS:\nPursuant to 15 U.S.C. § 1666(a) and 12 C.F.R. § 1026.13, you are strictly prohibited from reporting this disputed account as delinquent to any consumer credit reporting agency or assessing late finance charges while this formal dispute is pending. Any collection activity must cease immediately.\n\n2. TIMELY WRITTEN ACKNOWLEDGEMENT:\nFederal law requires written acknowledgement of this notice within thirty (30) days of receipt, and a complete resolution or written explanation within two billing cycles (not to exceed 90 days).\n\n3. COMPREHENSIVE ITEMIZED LEDGER DEMAND:\nI formally demand an updated, itemized statement containing standard CMS Revenue Codes, 11-digit National Drug Codes (NDCs) for all administered pharmaceuticals, and verified physician charge summaries.\n\n4. CHARITY CARE & AMOUNTS GENERALLY BILLED (AGB) DISCLOSURE:\nIn accordance with Internal Revenue Code Section 501(r)(4) and (r)(6), provide a complete copy of your Financial Assistance Policy (FAP) application and recalculate all remaining legitimate charges to your hospital's Amounts Generally Billed percentage.\n\nUntil these disputed charges are investigated and adjusted in accordance with federal and state billing regulations, no payment on the disputed sum of $2717.50 will be remitted.\n\nSincerely,\n\n____________________________________\nSarah Jenkins\nAccount Holder / Patient Representative\nCertified Mail Tracking: _______________________\n",
+    "generatedAt": "2026-10-26T12:24:20.757Z",
+    "formalLetterText": "REQUEST FOR ITEMIZED BILLING REVIEW\nDate: October 26, 2026\n\nTo: Mercy General Hospital & Trauma Center\n1200 Healthcare Blvd, Metro City, NY 10001\n\nPatient: Sarah Jenkins\nAccount: ACC-99284-883\nStatement date: 2026-10-14\nTotal Disputed Amount: $2717.50\n\nDear Billing Team,\n\nPlease review the selected charges below and provide supporting documentation or a corrected itemized statement. My statement lists gross charges of $3820.00. The selected, non-overlapping amount requested for review is $2717.50. This is a request for clarification, not a determination that the charges are invalid or that a reduction is owed.\n\nSELECTED CHARGES\n\n1. 99284 — EMERGENCY DEPT VISIT LEVEL 4\n   Service date: 2026-10-12 | Quantity: 1\n   Billed amount: $1850.00\n   Amount requested for review: $1130.00\n   Reasons: Price comparison to discuss\n   Request: Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility.\n\n2. 73110 — RADIOLOGIC EXAM WRIST COMPLETE 3+ VIEWS\n   Service date: 2026-10-12 | Quantity: 1\n   Billed amount: $420.00\n   Amount requested for review: $327.00\n   Reasons: Price comparison to discuss\n   Request: Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility.\n\n3. 80053 — COMPREHENSIVE METABOLIC PANEL\n   Service date: 2026-10-12 | Quantity: 1\n   Billed amount: $280.00\n   Amount requested for review: $202.00\n   Reasons: Price comparison to discuss\n   Request: Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility.\n\n4. 80053 — COMPREHENSIVE METABOLIC PANEL\n   Service date: 2026-10-12 | Quantity: 1\n   Billed amount: $280.00\n   Amount requested for review: $280.00\n   Reasons: Possible duplicate charge; Price comparison to discuss\n   Request: Ask the billing team to identify each distinct service and remove a duplicate only if confirmed. Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility.\n\n5. 36415 — ROUTINE VENIPUNCTURE BLOOD DRAW\n   Service date: 2026-10-12 | Quantity: 1\n   Billed amount: $70.00\n   Amount requested for review: $52.00\n   Reasons: Price comparison to discuss\n   Request: Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility.\n\n6. 36415 — ROUTINE VENIPUNCTURE BLOOD DRAW\n   Service date: 2026-10-12 | Quantity: 1\n   Billed amount: $70.00\n   Amount requested for review: $70.00\n   Reasons: Possible duplicate charge; Price comparison to discuss\n   Request: Ask the billing team to identify each distinct service and remove a duplicate only if confirmed. Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility.\n\n7. 29125 — APPL SHORT ARM SPLINT STATIC FOREARM-HAND\n   Service date: 2026-10-12 | Quantity: 1\n   Billed amount: $650.00\n   Amount requested for review: $477.50\n   Reasons: Price comparison to discuss\n   Request: Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility.\n\n8. J7030 — INFUSION NORMAL SALINE 1000CC\n   Service date: 2026-10-12 | Quantity: 1\n   Billed amount: $200.00\n   Amount requested for review: $179.00\n   Reasons: Price comparison to discuss\n   Request: Request the applicable insurer allowance, cash/self-pay price and financial assistance policy. Any reduction depends on your bill and eligibility.\n\nPlease explain any repeated services, relevant billing modifiers, applicable insurer adjustments, and the basis of the patient balance. If available, please send your financial assistance policy and self-pay pricing options.\n\nI request written confirmation of receipt and your expected review timeline. Please let me know whether you will voluntarily pause collection activity during this review. This letter does not establish an automatic collection or credit-reporting stay. Specific consumer protections depend on the type of account, coverage, facility and eligibility.\n\nPlease confirm any correction or settlement in writing before I agree to a revised payment. I request review of $2717.50; I am not treating an illustrative reference price as a legal payment limit.\n\nSincerely,\nSarah Jenkins\nContact details: ____________________\n\nPrepared with UnBill. Verify all figures and facts before sending. Educational billing assistance; not legal or medical advice.",
     "statutoryCitations": [
-      "Fair Credit Billing Act (15 U.S.C. 1666) — Timely notice of computational billing error and automatic credit report stay.",
-      "CMS National Correct Coding Initiative (NCCI) — Prohibition against improper component unbundling.",
-      "Internal Revenue Code Section 501(r)(6) — Tax-exempt hospital Limitation on Charges to Amounts Generally Billed (AGB).",
-      "Federal No Surprises Act (Public Law 116-260) — Protection against non-consensual out-of-network balance billing."
+      "Request an itemized billing review: Please review the identified charges and provide documentation or a corrected statement. https://www.cms.gov/medical-bill-rights",
+      "Credit-account billing errors: eligibility matters: Specific billing-error rights may apply to qualifying open-end credit accounts and timely notices. An ordinary hospital invoice is not automatically a qualifying credit account. https://www.consumerfinance.gov/rules-policy/regulations/1026/13/",
+      "Nonprofit hospital financial assistance: If applicable, please provide your financial assistance policy, eligibility criteria and the method used to calculate amounts generally billed. https://www.irs.gov/charities-non-profits/limitation-on-charges-section-501r5",
+      "Surprise billing protections: Certain emergency or out-of-network bills may qualify for federal surprise-billing protections, depending on coverage and circumstances. https://www.cms.gov/medical-bill-rights"
     ],
     "phoneNegotiationPoints": [
-      "Script 1 (Account Verification): \"Hello, I am calling regarding Account #ACC-99284-883. I have submitted a formal Fair Credit Billing Act dispute regarding $2717.50 in duplicate and unbundled line items. Please confirm this account is tagged as 'In Active Dispute' so no automated collections trigger.\"",
-      "Script 2 (When representative says 'Rates are non-negotiable'): \"I understand hospital chargemaster rates are standard, but federal IRC Section 501(r) prohibits non-profit hospitals from billing patients more than the Amount Generally Billed (AGB). Several line items on this bill exceed Medicare median allowables by over 400%. What is your facility's current AGB percentage for this year?\"",
-      "Script 3 (Handling Unbundled CPT Codes): \"Line item CPT 80048 is a component of comprehensive panel 80053 billed on the same date. Under CMS NCCI guidelines, component testing cannot be billed separately. Please write off this unbundled charge.\"",
-      "Script 4 (Lump-Sum Settlement Offer): \"If you recalculate the statement to fair market Medicare median rates of $1102.50, I am prepared to settle the entire undisputed balance today with a single one-time payment in exchange for a written zero-balance release.\""
-    ],
-    "generatedAt": "2026-10-26T09:03:02.015Z"
+      "Account verification: \"I am calling about account ACC-99284-883. Please send a complete itemized statement and explain my current patient balance.\"",
+      "Selected charges: \"I am requesting review of $2717.50 across 8 selected line items. Please explain the documented services and any applicable adjustments.\"",
+      "Financial assistance: \"Could you send the financial assistance policy and self-pay pricing options? Please explain eligibility and any hospital-specific AGB calculation if applicable.\"",
+      "Follow-up: \"Please confirm receipt, your review timeline and whether you can voluntarily pause collections. I will verify any revised balance or settlement in writing.\""
+    ]
   }
 }

@@ -1,0 +1,58 @@
+Browser tab: 4, Title: "UnBill — Understand Your Medical Bill", URL: "http://127.0.0.1:3107/results/sample_er_wrist_2026".
+1 AXWebArea UnBill — Understand Your Medical Bill, URL: 127.0.0.1:3107/results/sample_er_wrist_2026
+	2 container Billing Coach
+		3 container
+			4 heading Billing Coach, Value: 2, ID: coach-title
+				5 text Billing Coach
+			6 text Streaming advice · latency varies
+			7 button Close billing coach
+				8 image
+		9 container
+			10 text Selected review amount: $1,587.50 . Advice is educational; verify it with the billing team or a qualified adviser.
+		11 container Billing coach conversation
+			22 container
+				23 text You : What should I ask about a repeated charge?
+			24 container
+				25 text Coach : **Talking points for a repeated‑charge question**
+
+1. **Identify the service**
+   * “I see two line items for **[CPT/HCPCS code]** on my statement (date X and date Y). Can you confirm whether these represent separate procedures or a duplicate entry?”
+
+2. **Ask about modifiers or units**
+   * “Were any modifiers (e.g., ‑59, ‑25) or unit counts applied to each line? If so, how do they affect the billing?”
+
+3. **Clarify the clinical reason**
+   * “What clinical indication or documentation supports each occurrence of the service? Could one be a follow‑up or repeat test rather than a duplicate?”
+
+4. **Request a detailed explanation**
+   * “Please provide a line‑by‑line reconciliation that shows the charge, any adjustments, and the final amount applied to my account.”
+
+5. **Inquire about insurer processing**
+   * “How did my insurance carrier process each line? Were both lines submitted, and if so, what were the allowed amounts and patient responsibilities?”
+
+6. **Ask for correction if needed**
+   * “If one of the entries is an error, can you issue a corrected bill or a credit for the duplicate charge?”
+
+7. **Document the conversation**
+   * “May I have a written summary or reference number for this inquiry?”
+
+**Sample phone script (≈120 seconds)**
+
+> “Hello, my name is [Your First Name]. I’m reviewing my recent statement and noticed two charges for CPT [code] on [date 1] and [date 2]. Could you confirm whether those represent separate services or a duplicate entry? If they are separate, can you explain any modifiers or clinical reasons that justify both? Also, how did my insurance process each line, and what is the patient responsibility for each? If one is an error, I’d like to request a corrected bill or credit. Could you provide a written summary of our discussion and a reference number?”
+
+**Next steps**
+* Keep a copy of the statement and any notes.
+* If the provider cannot resolve it, follow up with your insurer’s billing department or consult the CMS “Your Health Care Bill” guide for additional rights.
+
+Feel free to adapt the script to your style, and let the billing team know you’re seeking clarification, not disputing clinical care.
+		13 container
+			14 checkbox (settable, integer) Value: 1, Description: I authorize sending my questions and de-identified bill context to Groq. I will not enter personal identifiers.
+			15 text I authorize sending my questions and de-identified bill context to Groq. I will not enter personal identifiers.
+		16 container
+			17 text Question for the billing coach
+			18 text field (settable) Question for the billing coach, ID: coach-question
+			19 button (disabled) Send question
+				20 image
+		21 button Clear Conversation
+
+The focused UI element is 1 AXWebArea UnBill — Understand Your Medical Bill, URL: 127.0.0.1:3107/results/sample_er_wrist_2026

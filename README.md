@@ -1,171 +1,77 @@
-# UnBill — Forensic Hospital Bill Auditor & Statutory Dispute Engine
+# UnBill
 
-> **80% of US hospital bills contain billing errors. Don't pay until you audit.**  
-> Built for the **Devpost "Build With AI: Basics" Hackathon** (October 2026).
+UnBill helps people review an itemized medical statement and prepare clear questions for the billing team. It extracts supported documents with Gemini, runs deterministic checks, keeps selected amounts consistent across a report and letter, and offers a streaming Groq billing coach.
 
----
+Built for [Build With AI: Basics](https://learn-ai-basics.devpost.com/). This release is intended for synthetic or de-identified demonstrations. It is not a clinical coding authority, legal service, or regulated health-record system.
 
-## 💡 The Problem
+## Try it locally
 
-American healthcare billing is intentionally opaque:
-- **80% of hospital bills contain errors** (duplicate line items, unbundled diagnostic panels, excessive chargemaster markups, or undocumented Level 5 acuity codes).
-- **$88 Billion in medical debt** sits on American consumer credit reports.
-- **86% of patients never dispute** because they cannot decode cryptic 5-digit CPT/HCPCS codes or navigate hospital billing bureaucracies.
-- Yet, when consumers formally dispute hospital charges backed by federal consumer protection statutes, **over 74% receive balance reductions or complete write-offs**.
+Requires Node.js 22+ and npm.
 
----
-
-## 🛡️ What UnBill Does
-
-**UnBill** is an independent, client-side patient financial advocacy application. Patients upload a photo, PDF, or text of their itemized medical statement, and UnBill:
-1. **Decodes clinical jargon into plain English** without medical ambiguity.
-2. **Executes deterministic forensic audits** cross-referencing CMS Medicare Physician Fee Schedules (MPFS) and National Correct Coding Initiative (NCCI) edits to detect duplicates, unbundling, and 300%+ markups.
-3. **Generates an enforceable Fair Credit Billing Act (15 U.S.C. § 1666) Certified Mail Dispute Package**, invoking automatic federal stays on negative credit reporting.
-4. **Equips the patient with an interactive Phone Negotiation Playbook** and a sub-350ms streaming **Groq Copilot** to handle defensive hospital billing representatives.
-
----
-
-## 🤖 The Multi-Agent AI Architecture
-
-UnBill rejects brittle probabilistic loops in favor of a **Deterministic Sequential Agent Pipeline**:
-
-```
-[ Uploaded Bill Photo / PDF / Text ]
-                 │
-                 ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 🤖 AGENT 1: Clinical Ingestion Agent (Gemini 3.8 Flash)      │
-│    • High-precision multimodal table extraction             │
-│    • Identifies facility, account #, and itemized CPT codes │
-│    • Standardizes into strict JSON schema                   │
-└─────────────────────────────────────────────────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────────────────────────────────┐
-│ ⚖️ AGENT 2: Forensic CPT & Pricing Auditor (Deterministic)   │
-│    • Zero-hallucination duplicate detection algorithm       │
-│    • CMS NCCI Unbundling check (comprehensive vs child)     │
-│    • Medicare Median Allowable benchmark markup math        │
-└─────────────────────────────────────────────────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 📜 AGENT 3: Legal & Dispute Advocate (Statutory Matcher)    │
-│    • Matches violations to FCBA § 1666, NSA, IRC § 501(r)   │
-│    • Assembles formal USPS Certified Mail dispute letter    │
-│    • Synthesizes 4-script counter-negotiation playbook      │
-└─────────────────────────────────────────────────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 💬 AGENT 4: UnBill Copilot (Groq Ultra-Fast Sub-350ms)      │
-│    • Real-time streaming conversational negotiation coach   │
-│    • Injected with active dossier numbers & account context │
-│    • Powered by openai/gpt-oss-120b                         │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Why a Hybrid Architecture?
-In healthcare finance and statutory consumer law, **mathematical hallucinations are unacceptable**. By isolating generative AI to perception (Gemini document OCR) and conversational coaching (Groq), while delegating arithmetic, duplicate checking, and legal bundling checks to deterministic TypeScript, UnBill achieves **100% mathematical accuracy and zero hallucinated legal citations**.
-
----
-
-## 🔒 Privacy & Zero-Retention Architecture
-
-- **HIPAA-Safe Client-Side Vault:** All audited bills and dispute kits are stored directly in the patient's browser (`localStorage` / IndexedDB via Zustand `persist`).
-- **Zero Server Retention:** No patient names, invoice numbers, or medical records are logged or permanently retained on remote application servers.
-- **Anonymous Report Sharing:** Optional share links are generated via ephemeral 30-day hashed keys in Upstash Redis.
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology | Purpose |
-|---|---|---|
-| **Framework** | Next.js 15 (App Router) + React 19 | Server-side rendering, streaming SSE, and edge routes |
-| **Language** | TypeScript 5.7 (Strict) | End-to-end domain type safety |
-| **Styling** | Tailwind CSS 3.4 | Editorial clinical-fintech aesthetic (Anti-AI-slop design) |
-| **Vision & Extraction** | Google Gemini 3.8 Flash | Multimodal hospital statement OCR and structured extraction |
-| **Forensic Logic** | Custom Deterministic Engine | NCCI bundling checks, duplicate detection & CMS benchmark math |
-| **Copilot Assistant** | Groq SDK (`openai/gpt-oss-120b`) | Sub-350ms first-token streaming conversational negotiation advice |
-| **Client State** | Zustand 5.0 | Client-side reactive vault and hydration-safe persistence |
-| **Edge Storage** | Upstash Redis | Anonymous report sharing and global savings counter |
-
----
-
-## 🚀 Getting Started Locally
-
-### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/unbill.git
-cd unbill
-```
-
-### 2. Install dependencies
-```bash
-npm install
-```
-
-### 3. Configure environment variables
-Copy `.env.example` to `.env.local`:
-```bash
+git clone https://github.com/z-lovejeet/UnBill.git
+cd UnBill
+npm ci
 cp .env.example .env.local
-```
-
-Fill in your API keys in `.env.local`:
-```env
-# 1. Google Gemini API (Multimodal OCR & extraction)
-GEMINI_API_KEY="your-gemini-api-key"
-GEMINI_MODEL="gemini-3.5-flash-lite"
-
-# 2. Groq API (Sub-350ms conversational copilot)
-GROQ_API_KEY="your-groq-api-key"
-GROQ_MODEL="openai/gpt-oss-120b"
-
-# 3. Upstash Redis (Optional - for share links)
-UPSTASH_REDIS_REST_URL="https://your-upstash.upstash.io"
-UPSTASH_REDIS_REST_TOKEN="your-upstash-token"
-
-# 4. App Base URL
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
-
-### 4. Run the development server
-```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open http://localhost:3000. Both synthetic examples work without AI keys or Redis. The examples run the same deterministic engine as extracted statements; they do not call document AI.
 
----
+For document extraction, set `GEMINI_API_KEY`. Defaults are `gemini-3.5-flash-lite`, with `gemini-3.1-flash-lite` fallback. For the coach, set `GROQ_API_KEY`; the configured primary is `openai/gpt-oss-120b`, with `openai/gpt-oss-20b` fallback. Provider availability and latency vary. No fixed latency guarantee is made.
 
-## 🧪 Mechanical Verification Suite
+## Features and limits
 
-UnBill includes standalone verification scripts for every agent in the pipeline:
+- PNG/JPEG/WebP/PDF intake, maximum **2.5 MB**, or pasted itemized text up to 50,000 characters; maximum 200 items.
+- Explicit consent before transmitting documents or coach questions. Use synthetic/de-identified input.
+- Runtime validation of extracted/direct input; unknown codes and dates remain unknown. Incomplete statements, unsupported credits and unreconciled totals require manual review.
+- Possible duplicates and overlapping panels, quantity/documentation review, and illustrative price comparisons. Legitimate repeats, providers and modifiers can change interpretation.
+- One selected amount per item, regenerated letter, four phone prompts, conditional consumer-resource links, copy and print/PDF export.
+- AES-256-GCM browser persistence, nonextractable IndexedDB device key, up to 30 reports. This is not password protection or protection from scripts running on the same origin.
+- Redacted share links, 256-bit random identifiers, 30-day expiration, and private revocation controls in the creator's vault. Procedures and amounts remain visible to link holders.
+- Bounded provider requests, streaming cancellation, body limits, per-network request limits and a configurable daily AI budget.
+
+The **19-code illustrative catalog is not an official CMS fee schedule**, market percentile dataset, insurer allowance or legal price cap. The 1.5× comparison is a demonstration heuristic. Findings are review candidates; estimated gross reductions are not guaranteed patient savings. An audit or letter does not activate a collection or credit-reporting stay. See [methodology](docs/03_MULTI_AGENT_AI_PIPELINE.md), [data provenance](data/benchmark_metadata.json) and [privacy/deployment instructions](docs/07_MANUAL_STEPS_AND_CONFIG.md).
+
+## Verify
 
 ```bash
-# 1. Test deterministic rules engine & Gemini clinical ingestion
-npx tsx scripts/test-audit.mjs
-
-# 2. Test Groq sub-350ms streaming chat & Upstash Redis
-npx tsx scripts/test-copilot.mjs
-
-# 3. Test production Next.js build
-npm run build
+npm run check             # lint, types, 18 offline regression tests, production build
+npm audit --audit-level=moderate
 ```
 
----
+Live provider checks use only synthetic fixtures and consume provider quota. Start the application with configured keys and Redis, then in another terminal:
 
-## 🏛️ Statutory Basis & Regulatory Citations
+```bash
+npm run test:live
+```
 
-All generated dispute kits and negotiation scripts reference established federal statutes:
-- **Fair Credit Billing Act (15 U.S.C. § 1666):** 60-day billing dispute window; automatic stay on credit bureau reporting; mandatory 30-day written acknowledgement.
-- **Federal No Surprises Act (Public Law 116-260, 42 U.S.C. § 300gg-111):** Prohibition of out-of-network balance billing in emergency and non-consensual situations; patient cost-sharing capped at in-network median deductible rates.
-- **Internal Revenue Code § 501(r)(6):** Prohibits tax-exempt 501(c)(3) hospitals from charging financial-assistance eligible patients gross chargemaster rates; requires reduction to Amounts Generally Billed (AGB).
-- **CMS National Correct Coding Initiative (NCCI Policy Manual, Ch. 1):** Prohibits unbundling sub-component procedures performed during a single encounter.
+The suite checks text/image/PDF extraction, document rejection, streaming chat, redacted sharing, invalid revocation and successful revocation. It deletes its own share record. Set `UNBILL_SMOKE_URL` to an explicit localhost port or HTTPS deployment to test that origin. Results are written to `docs/audits/2026-10-26/release-live-verification.json`; historical audit files describe earlier versions and are not current test results.
 
----
+For local production smoke testing:
 
-## 📄 License
+```bash
+npm run build
+ALLOW_LOCAL_RATE_LIMIT=true APP_URL=http://127.0.0.1:3107 npm start -- --hostname 127.0.0.1 --port 3107
+UNBILL_SMOKE_URL=http://127.0.0.1:3107 npm run test:live
+```
 
-MIT License. Designed and engineered for patient financial sovereignty.
+Keep `ALLOW_LOCAL_RATE_LIMIT=false` on public hosting. Public AI endpoints require working Redis protection; synthetic examples remain independent of providers.
+
+## Deployment
+
+The app targets Node.js Next.js hosting; `vercel.json` supplies a Vercel configuration. Set the server keys, Redis URL/token, daily request budget, and the actual `APP_URL` HTTPS origin. Vercel forwarding is detected automatically; custom reverse proxies must sanitize forwarded headers before enabling `TRUST_PROXY`. Do not expose secrets through client variables or source control.
+
+Run the offline checks before publishing and the live suite against the final deployment after configuring its environment. Check a share link in a separate browser and its revocation. `/api/health` reports configuration presence, not provider health. Full steps and rollback guidance are in [the deployment guide](docs/07_MANUAL_STEPS_AND_CONFIG.md).
+
+A public demonstration is different from accepting real patient records. Provider agreements/settings, organizational data practices and an appropriate clinical/legal review must be established before sensitive-data use. No HIPAA certification or blanket zero-retention claim is made.
+
+## Skill Pack and submission
+
+Planning and shipping artifacts live in [devpost/](devpost). The technical documents and release checklist were refreshed during hardening; historical learner participation is not invented. [Submission draft](devpost/submission.md) and [recording preparation](devpost/recording.md) are AI-assisted materials for contributor review. The Skill Pack requires the learner's own final public answers and narration; personal reflections and eligibility attestations must be supplied truthfully by the contributor.
+
+Required final external steps: public video URL, final original submission answers, required form fields/age confirmation, learner exit survey, and Devpost submission confirmation. Deployment is optional under the hackathon curriculum. Current submission deadline: **27 October 2026, 2:30 am IST**; verify on the [official rules page](https://learn-ai-basics.devpost.com/rules).
+
+## License
+
+Project code: [MIT](LICENSE). Included Skill Pack material retains its MIT notice. See [third-party notices](THIRD_PARTY_NOTICES.md).
