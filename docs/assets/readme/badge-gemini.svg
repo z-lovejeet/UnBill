@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="159" height="30" viewBox="0 0 159 30" role="img" aria-labelledby="title desc">
+  <title id="title">Gemini: extraction</title>
+  <desc id="desc">Gemini extraction</desc>
+  <rect x="0" y="0" width="159" height="30" rx="24" fill="#F7FAF7" stroke="none" />
+  <rect x="0" y="0" width="159" height="30" rx="7" fill="#FFFFFF" stroke="#DCE5DE" />
+  <rect x="61" y="1" width="97" height="28" rx="6" fill="#116149" stroke="none" />
+  <text x="10" y="20" fill="#56665F" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="600" letter-spacing="0">Gemini</text>
+  <text x="71" y="20" fill="#FFFFFF" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">extraction</text>
+</svg>

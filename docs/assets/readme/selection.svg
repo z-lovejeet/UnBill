@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="405" viewBox="0 0 1280 405" role="img" aria-labelledby="title desc">
+  <title id="title">Change a selection. Keep every output in step.</title>
+  <desc id="desc">Selected items are recalculated once per line, then the same selected amount is used in the report, letter, phone script and saved report.</desc>
+  <rect x="0" y="0" width="1280" height="405" rx="24" fill="#F7FAF7" stroke="none" />
+  <text x="46" y="42" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="2">UNBILL  /  PRODUCT &amp; ENGINEERING GUIDE</text>
+  <text x="46" y="87" fill="#142821" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Change a selection. Keep every output in step.</text>
+  <text x="46" y="383" fill="#56665F" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">UnBill  •  Read the charge. Understand the concern. Prepare the next step.</text>
+  <rect x="46" y="145" width="304" height="185" rx="16" fill="#DDF3E8" stroke="#DCE5DE" />
+  <text x="68" y="177" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">YOUR CHOICE</text>
+  <text x="68" y="211" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Selected charges</text>
+  <text x="68" y="245" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Include or exclude each item.</text>
+  <text x="68" y="272" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Keep the question specific.</text>
+  <path d="M350 237 L396 237" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="396,237 388,232 388,242" fill="#116149" />
+  <rect x="398" y="145" width="350" height="185" rx="16" fill="#FFFFFF" stroke="#DCE5DE" />
+  <text x="420" y="177" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">ONE CALCULATION</text>
+  <text x="420" y="211" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">One amount per line</text>
+  <text x="420" y="245" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Use the largest supported portion.</text>
+  <text x="420" y="272" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Cap it at that line’s billed charge.</text>
+  <path d="M748 237 L794 237" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="794,237 786,232 786,242" fill="#116149" />
+  <rect x="796" y="124" width="438" height="228" rx="16" fill="#E9F3FC" stroke="#DCE5DE" />
+  <text x="819" y="155" fill="#245D85" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1">SYNCHRONIZED OUTPUTS</text>
+  <text x="824" y="193" fill="#116149" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">✓</text>
+  <text x="853" y="193" fill="#142821" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="500" letter-spacing="0">Report summary</text>
+  <text x="824" y="231" fill="#116149" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">✓</text>
+  <text x="853" y="231" fill="#142821" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="500" letter-spacing="0">Review letter</text>
+  <text x="824" y="269" fill="#116149" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">✓</text>
+  <text x="853" y="269" fill="#142821" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="500" letter-spacing="0">Phone script</text>
+  <text x="824" y="307" fill="#116149" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">✓</text>
+  <text x="853" y="307" fill="#142821" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="500" letter-spacing="0">Saved selection</text>
+</svg>

@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="390" viewBox="0 0 1280 390" role="img" aria-labelledby="title desc">
+  <title id="title">Three amounts. Three different meanings.</title>
+  <desc id="desc">Synthetic ER example: original gross charges 3820 dollars, reported patient balance 2620 dollars, initial selected review amount 2717 dollars 50 cents. The review amount is not savings or a new balance.</desc>
+  <rect x="0" y="0" width="1280" height="390" rx="24" fill="#F7FAF7" stroke="none" />
+  <text x="46" y="42" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="2">UNBILL  /  PRODUCT &amp; ENGINEERING GUIDE</text>
+  <text x="46" y="87" fill="#142821" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Three amounts. Three different meanings.</text>
+  <text x="46" y="368" fill="#56665F" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">UnBill  •  Read the charge. Understand the concern. Prepare the next step.</text>
+  <rect x="46" y="124" width="382" height="190" rx="16" fill="#E9F3FC" stroke="#DCE5DE" />
+  <text x="68" y="158" fill="#56665F" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1">TOTAL ON THE BILL</text>
+  <text x="68" y="211" fill="#142821" font-size="35" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">$3,820.00</text>
+  <text x="68" y="250" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Original itemized charges.</text>
+  <text x="68" y="275" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Before adjustments and payments.</text>
+  <rect x="448" y="124" width="382" height="190" rx="16" fill="#DDF3E8" stroke="#DCE5DE" />
+  <text x="470" y="158" fill="#56665F" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1">BALANCE ON THE STATEMENT</text>
+  <text x="470" y="211" fill="#142821" font-size="35" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">$2,620.00</text>
+  <text x="470" y="250" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Reported patient responsibility.</text>
+  <text x="470" y="275" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Preserved from the source.</text>
+  <rect x="850" y="124" width="382" height="190" rx="16" fill="#FFF3D8" stroke="#DCE5DE" />
+  <text x="872" y="158" fill="#56665F" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1">AMOUNT TO QUESTION</text>
+  <text x="872" y="211" fill="#142821" font-size="35" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">$2,717.50</text>
+  <text x="872" y="250" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Selected portions of gross charges.</text>
+  <text x="872" y="275" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Not a refund or a revised balance.</text>
+  <text x="46" y="347" fill="#116149" font-size="15" font-family="Arial, Helvetica, sans-serif" font-weight="500" letter-spacing="0">Synthetic ER example • Initial selection • Do not subtract the review amount from the patient balance.</text>
+</svg>

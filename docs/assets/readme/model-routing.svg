@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="475" viewBox="0 0 1280 475" role="img" aria-labelledby="title desc">
+  <title id="title">Spend primary quota deliberately. Keep a bounded fallback.</title>
+  <desc id="desc">Redis reserves at most eighteen primary attempts per Pacific day. Eligible requests try Gemini 3.8 Flash for at most eighteen seconds; otherwise or on transient failure the request uses Gemini 3.5 Flash-Lite within one ninety-second extraction deadline.</desc>
+  <rect x="0" y="0" width="1280" height="475" rx="24" fill="#F7FAF7" stroke="none" />
+  <text x="46" y="42" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="2">UNBILL  /  PRODUCT &amp; ENGINEERING GUIDE</text>
+  <text x="46" y="87" fill="#142821" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Spend primary quota deliberately. Keep a bounded fallback.</text>
+  <text x="46" y="453" fill="#56665F" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">UnBill  •  Read the charge. Understand the concern. Prepare the next step.</text>
+  <rect x="46" y="131" width="325" height="190" rx="16" fill="#DDF3E8" stroke="#DCE5DE" />
+  <text x="68" y="163" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">SHARED PRIMARY LEDGER</text>
+  <text x="68" y="197" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Reserve before calling</text>
+  <text x="68" y="231" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">18 attempts per Pacific day.</text>
+  <text x="68" y="258" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Count failed attempts as well.</text>
+  <text x="68" y="285" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Skip primary when not available.</text>
+  <path d="M371 195 L418 195" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="418,195 410,190 410,200" fill="#116149" />
+  <rect x="420" y="131" width="357" height="190" rx="16" fill="#FFFFFF" stroke="#DCE5DE" />
+  <text x="442" y="163" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">PRIMARY / UP TO 18 SECONDS</text>
+  <text x="442" y="197" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Gemini 3.8 Flash</text>
+  <text x="442" y="231" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Low thinking; structured output.</text>
+  <text x="442" y="258" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Try only with a reserved attempt.</text>
+  <text x="442" y="285" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Transient failure → fallback.</text>
+  <path d="M777 222 L824 222" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="824,222 816,217 816,227" fill="#116149" />
+  <rect x="826" y="131" width="408" height="190" rx="16" fill="#E9F3FC" stroke="#DCE5DE" />
+  <text x="848" y="163" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">FALLBACK / TIME REMAINING</text>
+  <text x="848" y="197" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Gemini 3.5 Flash-Lite</text>
+  <text x="848" y="231" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Also used directly after the cap.</text>
+  <text x="848" y="258" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Uses the remaining extraction window.</text>
+  <text x="848" y="285" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">No automatic sample substitution.</text>
+  <path d="M208 323 L208 356" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="208,356 203,348 213,348" fill="#116149" />
+  <path d="M208 356 L1029 356" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="1029,356 1021,351 1021,361" fill="#116149" />
+  <path d="M1029 356 L1029 323" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="1029,323 1024,331 1034,331" fill="#116149" />
+  <text x="454" y="348" fill="#116149" font-size="15" font-family="Arial, Helvetica, sans-serif" font-weight="500" letter-spacing="0">Primary skipped: route directly to fallback</text>
+  <rect x="46" y="384" width="1188" height="40" rx="9" fill="#FFF3D8" stroke="none" />
+  <text x="65" y="410" fill="#855715" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="500" letter-spacing="0">90s extraction deadline  ·  120s audit route  ·  125s browser request  ·  separate 200/day default AI budget</text>
+</svg>

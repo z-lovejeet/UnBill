@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="525" viewBox="0 0 1280 525" role="img" aria-labelledby="title desc">
+  <title id="title">Specific questions, connected to the source charge.</title>
+  <desc id="desc">The review detects possible duplicates, panel overlap, illustrative price differences, quantity questions and visit-level documentation questions.</desc>
+  <rect x="0" y="0" width="1280" height="525" rx="24" fill="#F7FAF7" stroke="none" />
+  <text x="46" y="42" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="2">UNBILL  /  PRODUCT &amp; ENGINEERING GUIDE</text>
+  <text x="46" y="87" fill="#142821" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Specific questions, connected to the source charge.</text>
+  <text x="46" y="503" fill="#56665F" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">UnBill  •  Read the charge. Understand the concern. Prepare the next step.</text>
+  <rect x="46" y="122" width="1188" height="58" rx="10" fill="#FCE9E7" stroke="#DCE5DE" />
+  <circle cx="69" cy="151" r="5" fill="#9B423C" />
+  <text x="87" y="157" fill="#9B423C" font-size="17" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Possible duplicate charge</text>
+  <text x="409" y="157" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Matching code, date and amount: was the service performed twice?</text>
+  <rect x="46" y="192" width="1188" height="58" rx="10" fill="#FFF3D8" stroke="#DCE5DE" />
+  <circle cx="69" cy="221" r="5" fill="#855715" />
+  <text x="87" y="227" fill="#855715" font-size="17" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Test may already be included</text>
+  <text x="409" y="227" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">A recognized component appears with its panel on the same date.</text>
+  <rect x="46" y="262" width="1188" height="58" rx="10" fill="#E9F3FC" stroke="#DCE5DE" />
+  <circle cx="69" cy="291" r="5" fill="#245D85" />
+  <text x="87" y="297" fill="#245D85" font-size="17" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Above example price</text>
+  <text x="409" y="297" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">An illustrative comparison invites a pricing explanation.</text>
+  <rect x="46" y="332" width="1188" height="58" rx="10" fill="#DDF3E8" stroke="#DCE5DE" />
+  <circle cx="69" cy="361" r="5" fill="#116149" />
+  <text x="87" y="367" fill="#116149" font-size="17" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Check the number of units</text>
+  <text x="409" y="367" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Ask for the record supporting the quantity on the statement.</text>
+  <rect x="46" y="402" width="1188" height="58" rx="10" fill="#FFFFFF" stroke="#DCE5DE" />
+  <circle cx="69" cy="431" r="5" fill="#56665F" />
+  <text x="87" y="437" fill="#56665F" font-size="17" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Check the visit level</text>
+  <text x="409" y="437" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Request the documentation supporting the emergency visit code.</text>
+</svg>

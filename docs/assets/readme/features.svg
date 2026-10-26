@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="615" viewBox="0 0 1280 615" role="img" aria-labelledby="title desc">
+  <title id="title">A complete workspace for the billing conversation.</title>
+  <desc id="desc">Six product capabilities: flexible intake, readable results, synchronized preparation, conversational help, device history and revocable sharing.</desc>
+  <rect x="0" y="0" width="1280" height="615" rx="24" fill="#F7FAF7" stroke="none" />
+  <text x="46" y="42" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="2">UNBILL  /  PRODUCT &amp; ENGINEERING GUIDE</text>
+  <text x="46" y="87" fill="#142821" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">A complete workspace for the billing conversation.</text>
+  <text x="46" y="593" fill="#56665F" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">UnBill  •  Read the charge. Understand the concern. Prepare the next step.</text>
+  <rect x="46" y="125" width="382" height="196" rx="16" fill="#FFFFFF" stroke="#DCE5DE" />
+  <text x="68" y="157" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">INPUT</text>
+  <text x="68" y="191" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Readable source</text>
+  <text x="68" y="225" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">PNG, JPEG, WebP, PDF or text.</text>
+  <text x="68" y="252" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Synthetic examples for exploration.</text>
+  <rect x="448" y="125" width="382" height="196" rx="16" fill="#FFF3D8" stroke="#DCE5DE" />
+  <text x="470" y="157" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">RESULTS</text>
+  <text x="470" y="191" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Explain the concern</text>
+  <text x="470" y="225" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Named findings and source details.</text>
+  <text x="470" y="252" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Separate charges, balance and review.</text>
+  <rect x="850" y="125" width="382" height="196" rx="16" fill="#DDF3E8" stroke="#DCE5DE" />
+  <text x="872" y="157" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">PREPARATION</text>
+  <text x="872" y="191" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Keep figures aligned</text>
+  <text x="872" y="225" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Selected-charge review letter.</text>
+  <text x="872" y="252" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Read-aloud script, copy and PDF.</text>
+  <rect x="46" y="343" width="382" height="196" rx="16" fill="#E9F3FC" stroke="#DCE5DE" />
+  <text x="68" y="375" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">COACH</text>
+  <text x="68" y="409" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Ask a follow-up</text>
+  <text x="68" y="443" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Streaming, formatted answers.</text>
+  <text x="68" y="470" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Separate consent and minimized context.</text>
+  <rect x="448" y="343" width="382" height="196" rx="16" fill="#FFFFFF" stroke="#DCE5DE" />
+  <text x="470" y="375" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">VAULT</text>
+  <text x="470" y="409" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Pick up later</text>
+  <text x="470" y="443" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Up to 30 browser-encrypted reports.</text>
+  <text x="470" y="470" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Reopen the same review and selection.</text>
+  <rect x="850" y="343" width="382" height="196" rx="16" fill="#FCE9E7" stroke="#DCE5DE" />
+  <text x="872" y="375" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">SHARING</text>
+  <text x="872" y="409" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Control a separate copy</text>
+  <text x="872" y="443" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Redacted link with 30-day expiration.</text>
+  <text x="872" y="470" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Private creator control for revocation.</text>
+</svg>

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="705" viewBox="0 0 1280 705" role="img" aria-labelledby="title desc">
+  <title id="title">Clear boundaries between product, processing and storage.</title>
+  <desc id="desc">The browser calls Next.js routes. Audit uses Gemini plus validation and deterministic rules. Chat uses Groq. Share and request guards use Redis. Browser persistence is encrypted locally.</desc>
+  <rect x="0" y="0" width="1280" height="705" rx="24" fill="#F7FAF7" stroke="none" />
+  <text x="46" y="42" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="2">UNBILL  /  PRODUCT &amp; ENGINEERING GUIDE</text>
+  <text x="46" y="87" fill="#142821" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Clear boundaries between product, processing and storage.</text>
+  <text x="46" y="683" fill="#56665F" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">UnBill  •  Read the charge. Understand the concern. Prepare the next step.</text>
+  <rect x="46" y="126" width="1188" height="130" rx="16" fill="#DDF3E8" stroke="#DCE5DE" />
+  <text x="68" y="158" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">BROWSER / NEXT.JS + REACT</text>
+  <text x="68" y="192" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Intake → report → preparation → coach → vault</text>
+  <text x="68" y="226" fill="#56665F" font-size="18" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Zustand state · encrypted local history · explicit processing and sharing choices</text>
+  <path d="M225 256 L225 301" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="225,301 220,293 230,293" fill="#116149" />
+  <path d="M640 256 L640 301" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="640,301 635,293 645,293" fill="#116149" />
+  <path d="M1055 256 L1055 301" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="1055,301 1050,293 1060,293" fill="#116149" />
+  <rect x="46" y="303" width="384" height="177" rx="16" fill="#FFFFFF" stroke="#DCE5DE" />
+  <text x="68" y="335" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">POST /api/audit</text>
+  <text x="68" y="369" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Audit route</text>
+  <text x="68" y="403" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Parse and validate input.</text>
+  <text x="68" y="430" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Extract → validate → run rules.</text>
+  <rect x="448" y="303" width="384" height="177" rx="16" fill="#FFFFFF" stroke="#DCE5DE" />
+  <text x="470" y="335" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">POST /api/chat</text>
+  <text x="470" y="369" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Coach route</text>
+  <text x="470" y="403" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Minimize the report context.</text>
+  <text x="470" y="430" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Stream a contextual answer.</text>
+  <rect x="850" y="303" width="384" height="177" rx="16" fill="#FFFFFF" stroke="#DCE5DE" />
+  <text x="872" y="335" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">POST / GET / DELETE</text>
+  <text x="872" y="369" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Share routes</text>
+  <text x="872" y="403" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Rebuild and redact a copy.</text>
+  <text x="872" y="430" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Create, read or revoke access.</text>
+  <path d="M225 480 L225 523" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="225,523 220,515 230,515" fill="#116149" />
+  <path d="M640 480 L640 523" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="640,523 635,515 645,515" fill="#116149" />
+  <path d="M1055 480 L1055 523" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="1055,523 1050,515 1060,515" fill="#116149" />
+  <rect x="46" y="525" width="384" height="119" rx="16" fill="#E9F3FC" stroke="#DCE5DE" />
+  <text x="68" y="557" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">GOOGLE GEMINI</text>
+  <text x="68" y="591" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Document extraction</text>
+  <text x="68" y="625" fill="#56665F" font-size="15" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Structured statement fields</text>
+  <rect x="448" y="525" width="384" height="119" rx="16" fill="#E9F3FC" stroke="#DCE5DE" />
+  <text x="470" y="557" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">GROQ</text>
+  <text x="470" y="591" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Conversational assistance</text>
+  <text x="470" y="625" fill="#56665F" font-size="15" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Text streaming; no bill modification</text>
+  <rect x="850" y="525" width="384" height="119" rx="16" fill="#FFF3D8" stroke="#DCE5DE" />
+  <text x="872" y="557" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">UPSTASH REDIS</text>
+  <text x="872" y="591" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Shared state</text>
+  <text x="872" y="625" fill="#56665F" font-size="15" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Redacted copies + request counters</text>
+</svg>

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" role="img" aria-labelledby="title desc">
+  <title id="title">A shared report is a separate, revocable copy.</title>
+  <desc id="desc">Choose to share, redact direct identifiers, create a cryptographic link, then revoke access or allow expiry. Downloaded copies are outside link revocation.</desc>
+  <rect x="0" y="0" width="1280" height="400" rx="24" fill="#F7FAF7" stroke="none" />
+  <text x="46" y="42" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="2">UNBILL  /  PRODUCT &amp; ENGINEERING GUIDE</text>
+  <text x="46" y="87" fill="#142821" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">A shared report is a separate, revocable copy.</text>
+  <text x="46" y="378" fill="#56665F" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">UnBill  •  Read the charge. Understand the concern. Prepare the next step.</text>
+  <rect x="46" y="126" width="278" height="198" rx="16" fill="#FFFFFF" stroke="#DCE5DE" />
+  <text x="68" y="158" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">01 / CHOOSE</text>
+  <text x="68" y="192" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Separate consent</text>
+  <text x="68" y="226" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Procedures and amounts</text>
+  <text x="68" y="253" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">will remain visible.</text>
+  <path d="M326 224 L343 224" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="343,224 335,219 335,229" fill="#116149" />
+  <rect x="346" y="126" width="278" height="198" rx="16" fill="#DDF3E8" stroke="#DCE5DE" />
+  <text x="368" y="158" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">02 / REDACT</text>
+  <text x="368" y="192" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Remove identifiers</text>
+  <text x="368" y="226" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Patient, account, contacts</text>
+  <text x="368" y="253" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">and service dates.</text>
+  <path d="M626 224 L643 224" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="643,224 635,219 635,229" fill="#116149" />
+  <rect x="646" y="126" width="278" height="198" rx="16" fill="#E9F3FC" stroke="#DCE5DE" />
+  <text x="668" y="158" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">03 / PUBLISH</text>
+  <text x="668" y="192" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Create the link</text>
+  <text x="668" y="226" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">256-bit random identifier.</text>
+  <text x="668" y="253" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Up to 30 days in Redis.</text>
+  <path d="M926 224 L943 224" fill="none" stroke="#116149" stroke-width="2" />
+  <polygon points="943,224 935,219 935,229" fill="#116149" />
+  <rect x="946" y="126" width="278" height="198" rx="16" fill="#FCE9E7" stroke="#DCE5DE" />
+  <text x="968" y="158" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1.5">04 / WITHDRAW</text>
+  <text x="968" y="192" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Revoke or expire</text>
+  <text x="968" y="226" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Creator’s private control</text>
+  <text x="968" y="253" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">removes server access.</text>
+  <text x="46" y="359" fill="#56665F" font-size="15" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Deleting a local report does not revoke a link. Revocation cannot erase copies already downloaded.</text>
+</svg>

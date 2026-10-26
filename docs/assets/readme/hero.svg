@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="560" viewBox="0 0 1280 560" role="img" aria-labelledby="title desc">
+  <title id="title">Understand the bill. Prepare the conversation.</title>
+  <desc id="desc">UnBill turns an itemized statement into explained findings, a selected-charge letter, a phone script and controlled sharing.</desc>
+  <rect x="0" y="0" width="1280" height="560" rx="24" fill="#F7FAF7" stroke="none" />
+  <text x="46" y="42" fill="#116149" font-size="11" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="2">UNBILL  /  PRODUCT &amp; ENGINEERING GUIDE</text>
+  <text x="46" y="87" fill="#142821" font-size="30" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Understand the bill. Prepare the conversation.</text>
+  <text x="46" y="538" fill="#56665F" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">UnBill  •  Read the charge. Understand the concern. Prepare the next step.</text>
+  <rect x="32" y="112" width="1216" height="387" rx="22" fill="#142821" stroke="none" />
+  <text x="70" y="180" fill="#FFFFFF" font-size="70" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="-3">UnBill</text>
+  <text x="74" y="237" fill="#C4EBD7" font-size="33" font-family="Arial, Helvetica, sans-serif" font-weight="500" letter-spacing="0">Your bill. In plain English.</text>
+  <text x="74" y="281" fill="#C4EBD7" font-size="33" font-family="Arial, Helvetica, sans-serif" font-weight="500" letter-spacing="0">Your next step.</text>
+  <text x="74" y="356" fill="#D6E2DB" font-size="19" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Review itemized charges. Ask specific questions.</text>
+  <text x="74" y="387" fill="#D6E2DB" font-size="19" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Keep the report, letter and phone script aligned.</text>
+  <rect x="74" y="433" width="320" height="35" rx="8" fill="#244A3C" stroke="none" />
+  <text x="89" y="456" fill="#DAF6E6" font-size="12" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="1">NO ACCOUNT NEEDED  ·  MIT LICENSE</text>
+  <rect x="723" y="151" width="480" height="88" rx="14" fill="#DDF3E8" stroke="none" />
+  <text x="746" y="187" fill="#116149" font-size="17" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">01</text>
+  <text x="791" y="185" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Read</text>
+  <text x="791" y="214" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Images, PDFs or pasted text</text>
+  <rect x="723" y="256" width="480" height="88" rx="14" fill="#FFF3D8" stroke="none" />
+  <text x="746" y="292" fill="#116149" font-size="17" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">02</text>
+  <text x="791" y="290" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Review</text>
+  <text x="791" y="319" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Clear findings tied to each charge</text>
+  <rect x="723" y="361" width="480" height="88" rx="14" fill="#E9F3FC" stroke="none" />
+  <text x="746" y="397" fill="#116149" font-size="17" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">03</text>
+  <text x="791" y="395" fill="#142821" font-size="22" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="0">Prepare</text>
+  <text x="791" y="424" fill="#56665F" font-size="16" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="0">Letter, call script and next steps</text>
+</svg>
