@@ -68,9 +68,9 @@ A public demonstration is different from accepting real patient records. Provide
 
 ## Skill Pack and submission
 
-Planning and shipping artifacts live in [devpost/](devpost). The technical documents and release checklist were refreshed during hardening; historical learner participation is not invented. [Submission draft](devpost/submission.md) and [recording preparation](devpost/recording.md) are AI-assisted materials for contributor review. The Skill Pack requires the learner's own final public answers and narration; personal reflections and eligibility attestations must be supplied truthfully by the contributor.
+The [Skill Pack document index](devpost/README.md) connects the scope, PRD, technical specification, build checklist, app map and shipping materials. Use the [project overview](devpost/submission.md) for feature and architecture facts and the [recording guide](devpost/recording.md) for the demonstration sequence. The contributor confirmed successful Vercel deployment of code revision `1069dfb` and is handling recording and Devpost submission.
 
-Required final external steps: public video URL, final original submission answers, required form fields/age confirmation, learner exit survey, and Devpost submission confirmation. Deployment is optional under the hackathon curriculum. Current submission deadline: **27 October 2026, 2:30 am IST**; verify on the [official rules page](https://learn-ai-basics.devpost.com/rules).
+Remaining external steps are tracked in [shipping status](devpost/shipping-status.md): public video URL, actual form fields/age confirmation, exit survey and Devpost submission confirmation. Current submission deadline: **27 October 2026, 2:30 am IST**; verify on the [official rules page](https://learn-ai-basics.devpost.com/rules).
 
 ## License
 
