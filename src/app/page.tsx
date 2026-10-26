@@ -82,7 +82,10 @@ export default function Home() {
                     {formatCurrency(er.financials.totalPotentialSavings)}
                   </p>
                 </div>
-                <a href="#sample-tests" className="text-link">
+                <a
+                  href="#sample-tests"
+                  className="inline-flex items-center gap-2 rounded-xl bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-slate-800"
+                >
                   Try it <ArrowUpRight className="h-4 w-4" />
                 </a>
               </div>

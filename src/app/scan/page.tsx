@@ -200,8 +200,17 @@ export default function ScanPage() {
                     onChange={(e) => {
                       if (e.target.files?.[0]) choose(e.target.files[0]);
                     }}
-                    className="block w-full text-sm file:mr-4 file:rounded-lg file:border-0 file:bg-slate-100 file:px-4 file:py-2 file:font-semibold"
+                    className="sr-only"
                   />
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => input.current?.click()}
+                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-xs transition-colors hover:border-emerald-300 hover:bg-emerald-50/40 disabled:opacity-50"
+                  >
+                    <UploadCloud className="w-4 h-4" />
+                    Choose File
+                  </button>
                   <p className="text-xs text-slate-500">
                     Drag a file here or use Browse. PNG, JPEG, WebP or PDF · maximum 2.5 MB.
                   </p>
