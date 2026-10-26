@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-26",
+  "reportedCommit": "cdb81ed7d21d851fa168f986acececcbe6f6c2dc",
+  "reportedError": "npm ci EUSAGE: missing @emnapi/core@1.11.3 and @emnapi/runtime@1.11.3 lock entries",
+  "fix": {
+    "node": "22.x",
+    "exactDevelopmentPins": [
+      "@emnapi/core@1.11.3",
+      "@emnapi/runtime@1.11.3"
+    ]
+  },
+  "verification": {
+    "freshNpmCi": true,
+    "lint": true,
+    "typecheck": true,
+    "testsPassed": 18,
+    "productionBuild": true,
+    "dependencyAudit": "found 0 vulnerabilities",
+    "node22Runtime": "v22.23.4",
+    "node22FullCheck": true
+  },
+  "hostingVerification": "Contributor explicitly requested to handle Vercel verification after commit/push."
+}

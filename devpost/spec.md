@@ -39,7 +39,7 @@ Next.js 15 App Router / React 19 / TypeScript; Tailwind CSS; Zod runtime validat
 - `tests/release.test.ts`: offline regressions; `scripts/smoke-live.ts`: actual provider/route checks.
 
 ## Run, deployment and links
-Node.js 22+; `npm ci`; copy `.env.example` to `.env.local`; `npm run dev`. Full release gate: `npm run check` and `npm audit --audit-level=moderate`. Live gate: documented test server + `npm run test:live`. See `docs/07_MANUAL_STEPS_AND_CONFIG.md` for public environment, payload limits, rollout and rollback.
+Node.js 22 LTS; `npm ci`; copy `.env.example` to `.env.local`; `npm run dev`. Full release gate: `npm run check` and `npm audit --audit-level=moderate`. Live gate: documented test server + `npm run test:live`. See `docs/07_MANUAL_STEPS_AND_CONFIG.md` for public environment, payload limits, rollout and rollback.
 
 Public repository: https://github.com/z-lovejeet/UnBill . Hosted URL, final video URL and Devpost confirmation are recorded in `devpost/shipping-status.md` only after actual verification. A local recording is permitted; deployment is optional for this hackathon.
 

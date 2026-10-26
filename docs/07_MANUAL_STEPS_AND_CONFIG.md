@@ -1,7 +1,7 @@
 # Setup, deployment and operating guide
 
 ## Local setup
-Use Node.js 22+; `npm ci`; copy `.env.example` to `.env.local`; fill only server-side keys. Run `npm run dev` and open http://localhost:3000 . Synthetic examples work without providers. Never publish `.env.local`, credentials or the private learner profile.
+Use Node.js 22 LTS; `npm ci`; copy `.env.example` to `.env.local`; fill only server-side keys. Run `npm run dev` and open http://localhost:3000 . Synthetic examples work without providers. Never publish `.env.local`, credentials or the private learner profile.
 
 Gemini defaults: `gemini-3.5-flash-lite`, fallback `gemini-3.1-flash-lite`. Groq defaults: `openai/gpt-oss-120b`, fallback `openai/gpt-oss-20b`. Verify current model access/quota in provider accounts; no fixed free-tier limits or latency guarantees are assumed.
 
@@ -31,3 +31,6 @@ Retain the prior hosting deployment for rollback. If a provider or privacy issue
 
 ## Submission and recording
 Use `devpost/recording.md`, `submission.md`, `checklist.md` and `shipping-status.md`. Technical preparation is agent-supported; personal eligibility, reflections and actual publication/submission must be truthful. The Skill Pack's final public-authorship requirement needs contributor review. Deployment is optional for this hackathon; it does not replace the required public demonstration video.
+
+## Reproducible clean installs
+Deployment is pinned to Node 22.x. The exact `@emnapi/core` and `@emnapi/runtime` development pins intentionally retain the WebAssembly toolchain entries needed by cross-platform optional dependencies. Do not remove those lock records based only on a successful cached macOS install; use a fresh `npm ci` when changing dependencies.

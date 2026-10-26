@@ -27,6 +27,8 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
+    "@emnapi/core": "1.11.3",
+    "@emnapi/runtime": "1.11.3",
     "@eslint/eslintrc": "^3.3.7",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
@@ -45,6 +47,6 @@
     "postcss-selector-parser": "7.1.7"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": "22.x"
   }
 }

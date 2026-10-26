@@ -7,8 +7,8 @@ Updated during release hardening on 26 October 2026. This file distinguishes com
 | Repository | https://github.com/z-lovejeet/UnBill — public at audit |
 | Local production app | Build/start verified; see release evidence |
 | Provider flows | Nine synthetic live checks passed during hardening |
-| Release source publication | Pending final verification/publication authorization |
-| Hosted origin | Not yet published/verified in this repair pass |
+| Release source publication | Hardening published to main; clean-install correction verified locally and included in the follow-up push. Contributor will check Vercel. |
+| Hosted origin | Existing production domain: https://unbill-delta.vercel.app ; contributor handles verification of the automatic deployment |
 | Video | Recording materials and synthetic fixtures prepared; no final video URL verified |
 | Submission copy | AI-assisted draft prepared at user request; contributor must review current authorship requirement |
 | Required form fields | Skill Pack usage explanation and age-of-majority confirmation require contributor review/completion |

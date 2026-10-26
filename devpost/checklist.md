@@ -45,8 +45,8 @@ The readiness audit exposed stale letters, wrong-record fallback, misleading pri
 
 ## Shipping
 - [x] Existing public repository URL verified in the audit.
-- [ ] Release commit published and its remote revision verified.
-- [ ] Public hosted origin verified, if deployment is chosen.
+- [x] Hardening commit cdb81ed published to main; follow-up lockfile correction is verified locally before push.
+- [ ] Repaired deployment verified by contributor, who explicitly elected to handle Vercel. Existing origin: https://unbill-delta.vercel.app .
 - [ ] Final contributor-owned narration recorded and public video access verified.
 - [ ] Final original submission answers, Skill Pack usage field and age confirmation completed by contributor.
 - [ ] Exit survey completed by contributor.

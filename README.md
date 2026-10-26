@@ -6,7 +6,7 @@ Built for [Build With AI: Basics](https://learn-ai-basics.devpost.com/). This re
 
 ## Try it locally
 
-Requires Node.js 22+ and npm.
+Requires Node.js 22 LTS and npm.
 
 ```bash
 git clone https://github.com/z-lovejeet/UnBill.git

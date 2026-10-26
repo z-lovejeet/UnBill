@@ -1,16 +1,21 @@
-Browser tab: 5, Title: "UnBill — Understand Your Medical Bill", URL: "http://127.0.0.1:3107/results/share_SSmp-X_lf5Q0phA1TVrgxpi3tlEklAkYNG2RhUI1NXg".
-1 AXWebArea UnBill — Understand Your Medical Bill, URL: 127.0.0.1:3107/results/share_SSmp-X_lf5Q0phA1TVrgxpi3tlEklAkYNG2RhUI1NXg
-	2 container
-		3 link Description: UnBill Logo UnBill BILLING AI Billing Review Assistance, Value: 127.0.0.1:3107/
-		4 link Description: About, Value: 127.0.0.1:3107/about
-		5 link Description: Privacy, Value: 127.0.0.1:3107/privacy
-		6 link Description: Vault 2, Value: 127.0.0.1:3107/history
-		7 link Description: Audit a Bill, Value: 127.0.0.1:3107/scan
-	8 text Opening Report…
-	9 container
-		10 text UnBill provides educational billing review assistance. Findings and illustrative comparisons require verification; they do not establish legal rights, medical necessity or guaranteed savings.
-		11 link Description: Methodology, Value: 127.0.0.1:3107/about
-		12 link Description: Data Notice, Value: 127.0.0.1:3107/privacy
-		13 link Description: Devpost Skill Pack, Value: github.com/challengepost/learn-ai-basics
+Browser tab: 6, Title: "UnBill — Understand Your Medical Bill", URL: "http://127.0.0.1:3107/results/share_SSmp-X_lf5Q0phA1TVrgxpi3tlEklAkYNG2RhUI1NXg".
+0 AXWebArea UnBill — Understand Your Medical Bill, URL: 127.0.0.1:3107/results/share_SSmp-X_lf5Q0phA1TVrgxpi3tlEklAkYNG2RhUI1NXg
+	1 container
+		2 link Description: UnBill Logo UnBill BILLING AI Billing Review Assistance, Value: 127.0.0.1:3107/
+		3 link Description: About, Value: 127.0.0.1:3107/about
+		4 link Description: Privacy, Value: 127.0.0.1:3107/privacy
+		5 link Description: Vault 2, Value: 127.0.0.1:3107/history
+		6 link Description: Audit a Bill, Value: 127.0.0.1:3107/scan
+	13 container
+		14 heading Report Not Found or Unavailable, Value: 1
+			15 text Report Not Found or Unavailable
+		16 text This shared report has expired or was revoked.
+		17 link Description: Start a New Review, Value: 127.0.0.1:3107/scan
+		18 link Description: Open Vault, Value: 127.0.0.1:3107/history
+	8 container
+		9 text UnBill provides educational billing review assistance. Findings and illustrative comparisons require verification; they do not establish legal rights, medical necessity or guaranteed savings.
+		10 link Description: Methodology, Value: 127.0.0.1:3107/about
+		11 link Description: Data Notice, Value: 127.0.0.1:3107/privacy
+		12 link Description: Devpost Skill Pack, Value: github.com/challengepost/learn-ai-basics
 
-The focused UI element is 1 AXWebArea UnBill — Understand Your Medical Bill, URL: 127.0.0.1:3107/results/share_SSmp-X_lf5Q0phA1TVrgxpi3tlEklAkYNG2RhUI1NXg
+The focused UI element is 0 AXWebArea UnBill — Understand Your Medical Bill, URL: 127.0.0.1:3107/results/share_SSmp-X_lf5Q0phA1TVrgxpi3tlEklAkYNG2RhUI1NXg
