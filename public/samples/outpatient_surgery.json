@@ -12,52 +12,82 @@
     "patientName": "Michael Chang"
   },
   "financials": {
-    "totalBilledGross": 8420.00,
-    "insuranceAdjustments": 2800.00,
-    "patientResponsibility": 5620.00,
-    "totalPotentialSavings": 2350.00,
-    "riskScore": 85
+    "totalBilledGross": 2360,
+    "insuranceAdjustments": 2800,
+    "patientResponsibility": -440,
+    "totalPotentialSavings": 1943,
+    "riskScore": 98
   },
   "items": [
     {
       "id": "surg_item_1",
       "code": "80053",
       "rawDescription": "COMPREHENSIVE METABOLIC PANEL",
-      "plainEnglishDescription": "Comprehensive 14-test chemistry screening panel evaluating renal, hepatic, and metabolic functions.",
-      "clinicalCategory": "Laboratory",
       "dateOfService": "2026-10-15",
       "quantity": 1,
-      "billedAmount": 340.00,
-      "benchmarkMedian": 52.00,
-      "fairMarketRange": [40.00, 75.00],
-      "status": "NORMAL",
-      "isDisputed": false,
-      "anomalies": []
+      "billedAmount": 340,
+      "plainEnglishDescription": "Standard 14-test blood panel evaluating kidney function, liver health, blood glucose, and electrolyte balance.",
+      "clinicalCategory": "Laboratory",
+      "benchmarkMedian": 52,
+      "fairMarketRange": [
+        40,
+        75
+      ],
+      "status": "HIGH",
+      "isDisputed": true,
+      "anomalies": [
+        {
+          "itemId": "surg_item_1",
+          "code": "80053",
+          "anomalyType": "EXCESSIVE_MARKUP",
+          "severity": "HIGH",
+          "disputedAmount": 262,
+          "title": "Excessive Markup (6.5x Medicare Benchmark)",
+          "explanation": "Hospital billed $340.00 for CPT 80053 (Comprehensive Metabolic Panel (CMP)). The CMS Medicare median allowable fee is $52.00 (Fair market range: $40.00–$75.00). The hospital marked up this service by 554%.",
+          "remedy": "Demand recalculation to the regional fair market standard of $78.00, saving $262.00.",
+          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+        }
+      ]
     },
     {
       "id": "surg_item_2",
       "code": "82040",
       "rawDescription": "ALBUMIN SERUM",
-      "plainEnglishDescription": "Blood protein test checking liver function. Legally bundled inside the CMP panel (80053).",
-      "clinicalCategory": "Laboratory",
       "dateOfService": "2026-10-15",
       "quantity": 1,
-      "billedAmount": 120.00,
-      "benchmarkMedian": 18.00,
-      "fairMarketRange": [12.00, 30.00],
+      "billedAmount": 120,
+      "plainEnglishDescription": "Assay testing liver protein synthesis. Bundled under CMP (80053).",
+      "clinicalCategory": "Laboratory",
+      "benchmarkMedian": 18,
+      "fairMarketRange": [
+        12,
+        30
+      ],
       "status": "HIGH",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "surg_item_2",
           "code": "82040",
+          "parentCode": "80053",
           "anomalyType": "UNBUNDLED_CHARGE",
           "severity": "HIGH",
-          "disputedAmount": 120.00,
-          "title": "Improper Unbundling (CCI Edit Violation)",
-          "explanation": "CPT 82040 (Albumin) was billed separately for $120.00, but is legally bundled into the Comprehensive Metabolic Panel (CPT 80053) performed on the same day.",
-          "remedy": "Separate charge must be reduced to $0.00 per CMS Correct Coding Initiative.",
-          "statutoryBasis": "CMS National Correct Coding Initiative (NCCI)"
+          "disputedAmount": 120,
+          "title": "Improper Unbundling (CCI Violation)",
+          "explanation": "CPT 82040 was billed separately for $120.00, but it is legally bundled under comprehensive panel CPT 80053 (Comprehensive Metabolic Panel (CMP)) performed on the same date.",
+          "remedy": "Component test must be written off to $0.00 in compliance with CMS National Correct Coding Initiative.",
+          "statutoryBasis": "CMS National Correct Coding Initiative (NCCI Policy Manual, Ch. 1)"
+        },
+        {
+          "itemId": "surg_item_2",
+          "code": "82040",
+          "anomalyType": "EXCESSIVE_MARKUP",
+          "severity": "HIGH",
+          "disputedAmount": 93,
+          "title": "Excessive Markup (6.7x Medicare Benchmark)",
+          "explanation": "Hospital billed $120.00 for CPT 82040 (Albumin; Serum, Plasma, or Whole Blood). The CMS Medicare median allowable fee is $18.00 (Fair market range: $12.00–$30.00). The hospital marked up this service by 567%.",
+          "remedy": "Demand recalculation to the regional fair market standard of $27.00, saving $93.00.",
+          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
         }
       ]
     },
@@ -65,26 +95,41 @@
       "id": "surg_item_3",
       "code": "84075",
       "rawDescription": "ALKALINE PHOSPHATASE",
-      "plainEnglishDescription": "Liver enzyme test. Legally bundled inside the CMP panel (80053).",
-      "clinicalCategory": "Laboratory",
       "dateOfService": "2026-10-15",
       "quantity": 1,
-      "billedAmount": 130.00,
-      "benchmarkMedian": 20.00,
-      "fairMarketRange": [15.00, 35.00],
+      "billedAmount": 130,
+      "plainEnglishDescription": "Liver and bone enzyme evaluation. Bundled under CMP (80053).",
+      "clinicalCategory": "Laboratory",
+      "benchmarkMedian": 20,
+      "fairMarketRange": [
+        15,
+        35
+      ],
       "status": "HIGH",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "surg_item_3",
           "code": "84075",
+          "parentCode": "80053",
           "anomalyType": "UNBUNDLED_CHARGE",
           "severity": "HIGH",
-          "disputedAmount": 130.00,
-          "title": "Improper Unbundling (CCI Edit Violation)",
-          "explanation": "CPT 84075 (Alkaline Phosphatase) was billed separately for $130.00, but is an integral component of CPT 80053 billed on the same encounter date.",
-          "remedy": "Separate charge must be reduced to $0.00.",
-          "statutoryBasis": "CMS National Correct Coding Initiative (NCCI)"
+          "disputedAmount": 130,
+          "title": "Improper Unbundling (CCI Violation)",
+          "explanation": "CPT 84075 was billed separately for $130.00, but it is legally bundled under comprehensive panel CPT 80053 (Comprehensive Metabolic Panel (CMP)) performed on the same date.",
+          "remedy": "Component test must be written off to $0.00 in compliance with CMS National Correct Coding Initiative.",
+          "statutoryBasis": "CMS National Correct Coding Initiative (NCCI Policy Manual, Ch. 1)"
+        },
+        {
+          "itemId": "surg_item_3",
+          "code": "84075",
+          "anomalyType": "EXCESSIVE_MARKUP",
+          "severity": "HIGH",
+          "disputedAmount": 100,
+          "title": "Excessive Markup (6.5x Medicare Benchmark)",
+          "explanation": "Hospital billed $130.00 for CPT 84075 (Alkaline Phosphatase). The CMS Medicare median allowable fee is $20.00 (Fair market range: $15.00–$35.00). The hospital marked up this service by 550%.",
+          "remedy": "Demand recalculation to the regional fair market standard of $30.00, saving $100.00.",
+          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
         }
       ]
     },
@@ -92,26 +137,29 @@
       "id": "surg_item_4",
       "code": "71046",
       "rawDescription": "CHEST X-RAY 2 VIEWS",
-      "plainEnglishDescription": "Pre-operative two-view chest imaging examining the heart and lung fields.",
-      "clinicalCategory": "Radiology",
       "dateOfService": "2026-10-15",
       "quantity": 1,
-      "billedAmount": 490.00,
-      "benchmarkMedian": 68.00,
-      "fairMarketRange": [50.00, 120.00],
-      "status": "MEDIUM",
+      "billedAmount": 490,
+      "plainEnglishDescription": "Standard two-view imaging of lungs, heart silhouette, and thoracic cage.",
+      "clinicalCategory": "Radiology",
+      "benchmarkMedian": 68,
+      "fairMarketRange": [
+        50,
+        120
+      ],
+      "status": "HIGH",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "surg_item_4",
           "code": "71046",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "MEDIUM",
-          "disputedAmount": 300.00,
-          "title": "Severe Imaging Facility Markup",
-          "explanation": "Billed at $490.00 vs regional Medicare median of $68.00 (7.2x markup).",
-          "remedy": "Request reduction to fair market value ($120.00 maximum).",
-          "statutoryBasis": "Fair Credit Billing Act & IRC § 501(r)"
+          "severity": "HIGH",
+          "disputedAmount": 388,
+          "title": "Excessive Markup (7.2x Medicare Benchmark)",
+          "explanation": "Hospital billed $490.00 for CPT 71046 (Chest X-Ray - 2 Views (Frontal & Lateral)). The CMS Medicare median allowable fee is $68.00 (Fair market range: $50.00–$120.00). The hospital marked up this service by 621%.",
+          "remedy": "Demand recalculation to the regional fair market standard of $102.00, saving $388.00.",
+          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
         }
       ]
     },
@@ -119,26 +167,29 @@
       "id": "surg_item_5",
       "code": "93000",
       "rawDescription": "12-LEAD ELECTROCARDIOGRAM COMPLETE",
-      "plainEnglishDescription": "Routine pre-surgical cardiac rhythm tracing.",
-      "clinicalCategory": "Cardiology",
       "dateOfService": "2026-10-15",
       "quantity": 1,
-      "billedAmount": 310.00,
-      "benchmarkMedian": 42.00,
-      "fairMarketRange": [30.00, 85.00],
-      "status": "MEDIUM",
+      "billedAmount": 310,
+      "plainEnglishDescription": "12-lead electrical tracing evaluating cardiac rhythm and ischemic changes.",
+      "clinicalCategory": "Cardiology",
+      "benchmarkMedian": 42,
+      "fairMarketRange": [
+        30,
+        85
+      ],
+      "status": "HIGH",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "surg_item_5",
           "code": "93000",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "MEDIUM",
-          "disputedAmount": 200.00,
-          "title": "ECG Facility Markup",
-          "explanation": "Billed at $310.00 vs Medicare allowable rate of $42.00.",
-          "remedy": "Recalculate to hospital AGB percentage.",
-          "statutoryBasis": "IRC § 501(r)"
+          "severity": "HIGH",
+          "disputedAmount": 247,
+          "title": "Excessive Markup (7.4x Medicare Benchmark)",
+          "explanation": "Hospital billed $310.00 for CPT 93000 (Electrocardiogram (ECG/EKG) with Routine Interpretation). The CMS Medicare median allowable fee is $42.00 (Fair market range: $30.00–$85.00). The hospital marked up this service by 638%.",
+          "remedy": "Demand recalculation to the regional fair market standard of $63.00, saving $247.00.",
+          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
         }
       ]
     },
@@ -146,26 +197,29 @@
       "id": "surg_item_6",
       "code": "96360",
       "rawDescription": "INTRAVENOUS HYDRATION INFUSION 1ST HOUR",
-      "plainEnglishDescription": "IV line fluid infusion administered prior to surgical induction.",
-      "clinicalCategory": "Nursing Administration",
       "dateOfService": "2026-10-15",
       "quantity": 1,
-      "billedAmount": 550.00,
-      "benchmarkMedian": 88.00,
-      "fairMarketRange": [65.00, 160.00],
-      "status": "MEDIUM",
+      "billedAmount": 550,
+      "plainEnglishDescription": "IV administration of saline/electrolytes for rehydration.",
+      "clinicalCategory": "Nursing Administration",
+      "benchmarkMedian": 88,
+      "fairMarketRange": [
+        65,
+        160
+      ],
+      "status": "HIGH",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "surg_item_6",
           "code": "96360",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "MEDIUM",
-          "disputedAmount": 350.00,
-          "title": "IV Hydration Facility Markup",
-          "explanation": "Billed at $550.00 for 1 hour of standard saline infusion.",
-          "remedy": "Request reduction to hospital in-network contracted fee.",
-          "statutoryBasis": "IRC § 501(r)"
+          "severity": "HIGH",
+          "disputedAmount": 418,
+          "title": "Excessive Markup (6.3x Medicare Benchmark)",
+          "explanation": "Hospital billed $550.00 for CPT 96360 (Intravenous Hydration Infusion (Initial up to 1 Hour)). The CMS Medicare median allowable fee is $88.00 (Fair market range: $65.00–$160.00). The hospital marked up this service by 525%.",
+          "remedy": "Demand recalculation to the regional fair market standard of $132.00, saving $418.00.",
+          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
         }
       ]
     },
@@ -173,26 +227,29 @@
       "id": "surg_item_7",
       "code": "J7030",
       "rawDescription": "NORMAL SALINE 1000ML",
-      "plainEnglishDescription": "1 Liter sterile bag of normal saline infusion solution.",
-      "clinicalCategory": "Pharmacy & Supplies",
       "dateOfService": "2026-10-15",
       "quantity": 2,
-      "billedAmount": 420.00,
-      "benchmarkMedian": 28.00,
-      "fairMarketRange": [16.00, 70.00],
-      "status": "MEDIUM",
+      "billedAmount": 420,
+      "plainEnglishDescription": "1 Liter bag of sterile 0.9% sodium chloride IV fluids.",
+      "clinicalCategory": "Pharmacy & Supplies",
+      "benchmarkMedian": 14,
+      "fairMarketRange": [
+        8,
+        35
+      ],
+      "status": "HIGH",
       "isDisputed": true,
       "anomalies": [
         {
           "itemId": "surg_item_7",
           "code": "J7030",
           "anomalyType": "EXCESSIVE_MARKUP",
-          "severity": "MEDIUM",
-          "disputedAmount": 350.00,
-          "title": "Extreme IV Saline Markup",
-          "explanation": "Billed at $210.00 per liter bag ($420.00 total) for IV fluid that costs hospital under $5.00 wholesale.",
-          "remedy": "Request adjustment to standard retail benchmark.",
-          "statutoryBasis": "IRC § 501(r)"
+          "severity": "HIGH",
+          "disputedAmount": 378,
+          "title": "Excessive Markup (15.0x Medicare Benchmark)",
+          "explanation": "Hospital billed $420.00 for 2 units of CPT J7030 (Infusion, Normal Saline Solution, 1,000 cc). The CMS Medicare median allowable fee is $28.00 (Fair market range: $16.00–$70.00). The hospital marked up this service by 1400%.",
+          "remedy": "Demand recalculation to the regional fair market standard of $42.00, saving $378.00.",
+          "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
         }
       ]
     }
@@ -201,60 +258,119 @@
     {
       "itemId": "surg_item_2",
       "code": "82040",
+      "parentCode": "80053",
       "anomalyType": "UNBUNDLED_CHARGE",
       "severity": "HIGH",
-      "disputedAmount": 120.00,
-      "title": "Improper Unbundling (CCI Edit Violation)",
-      "explanation": "CPT 82040 (Albumin) was billed separately for $120.00, but is legally bundled into CPT 80053 performed on the same day.",
-      "remedy": "Separate charge must be reduced to $0.00 per CMS Correct Coding Initiative.",
-      "statutoryBasis": "CMS National Correct Coding Initiative (NCCI)"
+      "disputedAmount": 120,
+      "title": "Improper Unbundling (CCI Violation)",
+      "explanation": "CPT 82040 was billed separately for $120.00, but it is legally bundled under comprehensive panel CPT 80053 (Comprehensive Metabolic Panel (CMP)) performed on the same date.",
+      "remedy": "Component test must be written off to $0.00 in compliance with CMS National Correct Coding Initiative.",
+      "statutoryBasis": "CMS National Correct Coding Initiative (NCCI Policy Manual, Ch. 1)"
     },
     {
       "itemId": "surg_item_3",
       "code": "84075",
+      "parentCode": "80053",
       "anomalyType": "UNBUNDLED_CHARGE",
       "severity": "HIGH",
-      "disputedAmount": 130.00,
-      "title": "Improper Unbundling (CCI Edit Violation)",
-      "explanation": "CPT 84075 (Alkaline Phosphatase) was billed separately for $130.00, but is an integral component of CPT 80053 billed on the same encounter date.",
-      "remedy": "Separate charge must be reduced to $0.00.",
-      "statutoryBasis": "CMS National Correct Coding Initiative (NCCI)"
+      "disputedAmount": 130,
+      "title": "Improper Unbundling (CCI Violation)",
+      "explanation": "CPT 84075 was billed separately for $130.00, but it is legally bundled under comprehensive panel CPT 80053 (Comprehensive Metabolic Panel (CMP)) performed on the same date.",
+      "remedy": "Component test must be written off to $0.00 in compliance with CMS National Correct Coding Initiative.",
+      "statutoryBasis": "CMS National Correct Coding Initiative (NCCI Policy Manual, Ch. 1)"
+    },
+    {
+      "itemId": "surg_item_1",
+      "code": "80053",
+      "anomalyType": "EXCESSIVE_MARKUP",
+      "severity": "HIGH",
+      "disputedAmount": 262,
+      "title": "Excessive Markup (6.5x Medicare Benchmark)",
+      "explanation": "Hospital billed $340.00 for CPT 80053 (Comprehensive Metabolic Panel (CMP)). The CMS Medicare median allowable fee is $52.00 (Fair market range: $40.00–$75.00). The hospital marked up this service by 554%.",
+      "remedy": "Demand recalculation to the regional fair market standard of $78.00, saving $262.00.",
+      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+    },
+    {
+      "itemId": "surg_item_2",
+      "code": "82040",
+      "anomalyType": "EXCESSIVE_MARKUP",
+      "severity": "HIGH",
+      "disputedAmount": 93,
+      "title": "Excessive Markup (6.7x Medicare Benchmark)",
+      "explanation": "Hospital billed $120.00 for CPT 82040 (Albumin; Serum, Plasma, or Whole Blood). The CMS Medicare median allowable fee is $18.00 (Fair market range: $12.00–$30.00). The hospital marked up this service by 567%.",
+      "remedy": "Demand recalculation to the regional fair market standard of $27.00, saving $93.00.",
+      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+    },
+    {
+      "itemId": "surg_item_3",
+      "code": "84075",
+      "anomalyType": "EXCESSIVE_MARKUP",
+      "severity": "HIGH",
+      "disputedAmount": 100,
+      "title": "Excessive Markup (6.5x Medicare Benchmark)",
+      "explanation": "Hospital billed $130.00 for CPT 84075 (Alkaline Phosphatase). The CMS Medicare median allowable fee is $20.00 (Fair market range: $15.00–$35.00). The hospital marked up this service by 550%.",
+      "remedy": "Demand recalculation to the regional fair market standard of $30.00, saving $100.00.",
+      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
     },
     {
       "itemId": "surg_item_4",
       "code": "71046",
       "anomalyType": "EXCESSIVE_MARKUP",
-      "severity": "MEDIUM",
-      "disputedAmount": 300.00,
-      "title": "Severe Imaging Facility Markup",
-      "explanation": "Billed at $490.00 vs regional Medicare median of $68.00 (7.2x markup).",
-      "remedy": "Request reduction to fair market value ($120.00 maximum).",
-      "statutoryBasis": "Fair Credit Billing Act & IRC § 501(r)"
+      "severity": "HIGH",
+      "disputedAmount": 388,
+      "title": "Excessive Markup (7.2x Medicare Benchmark)",
+      "explanation": "Hospital billed $490.00 for CPT 71046 (Chest X-Ray - 2 Views (Frontal & Lateral)). The CMS Medicare median allowable fee is $68.00 (Fair market range: $50.00–$120.00). The hospital marked up this service by 621%.",
+      "remedy": "Demand recalculation to the regional fair market standard of $102.00, saving $388.00.",
+      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+    },
+    {
+      "itemId": "surg_item_5",
+      "code": "93000",
+      "anomalyType": "EXCESSIVE_MARKUP",
+      "severity": "HIGH",
+      "disputedAmount": 247,
+      "title": "Excessive Markup (7.4x Medicare Benchmark)",
+      "explanation": "Hospital billed $310.00 for CPT 93000 (Electrocardiogram (ECG/EKG) with Routine Interpretation). The CMS Medicare median allowable fee is $42.00 (Fair market range: $30.00–$85.00). The hospital marked up this service by 638%.",
+      "remedy": "Demand recalculation to the regional fair market standard of $63.00, saving $247.00.",
+      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
+    },
+    {
+      "itemId": "surg_item_6",
+      "code": "96360",
+      "anomalyType": "EXCESSIVE_MARKUP",
+      "severity": "HIGH",
+      "disputedAmount": 418,
+      "title": "Excessive Markup (6.3x Medicare Benchmark)",
+      "explanation": "Hospital billed $550.00 for CPT 96360 (Intravenous Hydration Infusion (Initial up to 1 Hour)). The CMS Medicare median allowable fee is $88.00 (Fair market range: $65.00–$160.00). The hospital marked up this service by 525%.",
+      "remedy": "Demand recalculation to the regional fair market standard of $132.00, saving $418.00.",
+      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
     },
     {
       "itemId": "surg_item_7",
       "code": "J7030",
       "anomalyType": "EXCESSIVE_MARKUP",
-      "severity": "MEDIUM",
-      "disputedAmount": 350.00,
-      "title": "Extreme IV Saline Markup",
-      "explanation": "Billed at $210.00 per bag ($420.00 total) for standard saline solution.",
-      "remedy": "Request adjustment to standard retail benchmark.",
-      "statutoryBasis": "IRC § 501(r)"
+      "severity": "HIGH",
+      "disputedAmount": 378,
+      "title": "Excessive Markup (15.0x Medicare Benchmark)",
+      "explanation": "Hospital billed $420.00 for 2 units of CPT J7030 (Infusion, Normal Saline Solution, 1,000 cc). The CMS Medicare median allowable fee is $28.00 (Fair market range: $16.00–$70.00). The hospital marked up this service by 1400%.",
+      "remedy": "Demand recalculation to the regional fair market standard of $42.00, saving $378.00.",
+      "statutoryBasis": "IRC Section 501(r) Amounts Generally Billed (AGB) Limitation"
     }
   ],
   "disputePackage": {
-    "formalLetterText": "Date: October 24, 2026\n\nTo:\nBilling & Patient Financial Services\nSt. Luke's Ambulatory Surgical Pavilion\n450 Medical Center Way, Boston, MA 02115\n\nRE: Formal Notice of Disputed Unbundled Charges & Excessive Markups\nPatient Name: Michael Chang\nAccount Number: SURG-2026-4410\nStatement Date: October 18, 2026\nDisputed Amount: $2,350.00\n\nDear Billing Compliance Department,\n\nPursuant to the Fair Credit Billing Act (15 U.S.C. § 1666) and the CMS National Correct Coding Initiative (NCCI), I am formally disputing unbundled laboratory test charges and excessive facility markups on the above-referenced account.\n\nFollowing forensic analysis, the following charges are in direct violation of federal coding guidelines:\n\n1. CPT 82040 (Albumin) - $120.00 & CPT 84075 (Alkaline Phosphatase) - $130.00\n   Grievance: Illegal Unbundling. Both tests were performed on October 15, 2026, alongside CPT 80053 (Comprehensive Metabolic Panel). Under CMS NCCI standards, individual chemistry components may not be unbundled and billed separately when a comprehensive panel is charged.\n\n2. CPT 71046 (Chest X-Ray) - $490.00\n   Grievance: Severe facility markup exceeding 720% of the Medicare allowable median rate of $68.00.\n\n3. CPT J7030 (Normal Saline Solution) - $420.00\n   Grievance: Extreme pharmaceutical supply markup ($210.00 per 1,000ml bag) exceeding standard reasonable community pricing.\n\nDEMANDS:\n1. Reissue an amended statement zeroing out unbundled laboratory CPT codes 82040 and 84075.\n2. Recalculate facility and supply charges pursuant to your hospital's Amount Generally Billed (AGB) rate under IRC § 501(r).\n3. Maintain a freeze on credit reporting and collection actions pursuant to 15 U.S.C. § 1666 while this investigation remains pending.\n\nSincerely,\n\nMichael Chang\nAccount #SURG-2026-4410",
+    "formalLetterText": "SENT VIA CERTIFIED MAIL / WRITTEN DISPUTE SUBMISSION\nDATE: October 26, 2026\n\nTO:\nSt. Luke's Ambulatory Surgical Pavilion\nAttn: Patient Financial Services & Billing Dispute Department\n450 Medical Center Way, Boston, MA 02115\nPhone: 1-888-555-7890\n\nRE: FORMAL NOTICE OF BILLING ERROR, DISPUTE OF OVERCHARGES, AND DEMAND FOR ACCOUNT RECONCILIATION\nPatient Name: Michael Chang\nAccount / Invoice Number: SURG-2026-4410\nStatement Date: 2026-10-18\nTotal Disputed Amount: $1943.00\n\nDear Billing Compliance Officer,\n\nPlease accept this letter as formal written notice of billing errors, improper coding discrepancies, and excessive charges regarding the above-referenced account. I am exercising my rights under the Fair Credit Billing Act (15 U.S.C. § 1666), Regulation Z (12 C.F.R. § 1026.13), and federal hospital billing standards.\n\nA comprehensive forensic audit of the itemized statement reveals that the gross billed total of $2360.00 contains $1943.00 in computational inaccuracies, unbundled procedures, duplicate entries, and markups that substantially exceed regional Medicare benchmarks.\n\n============================================================\nITEMIZED SCHEDULE OF DISPUTED CHARGES\n============================================================\n1. CPT 80053 — COMPREHENSIVE METABOLIC PANEL\n   • Date of Service: 2026-10-15\n   • Billed Amount: $340.00 | Benchmark Median: $52.00\n   • Violation: Excessive Markup (6.5x Medicare Benchmark)\n   • Disputed Overcharge: $262.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $78.00, saving $262.00.\n\n2. CPT 82040 — ALBUMIN SERUM\n   • Date of Service: 2026-10-15\n   • Billed Amount: $120.00 | Benchmark Median: $18.00\n   • Violation: Improper Unbundling (CCI Violation)\n   • Disputed Overcharge: $120.00\n   • Forensic Remedy: Component test must be written off to $0.00 in compliance with CMS National Correct Coding Initiative.\n\n3. CPT 82040 — ALBUMIN SERUM\n   • Date of Service: 2026-10-15\n   • Billed Amount: $120.00 | Benchmark Median: $18.00\n   • Violation: Excessive Markup (6.7x Medicare Benchmark)\n   • Disputed Overcharge: $93.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $27.00, saving $93.00.\n\n4. CPT 84075 — ALKALINE PHOSPHATASE\n   • Date of Service: 2026-10-15\n   • Billed Amount: $130.00 | Benchmark Median: $20.00\n   • Violation: Improper Unbundling (CCI Violation)\n   • Disputed Overcharge: $130.00\n   • Forensic Remedy: Component test must be written off to $0.00 in compliance with CMS National Correct Coding Initiative.\n\n5. CPT 84075 — ALKALINE PHOSPHATASE\n   • Date of Service: 2026-10-15\n   • Billed Amount: $130.00 | Benchmark Median: $20.00\n   • Violation: Excessive Markup (6.5x Medicare Benchmark)\n   • Disputed Overcharge: $100.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $30.00, saving $100.00.\n\n6. CPT 71046 — CHEST X-RAY 2 VIEWS\n   • Date of Service: 2026-10-15\n   • Billed Amount: $490.00 | Benchmark Median: $68.00\n   • Violation: Excessive Markup (7.2x Medicare Benchmark)\n   • Disputed Overcharge: $388.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $102.00, saving $388.00.\n\n7. CPT 93000 — 12-LEAD ELECTROCARDIOGRAM COMPLETE\n   • Date of Service: 2026-10-15\n   • Billed Amount: $310.00 | Benchmark Median: $42.00\n   • Violation: Excessive Markup (7.4x Medicare Benchmark)\n   • Disputed Overcharge: $247.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $63.00, saving $247.00.\n\n8. CPT 96360 — INTRAVENOUS HYDRATION INFUSION 1ST HOUR\n   • Date of Service: 2026-10-15\n   • Billed Amount: $550.00 | Benchmark Median: $88.00\n   • Violation: Excessive Markup (6.3x Medicare Benchmark)\n   • Disputed Overcharge: $418.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $132.00, saving $418.00.\n\n9. CPT J7030 — NORMAL SALINE 1000ML\n   • Date of Service: 2026-10-15\n   • Billed Amount: $420.00 | Benchmark Median: $14.00\n   • Violation: Excessive Markup (15.0x Medicare Benchmark)\n   • Disputed Overcharge: $378.00\n   • Forensic Remedy: Demand recalculation to the regional fair market standard of $42.00, saving $378.00.\n\n\n============================================================\nSTATUTORY DEMANDS & PRESERVATION OF RIGHTS\n============================================================\n1. IMMEDIATE STAY ON CREDIT REPORTING & COLLECTIONS:\nPursuant to 15 U.S.C. § 1666(a) and 12 C.F.R. § 1026.13, you are strictly prohibited from reporting this disputed account as delinquent to any consumer credit reporting agency or assessing late finance charges while this formal dispute is pending. Any collection activity must cease immediately.\n\n2. TIMELY WRITTEN ACKNOWLEDGEMENT:\nFederal law requires written acknowledgement of this notice within thirty (30) days of receipt, and a complete resolution or written explanation within two billing cycles (not to exceed 90 days).\n\n3. COMPREHENSIVE ITEMIZED LEDGER DEMAND:\nI formally demand an updated, itemized statement containing standard CMS Revenue Codes, 11-digit National Drug Codes (NDCs) for all administered pharmaceuticals, and verified physician charge summaries.\n\n4. CHARITY CARE & AMOUNTS GENERALLY BILLED (AGB) DISCLOSURE:\nIn accordance with Internal Revenue Code Section 501(r)(4) and (r)(6), provide a complete copy of your Financial Assistance Policy (FAP) application and recalculate all remaining legitimate charges to your hospital's Amounts Generally Billed percentage.\n\nUntil these disputed charges are investigated and adjusted in accordance with federal and state billing regulations, no payment on the disputed sum of $1943.00 will be remitted.\n\nSincerely,\n\n____________________________________\nMichael Chang\nAccount Holder / Patient Representative\nCertified Mail Tracking: _______________________\n",
     "statutoryCitations": [
-      "CMS National Correct Coding Initiative (NCCI)",
-      "Fair Credit Billing Act (15 U.S.C. § 1666)",
-      "IRS Section 501(r) Financial Assistance Regulations"
+      "Fair Credit Billing Act (15 U.S.C. 1666) — Timely notice of computational billing error and automatic credit report stay.",
+      "CMS National Correct Coding Initiative (NCCI) — Prohibition against improper component unbundling.",
+      "Internal Revenue Code Section 501(r)(6) — Tax-exempt hospital Limitation on Charges to Amounts Generally Billed (AGB).",
+      "Federal No Surprises Act (Public Law 116-260) — Protection against non-consensual out-of-network balance billing."
     ],
     "phoneNegotiationPoints": [
-      "Step 1: Contact surgical pavilion billing at 1-888-555-7890.",
-      "Step 2: Reference Account #SURG-2026-4410 and notify them: 'I have had my bill audited under CMS NCCI rules. CPT 82040 and 84075 are unbundled subcomponents of CPT 80053 and must be written off immediately.'",
-      "Step 3: Point out the 7x markup on the chest X-ray and request an immediate self-pay discount or AGB adjustment."
+      "Script 1 (Account Verification): \"Hello, I am calling regarding Account #SURG-2026-4410. I have submitted a formal Fair Credit Billing Act dispute regarding $1943.00 in duplicate and unbundled line items. Please confirm this account is tagged as 'In Active Dispute' so no automated collections trigger.\"",
+      "Script 2 (When representative says 'Rates are non-negotiable'): \"I understand hospital chargemaster rates are standard, but federal IRC Section 501(r) prohibits non-profit hospitals from billing patients more than the Amount Generally Billed (AGB). Several line items on this bill exceed Medicare median allowables by over 400%. What is your facility's current AGB percentage for this year?\"",
+      "Script 3 (Handling Unbundled CPT Codes): \"Line item CPT 82040 is a component of comprehensive panel 80053 billed on the same date. Under CMS NCCI guidelines, component testing cannot be billed separately. Please write off this unbundled charge.\"",
+      "Script 4 (Lump-Sum Settlement Offer): \"If you recalculate the statement to fair market Medicare median rates of $417.00, I am prepared to settle the entire undisputed balance today with a single one-time payment in exchange for a written zero-balance release.\""
     ],
-    "generatedAt": "2026-10-24T00:00:00Z"
+    "generatedAt": "2026-10-26T09:03:02.016Z"
   }
 }
