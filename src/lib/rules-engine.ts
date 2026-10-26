@@ -39,10 +39,31 @@ export const LEGAL_STATUTES = legalStatutesData as LegalStatute[];
 
 /**
  * Normalizes CPT/HCPCS code to alphanumeric string without spaces or symbols.
+ * Strips annotations like "(Inferred)".
  */
 export function normalizeCptCode(code: string): string {
   if (!code) return '';
-  return code.replace(/[^a-zA-Z0-9]/g, '').trim().toUpperCase();
+  const cleaned = code.replace(/\s*\([^)]*\)/g, '').trim();
+  const match = cleaned.match(/^[a-zA-Z0-9]+/);
+  return match ? match[0].toUpperCase() : cleaned.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+}
+
+/**
+ * Normalizes dates across ISO (YYYY-MM-DD) and US (MM/DD/YYYY) formats.
+ */
+export function normalizeDate(dateStr?: string): string {
+  if (!dateStr) return 'nodate';
+  const trimmed = dateStr.trim();
+  const usMatch = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (usMatch) {
+    const [, m, d, y] = usMatch;
+    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+  }
+  const parsed = Date.parse(trimmed);
+  if (!isNaN(parsed)) {
+    return new Date(parsed).toISOString().split('T')[0];
+  }
+  return trimmed.toLowerCase();
 }
 
 /**
@@ -71,8 +92,9 @@ export function auditDuplicateCharges(items: RawLineItem[]): AnomalyReport[] {
 
   for (const item of items) {
     const cleanCode = normalizeCptCode(item.code);
+    const cleanDate = normalizeDate(item.dateOfService);
     // Group by Code + Date + Amount (or just Code + Date if exact same amount)
-    const key = `${cleanCode}_${item.dateOfService || 'nodate'}_${item.billedAmount}`;
+    const key = `${cleanCode}_${cleanDate}_${item.billedAmount}`;
     
     if (!itemMap.has(key)) {
       itemMap.set(key, [item]);
@@ -133,29 +155,37 @@ export function auditDuplicateCharges(items: RawLineItem[]): AnomalyReport[] {
  */
 export function auditUnbundling(items: RawLineItem[]): AnomalyReport[] {
   const anomalies: AnomalyReport[] = [];
-  const presentCodes = new Set(items.map((i) => normalizeCptCode(i.code)));
 
   for (const parentItem of items) {
     const parentBenchmark = findBenchmark(parentItem.code, parentItem.rawDescription);
     if (parentBenchmark && parentBenchmark.bundles && parentBenchmark.bundles.length > 0) {
+      const parentDate = normalizeDate(parentItem.dateOfService);
+
       for (const bundledCode of parentBenchmark.bundles) {
-        if (presentCodes.has(normalizeCptCode(bundledCode))) {
-          const childItem = items.find(
-            (i) => normalizeCptCode(i.code) === normalizeCptCode(bundledCode)
-          );
-          if (childItem && childItem.id !== parentItem.id) {
-            anomalies.push({
-              itemId: childItem.id,
-              code: childItem.code,
-              anomalyType: 'UNBUNDLED_CHARGE',
-              severity: 'HIGH',
-              disputedAmount: childItem.billedAmount,
-              title: 'Improper Unbundling (CCI Violation)',
-              explanation: `CPT ${childItem.code} was billed separately for $${childItem.billedAmount.toFixed(2)}, but it is legally bundled under comprehensive panel CPT ${parentItem.code} (${parentBenchmark.name}) performed on the same date.`,
-              remedy: 'Component test must be written off to $0.00 in compliance with CMS National Correct Coding Initiative.',
-              statutoryBasis: 'CMS National Correct Coding Initiative (NCCI Policy Manual, Ch. 1)',
-            });
+        const cleanBundled = normalizeCptCode(bundledCode);
+        const matchingChildren = items.filter((i) => {
+          if (i.id === parentItem.id) return false;
+          if (normalizeCptCode(i.code) !== cleanBundled) return false;
+          const childDate = normalizeDate(i.dateOfService);
+          if (parentDate !== 'nodate' && childDate !== 'nodate' && parentDate !== childDate) {
+            return false;
           }
+          return true;
+        });
+
+        for (const childItem of matchingChildren) {
+          anomalies.push({
+            itemId: childItem.id,
+            code: childItem.code,
+            parentCode: parentItem.code,
+            anomalyType: 'UNBUNDLED_CHARGE',
+            severity: 'HIGH',
+            disputedAmount: childItem.billedAmount,
+            title: 'Improper Unbundling (CCI Violation)',
+            explanation: `CPT ${childItem.code} was billed separately for $${childItem.billedAmount.toFixed(2)}, but it is legally bundled under comprehensive panel CPT ${parentItem.code} (${parentBenchmark.name}) performed on the same date.`,
+            remedy: 'Component test must be written off to $0.00 in compliance with CMS National Correct Coding Initiative.',
+            statutoryBasis: 'CMS National Correct Coding Initiative (NCCI Policy Manual, Ch. 1)',
+          } as AnomalyReport);
         }
       }
     }
@@ -175,13 +205,15 @@ export function auditExcessiveMarkups(items: RawLineItem[]): AnomalyReport[] {
     if (!benchmark) continue;
 
     const billed = item.billedAmount;
-    const median = benchmark.medicareMedian;
-    const ratio = billed / (median > 0 ? median : 1);
+    const qty = Math.max(1, item.quantity || 1);
+    const totalMedian = benchmark.medicareMedian * qty;
+    const totalThreshold = benchmark.markupThreshold * qty;
+    const ratio = billed / (totalMedian > 0 ? totalMedian : 1);
 
-    // If billed exceeds threshold OR exceeds 2.5x Medicare median
-    if (billed >= benchmark.markupThreshold || ratio >= 2.5) {
+    // If billed exceeds threshold OR exceeds 2.5x Medicare median (accounting for quantity)
+    if (billed >= totalThreshold || ratio >= 2.5) {
       // Disputed overcharge is everything beyond a reasonable fair market rate (1.5x Medicare)
-      const fairBenchmark = Math.round(median * 1.5 * 100) / 100;
+      const fairBenchmark = Math.round(totalMedian * 1.5 * 100) / 100;
       const disputedOvercharge = Math.max(0, Math.round((billed - fairBenchmark) * 100) / 100);
 
       const severity: AnomalySeverity = ratio >= 4.0 ? 'HIGH' : 'MEDIUM';
@@ -193,7 +225,7 @@ export function auditExcessiveMarkups(items: RawLineItem[]): AnomalyReport[] {
         severity,
         disputedAmount: disputedOvercharge,
         title: `Excessive Markup (${ratio.toFixed(1)}x Medicare Benchmark)`,
-        explanation: `Hospital billed $${billed.toFixed(2)} for CPT ${item.code} (${benchmark.name}). The CMS Medicare median allowable fee is $${median.toFixed(2)} (Fair market range: $${benchmark.fairMarketRange[0]}–$${benchmark.fairMarketRange[1]}). The hospital marked up this service by ${((ratio - 1) * 100).toFixed(0)}%.`,
+        explanation: `Hospital billed $${billed.toFixed(2)} for ${qty > 1 ? `${qty} units of ` : ''}CPT ${item.code} (${benchmark.name}). The CMS Medicare median allowable fee is $${totalMedian.toFixed(2)} (Fair market range: $${(benchmark.fairMarketRange[0] * qty).toFixed(2)}–$${(benchmark.fairMarketRange[1] * qty).toFixed(2)}). The hospital marked up this service by ${((ratio - 1) * 100).toFixed(0)}%.`,
         remedy: `Demand recalculation to the regional fair market standard of $${fairBenchmark.toFixed(2)}, saving $${disputedOvercharge.toFixed(2)}.`,
         statutoryBasis: 'IRC Section 501(r) Amounts Generally Billed (AGB) Limitation',
       });
@@ -211,13 +243,19 @@ export function auditUpcodingSeverity(items: RawLineItem[]): AnomalyReport[] {
   const level5ER = items.find((i) => normalizeCptCode(i.code) === '99285');
 
   if (level5ER) {
-    // If billed Level 5 (immediate life or limb threat) but total procedures are minor (e.g. single x-ray or suture)
+    // If billed Level 5 (immediate life or limb threat) but encounter contains explicitly low-acuity indicators (e.g. closed simple fracture, routine minor suture)
     const hasMajorResuscitation = items.some((i) => {
       const code = normalizeCptCode(i.code);
       return ['99291', '31500', '92950'].includes(code); // Critical care, intubation, CPR
     });
 
-    if (!hasMajorResuscitation && level5ER.billedAmount > 1200) {
+    const hasMinorClinicalIndicators = items.some((i) => {
+      const code = normalizeCptCode(i.code);
+      return ['73130', '73110', '25600', '12001', '12002', '29125', '29105', '99281', '99282'].includes(code);
+    });
+
+    // High decision-making ED care alone without minor contradictors is not upcoding
+    if (!hasMajorResuscitation && hasMinorClinicalIndicators && level5ER.billedAmount > 1200) {
       const level3Median = 260.0;
       const potentialDispute = Math.max(0, level5ER.billedAmount - (level3Median * 1.8));
 
@@ -275,10 +313,10 @@ export function compileForensicAudit(
       status = 'LOW';
     }
 
-    const median = benchmark ? benchmark.medicareMedian : Math.round(item.billedAmount * 0.35);
+    const median = benchmark ? benchmark.medicareMedian : 0;
     const fairRange: [number, number] = benchmark
       ? benchmark.fairMarketRange
-      : [Math.round(median * 0.8), Math.round(median * 1.4)];
+      : [0, 0];
 
     return {
       ...item,
@@ -326,14 +364,15 @@ export function compileForensicAudit(
   );
   if (allAnomalies.length === 0) riskScore = 8;
 
+  const gross = financialsOverride?.totalBilledGross ?? totalBilled;
+  const insurance = (financialsOverride as any)?.insuranceAdjustments ?? (financialsOverride as any)?.insurancePaid ?? 0;
+  const patientResp = (financialsOverride as any)?.patientResponsibility ?? (financialsOverride as any)?.patientBalanceDue ?? gross;
+
   const financials: FinancialSummary = {
-    totalBilledGross: financialsOverride?.totalBilledGross || totalBilled,
-    insuranceAdjustments: financialsOverride?.insuranceAdjustments || 0,
-    patientResponsibility:
-      financialsOverride?.patientResponsibility !== undefined
-        ? financialsOverride.patientResponsibility
-        : totalBilled,
-    totalPotentialSavings: Math.round(totalPotentialSavings * 100) / 100,
+    totalBilledGross: gross,
+    insuranceAdjustments: insurance,
+    patientResponsibility: patientResp,
+    totalPotentialSavings: Math.min(gross, Math.round(totalPotentialSavings * 100) / 100),
     riskScore,
   };
 
@@ -405,7 +444,7 @@ export function generateStatutoryDisputePackage(
   }
 
   if (!tableRows) {
-    tableRows = 'No severe statutory discrepancies identified. All billed items conform to median regional pricing.\n';
+    tableRows = 'No severe statutory discrepancies flagged on itemized entries. Formal itemized reconciliation requested.\n';
   }
 
   const formalLetterText = `SENT VIA CERTIFIED MAIL / WRITTEN DISPUTE SUBMISSION
@@ -458,10 +497,16 @@ Account Holder / Patient Representative
 Certified Mail Tracking: _______________________
 `;
 
+  const unbundleAnomaly = items
+    .flatMap((i) => i.anomalies)
+    .find((a) => a.anomalyType === 'UNBUNDLED_CHARGE');
+  const childCode = unbundleAnomaly?.code || '80048';
+  const parentCode = unbundleAnomaly?.parentCode || '80053';
+
   const phoneNegotiationPoints = [
     `Script 1 (Account Verification): "Hello, I am calling regarding Account #${accountNo}. I have submitted a formal Fair Credit Billing Act dispute regarding $${financials.totalPotentialSavings.toFixed(2)} in duplicate and unbundled line items. Please confirm this account is tagged as 'In Active Dispute' so no automated collections trigger."`,
     `Script 2 (When representative says 'Rates are non-negotiable'): "I understand hospital chargemaster rates are standard, but federal IRC Section 501(r) prohibits non-profit hospitals from billing patients more than the Amount Generally Billed (AGB). Several line items on this bill exceed Medicare median allowables by over 400%. What is your facility's current AGB percentage for this year?"`,
-    `Script 3 (Handling Unbundled CPT Codes): "Line item CPT ${items.find((i) => i.anomalies.some((a) => a.anomalyType === 'UNBUNDLED_CHARGE'))?.code || '80048'} is a component of comprehensive panel ${items.find((i) => i.anomalies.some((a) => a.anomalyType === 'UNBUNDLED_CHARGE'))?.anomalies[0]?.code || '80053'} billed on the same date. Under CMS NCCI guidelines, component testing cannot be billed separately. Please write off this unbundled charge."`,
+    `Script 3 (Handling Unbundled CPT Codes): "Line item CPT ${childCode} is a component of comprehensive panel ${parentCode} billed on the same date. Under CMS NCCI guidelines, component testing cannot be billed separately. Please write off this unbundled charge."`,
     `Script 4 (Lump-Sum Settlement Offer): "If you recalculate the statement to fair market Medicare median rates of $${(financials.totalBilledGross - financials.totalPotentialSavings).toFixed(2)}, I am prepared to settle the entire undisputed balance today with a single one-time payment in exchange for a written zero-balance release."`,
   ];
 

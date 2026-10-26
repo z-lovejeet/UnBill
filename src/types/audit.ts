@@ -30,6 +30,7 @@ export interface AuditedLineItem extends RawLineItem {
 export interface AnomalyReport {
   itemId: string;
   code: string;
+  parentCode?: string;
   anomalyType: AnomalyType;
   severity: AnomalySeverity;
   disputedAmount: number;
