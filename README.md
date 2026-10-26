@@ -34,7 +34,7 @@ UnBill rejects brittle probabilistic loops in favor of a **Deterministic Sequent
                  │
                  ▼
 ┌─────────────────────────────────────────────────────────────┐
-│ 🤖 AGENT 1: Clinical Ingestion Agent (Gemini 3.5 Flash Lite) │
+│ 🤖 AGENT 1: Clinical Ingestion Agent (Gemini 3.8 Flash)      │
 │    • High-precision multimodal table extraction             │
 │    • Identifies facility, account #, and itemized CPT codes │
 │    • Standardizes into strict JSON schema                   │
@@ -85,7 +85,7 @@ In healthcare finance and statutory consumer law, **mathematical hallucinations 
 | **Framework** | Next.js 15 (App Router) + React 19 | Server-side rendering, streaming SSE, and edge routes |
 | **Language** | TypeScript 5.7 (Strict) | End-to-end domain type safety |
 | **Styling** | Tailwind CSS 3.4 | Editorial clinical-fintech aesthetic (Anti-AI-slop design) |
-| **Vision & Extraction** | Google Gemini 3.5 Flash Lite | Multimodal hospital statement OCR and structured extraction |
+| **Vision & Extraction** | Google Gemini 3.8 Flash | Multimodal hospital statement OCR and structured extraction |
 | **Forensic Logic** | Custom Deterministic Engine | NCCI bundling checks, duplicate detection & CMS benchmark math |
 | **Copilot Assistant** | Groq SDK (`openai/gpt-oss-120b`) | Sub-350ms first-token streaming conversational negotiation advice |
 | **Client State** | Zustand 5.0 | Client-side reactive vault and hydration-safe persistence |

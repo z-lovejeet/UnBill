@@ -42,11 +42,20 @@ export default function ResultsPage() {
       return;
     }
 
-    // Otherwise, attempt to load from sample API or localStorage
+    // Otherwise, attempt to load from sample API, local vault history, or shared link
     const loadReport = async () => {
       setIsLoading(true);
       try {
-        // If it's a shared link, check Upstash cloud first
+        // Check local vault history first
+        const historyMatch = useAuditStore.getState().history.find((h) => h.id === id);
+        if (historyMatch) {
+          setReport(historyMatch);
+          setCurrentReport(historyMatch);
+          setIsLoading(false);
+          return;
+        }
+
+        // If it's a shared link, check Upstash cloud
         if (id.startsWith('share_')) {
           const shareRes = await fetch(`/api/share?id=${id}`);
           if (shareRes.ok) {
@@ -56,19 +65,24 @@ export default function ResultsPage() {
             setIsLoading(false);
             return;
           }
+          setIsLoading(false);
+          return;
         }
 
-        const sampleId = id.includes('surgery') ? 'outpatient_surgery' : 'er_visit_broken_wrist';
-        const res = await fetch('/api/audit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sampleId }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          data.id = id;
-          setReport(data);
-          setCurrentReport(data);
+        // If it's explicitly a sample request
+        if (id.startsWith('sample_') || id === 'outpatient_surgery' || id === 'er_visit_broken_wrist') {
+          const sampleId = id.includes('surgery') ? 'outpatient_surgery' : 'er_visit_broken_wrist';
+          const res = await fetch('/api/audit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sampleId }),
+          });
+          if (res.ok) {
+            const data = await res.json();
+            data.id = id;
+            setReport(data);
+            setCurrentReport(data);
+          }
         }
       } catch (err) {
         console.error('Failed to load audit report:', err);
@@ -136,12 +150,40 @@ export default function ResultsPage() {
     setTimeout(() => setShareSuccess(false), 2500);
   };
 
-  if (isLoading || !report) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
         <div className="w-10 h-10 border-4 border-slate-300 border-t-slate-900 rounded-full animate-spin mb-4" />
         <h2 className="text-base font-semibold text-slate-800">Loading Forensic Audit Dossier...</h2>
         <p className="text-xs text-slate-500 mt-1">Reconstructing clinical ledger and benchmarks.</p>
+      </div>
+    );
+  }
+
+  if (!report) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 text-center">
+        <div className="p-3 bg-amber-50 rounded-2xl border border-amber-200 text-amber-700 mb-3 inline-block">
+          <ShieldAlert className="w-7 h-7 mx-auto" />
+        </div>
+        <h2 className="text-lg font-bold text-slate-900">Audit Dossier Not Found or Expired</h2>
+        <p className="text-xs text-slate-500 max-w-sm mt-1 mb-6">
+          This audit report is no longer in your local browser vault or the shared cloud link has expired.
+        </p>
+        <div className="flex items-center justify-center gap-3">
+          <Link
+            href="/scan"
+            className="px-4 py-2 bg-slate-950 text-white rounded-xl text-xs font-semibold hover:bg-slate-900 transition-colors"
+          >
+            Audit a New Bill
+          </Link>
+          <Link
+            href="/history"
+            className="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-semibold hover:bg-slate-50 transition-colors"
+          >
+            View Vault History
+          </Link>
+        </div>
       </div>
     );
   }
