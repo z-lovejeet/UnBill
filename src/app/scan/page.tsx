@@ -179,40 +179,39 @@ export default function ScanPage() {
             </div>
             <div className="p-6 sm:p-8 space-y-5">
               {tab === 'UPLOAD' ? (
+                <>
+                <input
+                  id="statement-file"
+                  type="file"
+                  ref={input}
+                  accept={supported.join(',')}
+                  disabled={busy}
+                  onChange={(e) => {
+                    if (e.target.files?.[0]) choose(e.target.files[0]);
+                  }}
+                  className="hidden"
+                />
                 <div
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={(e) => {
                     e.preventDefault();
                     if (!busy && e.dataTransfer.files[0]) choose(e.dataTransfer.files[0]);
                   }}
-                  className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center space-y-3"
+                  onClick={() => { if (!busy) input.current?.click(); }}
+                  className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center space-y-3 cursor-pointer hover:border-emerald-400 transition-colors"
                 >
-                  <UploadCloud className="w-9 h-9 mx-auto text-slate-500" />
-                  <label htmlFor="statement-file" className="block font-semibold text-sm">
+                  <UploadCloud className="w-9 h-9 mx-auto text-slate-400" />
+                  <p className="font-semibold text-sm">
                     Itemized Statement File
-                  </label>
-                  <input
-                    id="statement-file"
-                    type="file"
-                    ref={input}
-                    accept={supported.join(',')}
-                    disabled={busy}
-                    onChange={(e) => {
-                      if (e.target.files?.[0]) choose(e.target.files[0]);
-                    }}
-                    className="sr-only"
-                  />
-                  <button
-                    type="button"
-                    disabled={busy}
-                    onClick={() => input.current?.click()}
-                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-xs transition-colors hover:border-emerald-300 hover:bg-emerald-50/40 disabled:opacity-50"
+                  </p>
+                  <span
+                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-xs"
                   >
                     <UploadCloud className="w-4 h-4" />
                     Choose File
-                  </button>
+                  </span>
                   <p className="text-xs text-slate-500">
-                    Drag a file here or use Browse. PNG, JPEG, WebP or PDF · maximum 2.5 MB.
+                    Drag a file here or click anywhere in this area. PNG, JPEG, WebP or PDF · max 2.5 MB.
                   </p>
                   {file && (
                     <p className="text-sm break-all flex items-center justify-center gap-2">
@@ -221,6 +220,7 @@ export default function ScanPage() {
                     </p>
                   )}
                 </div>
+                </>
               ) : (
                 <div>
                   <label htmlFor="statement-text" className="block text-sm font-semibold mb-2">
