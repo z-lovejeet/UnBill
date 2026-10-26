@@ -191,14 +191,14 @@ export default function ScanPage() {
                   }}
                   className="hidden"
                 />
-                <div
+                <label
+                  htmlFor="statement-file"
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={(e) => {
                     e.preventDefault();
                     if (!busy && e.dataTransfer.files[0]) choose(e.dataTransfer.files[0]);
                   }}
-                  onClick={() => { if (!busy) input.current?.click(); }}
-                  className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center space-y-3 cursor-pointer hover:border-emerald-400 transition-colors"
+                  className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center space-y-3 cursor-pointer hover:border-emerald-400 transition-colors block"
                 >
                   <UploadCloud className="w-9 h-9 mx-auto text-slate-400" />
                   <p className="font-semibold text-sm">
@@ -219,7 +219,7 @@ export default function ScanPage() {
                       {file.name} · {(file.size / 1_000_000).toFixed(2)} MB
                     </p>
                   )}
-                </div>
+                </label>
                 </>
               ) : (
                 <div>
