@@ -22,13 +22,19 @@ export async function POST(req: NextRequest) {
     }
 
     const redis = getRedisClient();
+    if (!redis) {
+      return NextResponse.json(
+        { error: 'Cloud sharing storage is disabled or unavailable in this environment.' },
+        { status: 503 }
+      );
+    }
+
     const shareId = `share_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 7)}`;
 
-    if (redis) {
-      // Store report with 30-day expiration (2,592,000 seconds)
-      await redis.set(`unbill:share:${shareId}`, JSON.stringify(auditReport), {
-        ex: 60 * 60 * 24 * 30,
-      });
+    // Store report with 30-day expiration (2,592,000 seconds)
+    await redis.set(`unbill:share:${shareId}`, JSON.stringify(auditReport), {
+      ex: 60 * 60 * 24 * 30,
+    });
 
       // Increment global anonymous audit counter
       try {
@@ -40,7 +46,6 @@ export async function POST(req: NextRequest) {
       } catch (counterErr) {
         console.warn('Non-critical: Redis counter update skipped:', counterErr);
       }
-    }
 
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     const shareUrl = `${baseUrl}/results/${shareId}`;

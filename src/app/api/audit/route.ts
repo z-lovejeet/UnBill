@@ -16,6 +16,9 @@ export async function POST(req: NextRequest) {
 
     // Route 1: Instant 1-Click Sample Intake
     if (sampleId) {
+      if (sampleId !== 'outpatient_surgery' && sampleId !== 'er_visit_broken_wrist') {
+        return NextResponse.json({ error: 'Sample bill not found.' }, { status: 404 });
+      }
       const sampleFileName =
         sampleId === 'outpatient_surgery'
           ? 'outpatient_surgery.json'
@@ -29,10 +32,28 @@ export async function POST(req: NextRequest) {
         parsedReport.createdAt = new Date().toISOString();
         return NextResponse.json(parsedReport, { status: 200 });
       }
+      return NextResponse.json({ error: 'Sample file missing from disk.' }, { status: 404 });
     }
 
     // Route 2: Pre-parsed Raw Bill Data (direct JSON intake)
-    if (incomingBill && Array.isArray(incomingBill.items)) {
+    if (incomingBill) {
+      if (!Array.isArray(incomingBill.items) || incomingBill.items.length === 0) {
+        return NextResponse.json(
+          { error: 'Empty itemized statement. At least one line item is required.' },
+          { status: 400 }
+        );
+      }
+
+      const hasInvalidAmount = incomingBill.items.some(
+        (i: any) => typeof i?.billedAmount !== 'number' || isNaN(i?.billedAmount)
+      );
+      if (hasInvalidAmount) {
+        return NextResponse.json(
+          { error: 'Invalid line item amount. Billed amount must be a valid number.' },
+          { status: 400 }
+        );
+      }
+
       const auditedReport = compileForensicAudit(
         incomingBill.items,
         incomingBill.facility || { name: 'Hospital Facility' },
