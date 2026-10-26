@@ -81,26 +81,44 @@ export const useAuditStore = create<AuditState>()(
           return item;
         });
 
-        // Recalculate potential savings from disputed items
+        // Recalculate potential savings from disputed items without double-counting
         const newSavings = updatedItems
           .filter((i) => i.isDisputed)
           .reduce((sum, i) => {
-            const itemAnomalies = i.anomalies.reduce((aSum, a) => aSum + a.disputedAmount, 0);
-            return sum + (itemAnomalies > 0 ? itemAnomalies : 0);
+            if (i.anomalies.length === 0) return sum;
+            const maxDispute = Math.max(...i.anomalies.map((a) => a.disputedAmount));
+            const itemSaving = Math.min(i.billedAmount, maxDispute);
+            return sum + (itemSaving > 0 ? itemSaving : 0);
           }, 0);
+
+        const roundedSavings = Math.round(newSavings * 100) / 100;
+        const updatedDisputePackage = current.disputePackage
+          ? {
+              ...current.disputePackage,
+              formalLetterText: current.disputePackage.formalLetterText
+                .replace(/Total Disputed Amount: \$[0-9.]+/g, `Total Disputed Amount: $${roundedSavings.toFixed(2)}`)
+                .replace(/contains \$[0-9.]+ in computational/g, `contains $${roundedSavings.toFixed(2)} in computational`),
+            }
+          : current.disputePackage;
 
         const updatedAudit: AuditReport = {
           ...current,
           items: updatedItems,
           financials: {
             ...current.financials,
-            totalPotentialSavings: Math.round(newSavings * 100) / 100,
+            totalPotentialSavings: roundedSavings,
           },
+          disputePackage: updatedDisputePackage,
         };
+
+        const updatedHistory = get().history.map((h) =>
+          h.id === updatedAudit.id ? updatedAudit : h
+        );
 
         set({
           currentAudit: updatedAudit,
           currentReport: updatedAudit,
+          history: updatedHistory,
         });
       },
 
@@ -160,6 +178,33 @@ export const useAuditStore = create<AuditState>()(
     {
       name: 'unbill_vault_v1',
       skipHydration: true, // Prevents SSR window hydration mismatch in Next.js
+      storage: {
+        getItem: (name: string) => {
+          if (typeof window === 'undefined' && typeof globalThis.localStorage === 'undefined') return null;
+          const raw = globalThis.localStorage?.getItem(name);
+          if (!raw) return null;
+          try {
+            const decoded = typeof Buffer !== 'undefined'
+              ? Buffer.from(raw, 'base64').toString('utf8')
+              : decodeURIComponent(Array.prototype.map.call(atob(raw), (c: string) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+            return JSON.parse(decoded);
+          } catch {
+            try { return JSON.parse(raw); } catch { return null; }
+          }
+        },
+        setItem: (name: string, value: any) => {
+          if (typeof window === 'undefined' && typeof globalThis.localStorage === 'undefined') return;
+          const str = JSON.stringify(value);
+          const encoded = typeof Buffer !== 'undefined'
+            ? Buffer.from(str, 'utf8').toString('base64')
+            : btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
+          globalThis.localStorage?.setItem(name, encoded);
+        },
+        removeItem: (name: string) => {
+          if (typeof window === 'undefined' && typeof globalThis.localStorage === 'undefined') return;
+          globalThis.localStorage?.removeItem(name);
+        },
+      },
     }
   )
 );

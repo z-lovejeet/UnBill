@@ -74,6 +74,46 @@ SCHEMA:
 }
 `;
 
+const FALLBACK_MODELS = ['gemini-3.5-flash', 'gemini-3.1-flash-lite'];
+
+async function generateWithFallback(
+  genAI: GoogleGenerativeAI,
+  primaryModel: string,
+  config: any,
+  systemInstruction: string | undefined,
+  contents: any[]
+) {
+  const modelsToTry = [primaryModel, ...FALLBACK_MODELS.filter((m) => m !== primaryModel)];
+  let lastError: any = null;
+
+  for (const modelName of modelsToTry) {
+    try {
+      const model = genAI.getGenerativeModel({
+        model: modelName,
+        generationConfig: config,
+        systemInstruction,
+      });
+      return await model.generateContent(contents);
+    } catch (err: any) {
+      lastError = err;
+      const msg = (err?.message || '').toLowerCase();
+      if (
+        msg.includes('503') ||
+        msg.includes('unavailable') ||
+        msg.includes('high demand') ||
+        msg.includes('overloaded') ||
+        msg.includes('not found') ||
+        msg.includes('404')
+      ) {
+        console.warn(`Model ${modelName} transiently unavailable (${err.message.slice(0, 60)}), trying fallback model...`);
+        continue;
+      }
+      throw err;
+    }
+  }
+  throw lastError;
+}
+
 /**
  * Extracts raw structured bill data from an image file (base64) using Gemini multimodal vision.
  */
@@ -82,36 +122,35 @@ export async function extractBillFromImage(
   mimeType: string = 'image/jpeg'
 ): Promise<RawBillData> {
   const genAI = getGeminiClient();
-  const model = genAI.getGenerativeModel({
-    model: DEFAULT_GEMINI_MODEL,
-    generationConfig: {
+  const cleanBase64 = base64Data.includes(',') ? base64Data.split(',')[1] : base64Data;
+
+  const result = await generateWithFallback(
+    genAI,
+    DEFAULT_GEMINI_MODEL,
+    {
       responseMimeType: 'application/json',
       temperature: 0.1,
     },
-    systemInstruction: EXTRACTION_SYSTEM_INSTRUCTION,
-  });
-
-  // Strip prefix if included (e.g. "data:image/png;base64,")
-  const cleanBase64 = base64Data.includes(',') ? base64Data.split(',')[1] : base64Data;
-
-  const result = await model.generateContent([
-    {
-      inlineData: {
-        data: cleanBase64,
-        mimeType: mimeType || 'image/jpeg',
+    EXTRACTION_SYSTEM_INSTRUCTION,
+    [
+      {
+        inlineData: {
+          data: cleanBase64,
+          mimeType: mimeType || 'image/jpeg',
+        },
       },
-    },
-    {
-      text: 'Extract all hospital facility details, patient account numbers, and itemized billing line items into the required JSON schema.',
-    },
-  ]);
+      {
+        text: 'Extract all hospital facility details, patient account numbers, and itemized billing line items into the required JSON schema.',
+      },
+    ]
+  );
 
   const responseText = result.response.text();
   try {
     const parsed = JSON.parse(responseText);
     return sanitizeRawBillData(parsed);
-  } catch (err) {
-    console.error('Failed to parse Gemini JSON response:', responseText, err);
+  } catch (err: any) {
+    console.error('Failed to parse Gemini JSON response. Syntax error:', err?.message || err);
     throw new Error('Gemini extraction output was not valid JSON.');
   }
 }
@@ -121,27 +160,28 @@ export async function extractBillFromImage(
  */
 export async function extractBillFromText(rawText: string): Promise<RawBillData> {
   const genAI = getGeminiClient();
-  const model = genAI.getGenerativeModel({
-    model: DEFAULT_GEMINI_MODEL,
-    generationConfig: {
+
+  const result = await generateWithFallback(
+    genAI,
+    DEFAULT_GEMINI_MODEL,
+    {
       responseMimeType: 'application/json',
       temperature: 0.1,
     },
-    systemInstruction: EXTRACTION_SYSTEM_INSTRUCTION,
-  });
-
-  const result = await model.generateContent([
-    {
-      text: `Analyze the following medical bill statement text and extract all line items:\n\n${rawText}`,
-    },
-  ]);
+    EXTRACTION_SYSTEM_INSTRUCTION,
+    [
+      {
+        text: `Analyze the following medical bill statement text and extract all line items:\n\n${rawText}`,
+      },
+    ]
+  );
 
   const responseText = result.response.text();
   try {
     const parsed = JSON.parse(responseText);
     return sanitizeRawBillData(parsed);
-  } catch (err) {
-    console.error('Failed to parse Gemini text response:', responseText, err);
+  } catch (err: any) {
+    console.error('Failed to parse Gemini text response. Syntax error:', err?.message || err);
     throw new Error('Gemini extraction output was not valid JSON.');
   }
 }
@@ -210,23 +250,27 @@ Return ONLY the formatted letter text.
  * Ensures extracted data conforms to valid types and sane defaults.
  */
 function sanitizeRawBillData(data: any): RawBillData {
+  const hasItems = Array.isArray(data.items) && data.items.length > 0;
   return {
-    isMedicalBill: data.isMedicalBill !== false,
-    rejectionReason: data.rejectionReason || undefined,
+    isMedicalBill: Boolean(data.isMedicalBill) && hasItems,
+    rejectionReason: data.rejectionReason || (!hasItems ? 'No itemized charges found.' : undefined),
     facility: {
-      name: data.facility?.name || 'Metropolitan Memorial Hospital',
-      address: data.facility?.address || '100 Medical Center Parkway, Suite 400',
-      billingPhone: data.facility?.billingPhone || '(800) 555-0199',
+      name: data.facility?.name?.trim() || 'Medical Facility',
+      address: data.facility?.address?.trim() || 'Billing Compliance Department',
+      billingPhone: data.facility?.billingPhone?.trim() || '',
     },
     patient: {
-      accountNumber: data.patient?.accountNumber || `ACC-${Math.floor(100000 + Math.random() * 900000)}`,
+      accountNumber: data.patient?.accountNumber?.trim() || 'Unspecified',
       statementDate: data.patient?.statementDate || new Date().toISOString().split('T')[0],
-      patientName: data.patient?.patientName || 'Patient',
+      patientName: data.patient?.patientName?.trim() || 'Patient',
     },
     financials: {
       totalBilledGross: Number(data.financials?.totalBilledGross) || 0,
       insurancePaid: Number(data.financials?.insurancePaid) || 0,
-      patientBalanceDue: Number(data.financials?.patientBalanceDue) || Number(data.financials?.totalBilledGross) || 0,
+      patientBalanceDue:
+        data.financials?.patientBalanceDue !== undefined && !isNaN(Number(data.financials?.patientBalanceDue))
+          ? Number(data.financials?.patientBalanceDue)
+          : Number(data.financials?.totalBilledGross) || 0,
     },
     items: Array.isArray(data.items)
       ? data.items.map((item: any, idx: number) => ({
