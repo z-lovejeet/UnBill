@@ -188,7 +188,7 @@
       <h2>Other useful seams</h2>
       <p>
         Encryption/key handling: <code>src/lib/vault-storage.ts</code>. Coach:
-        <code>src/components/copilot-drawer.tsx</code> and <code>src/app/api/chat/route.ts</code>.
+        <code>src/components/copilot-drawer.tsx</code>, <code>src/components/billing-coach.tsx</code>, <code>src/components/coach-message.tsx</code> and <code>src/app/api/chat/route.ts</code>.
         Sharing/redaction/revocation: <code>src/app/api/share/route.ts</code> and
         <code>src/lib/reports.ts</code>. Operating limits: <code>src/lib/api-utils.ts</code>. The
         illustrative data's limits are in <code>data/benchmark_metadata.json</code>.
@@ -200,8 +200,9 @@
       </p>
     </section>
     <p class="small">
-      Code snapshot: model routing and quota guard, 26 October 2026. Source SHA-256:
-      <code>47cc79b0c28283bdd9a9aa76bc325330340b0e5784066c744077c26ae9c1cd09</code>. This is a saved
+      Code snapshot: clear findings, formatted coach and call scripts, 26 October 2026. Source
+      SHA-256:
+      <code>20d7b3d529dd59886831589a872e6ad3d2023e8ac748c5d2a80a5e4e145fbad2</code>. This is a saved
       map, not live introspection; refresh it if source paths or behavior change. See
       <a href="checklist.md">the checklist</a> and
       <a href="shipping-status.md">actual shipping status</a>.

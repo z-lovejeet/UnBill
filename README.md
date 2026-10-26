@@ -28,7 +28,7 @@ The primary has a shared cap of **18 provider attempts per Pacific-time day**. A
 - Explicit consent before transmitting documents or coach questions. Use synthetic/de-identified input.
 - Runtime validation of extracted/direct input; unknown codes and dates remain unknown. Incomplete statements, unsupported credits and unreconciled totals require manual review.
 - Possible duplicates and overlapping panels, quantity/documentation review, and illustrative price comparisons. Legitimate repeats, providers and modifiers can change interpretation.
-- One selected amount per item, regenerated letter, four phone prompts, conditional consumer-resource links, copy and print/PDF export.
+- One selected amount per item, regenerated letter, a read-aloud phone script, conditional consumer-resource links, copy and print/PDF export.
 - AES-256-GCM browser persistence, nonextractable IndexedDB device key, up to 30 reports. This is not password protection or protection from scripts running on the same origin.
 - Redacted share links, 256-bit random identifiers, 30-day expiration, and private revocation controls in the creator's vault. Procedures and amounts remain visible to link holders.
 - Bounded provider requests, streaming cancellation, body limits, per-network request limits and a configurable daily AI budget.
@@ -38,7 +38,7 @@ The **19-code illustrative catalog is not an official CMS fee schedule**, market
 ## Verify
 
 ```bash
-npm run check             # lint, types, 25 offline regression tests, production build
+npm run check             # lint, types, 29 offline regression tests, production build
 npm audit --audit-level=moderate
 ```
 

@@ -118,3 +118,9 @@ No unresolved implementation decision blocks the documented demonstration. Futur
 ## Known product limits
 
 19 illustrative codes, no official fee-feed or insurer/EOB adjudication, no clinical coding determination, no automatic legal protection, no guaranteed reduction, no verified organizational approval for sensitive health-data operation. Public demo inputs must be synthetic or de-identified.
+
+### Clear results and call preparation
+
+The result summary counts unique charges with concerns, then names the concern types: possible duplicates, tests that may already be included, illustrative price differences, quantity questions and visit-level documentation. Three separate figures explain original charges, the source patient balance and the selected portion to question. The latter is not subtracted from the patient balance or presented as savings. Each charge shows its concerns without requiring expansion; source detail and follow-up questions remain available below.
+
+The billing coach opens as a lazy-loaded, viewport-bounded dialog with an independently scrolling conversation and a visible composer. Assistant Markdown renders as structured headings, lists, emphasis and quoted scripts; raw HTML and unsafe links are not enabled. Provider instructions request short, practical answers and distinguish suspected errors from illustrative comparisons. The deterministic phone script includes opening/summary/balance steps, one spoken section per selected charge, assistance questions, escalation and a written-confirmation close. The phone script can be copied or printed, and it updates with the report selection.

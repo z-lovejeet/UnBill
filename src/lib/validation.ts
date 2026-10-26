@@ -178,7 +178,7 @@ export const reportSchema = z
     disputePackage: z.object({
       formalLetterText: text(200000),
       statutoryCitations: z.array(text(3000)).max(10),
-      phoneNegotiationPoints: z.array(text(3000)).max(10),
+      phoneNegotiationPoints: z.array(text(3000)).max(MAX_ITEMS + 6),
       generatedAt: z.string().datetime(),
     }),
   })

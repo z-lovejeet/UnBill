@@ -172,3 +172,95 @@ section[id] {
     border: 0 !important;
   }
 }
+
+.coach-dialog {
+  position: fixed;
+  inset: 0;
+  margin: 0 0 0 auto;
+  width: min(100vw, 32rem);
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+}
+.coach-composer {
+  max-height: 48dvh;
+  overflow-y: auto;
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+.coach-prose {
+  overflow-wrap: anywhere;
+}
+.coach-prose > :first-child {
+  margin-top: 0;
+}
+.coach-prose > :last-child {
+  margin-bottom: 0;
+}
+.coach-prose p {
+  margin: 0.65rem 0;
+}
+.coach-prose h1,
+.coach-prose h2,
+.coach-prose h3,
+.coach-prose h4 {
+  margin: 1.15rem 0 0.45rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #064e3b;
+}
+.coach-prose strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+.coach-prose ul,
+.coach-prose ol {
+  padding-left: 1.3rem;
+  margin: 0.65rem 0;
+}
+.coach-prose ul {
+  list-style: disc;
+}
+.coach-prose ol {
+  list-style: decimal;
+}
+.coach-prose li {
+  padding-left: 0.2rem;
+  margin: 0.5rem 0;
+}
+.coach-prose li::marker {
+  color: #047857;
+  font-weight: 600;
+}
+.coach-prose blockquote {
+  border-left: 3px solid #6ee7b7;
+  background: #ecfdf5;
+  padding: 0.5rem 0.8rem;
+  margin: 0.75rem 0;
+  color: #064e3b;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.coach-prose a {
+  color: #047857;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.coach-prose code {
+  border-radius: 0.25rem;
+  background: #f1f5f9;
+  padding: 0.1rem 0.3rem;
+  font-size: 0.85em;
+}
+.coach-prose pre {
+  overflow-x: auto;
+  padding: 0.8rem;
+  background: #f1f5f9;
+  border-radius: 0.5rem;
+}
+.coach-prose hr {
+  border-color: #e2e8f0;
+  margin: 1rem 0;
+}

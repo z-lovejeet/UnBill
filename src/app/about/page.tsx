@@ -88,7 +88,7 @@ export default function About() {
             ],
             [
               'A practical preparation kit',
-              'Copy or print a selected-charge letter, follow four phone prompts and open consumer resources that explain the conditions behind relevant protections.',
+              'Copy or print a selected-charge letter, follow a read-aloud phone script and open consumer resources that explain the conditions behind relevant protections.',
             ],
             [
               'An optional billing coach',

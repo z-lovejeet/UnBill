@@ -1,5 +1,6 @@
 import catalog from '../../data/cpt_benchmarks.json';
 import resources from '../../data/legal_statutes.json';
+import { phoneQuestion } from './review-language';
 import type {
   RawLineItem,
   AuditedLineItem,
@@ -218,10 +219,26 @@ export function generateStatutoryDisputePackage(
     formalLetterText: `REQUEST FOR ITEMIZED BILLING REVIEW\nDate: ${date}\n\nTo: ${facility.name}\n${facility.address || 'Patient Billing Department'}\n\nPatient: ${patient.patientName || 'Not provided'}\nAccount: ${patient.accountNumber}\nStatement date: ${patient.statementDate || 'Not provided'}\nTotal Disputed Amount: $${amount}\n\nDear Billing Team,\n\nPlease review the selected charges below and provide supporting documentation or a corrected itemized statement. My statement lists gross charges of $${financials.totalBilledGross.toFixed(2)}. The selected, non-overlapping amount requested for review is $${amount}. This is a request for clarification, not a determination that the charges are invalid or that a reduction is owed.\n\nSELECTED CHARGES\n\n${rows || 'No charges are selected. Please provide a complete itemized statement and explain the balance.'}\n\nPlease explain any repeated services, relevant billing modifiers, applicable insurer adjustments, and the basis of the patient balance. If available, please send your financial assistance policy and self-pay pricing options.\n\nI request written confirmation of receipt and your expected review timeline. Please let me know whether you will voluntarily pause collection activity during this review. This letter does not establish an automatic collection or credit-reporting stay. Specific consumer protections depend on the type of account, coverage, facility and eligibility.\n\nPlease confirm any correction or settlement in writing before I agree to a revised payment. I request review of $${amount}; I am not treating an illustrative reference price as a legal payment limit.\n\nSincerely,\n${patient.patientName || 'Patient / account holder'}\nContact details: ____________________\n\nPrepared with UnBill. Verify all figures and facts before sending. Educational billing assistance; not legal or medical advice.`,
     statutoryCitations: resources.map((r) => `${r.title}: ${r.formalNoticeClause} ${r.sourceUrl}`),
     phoneNegotiationPoints: [
-      `Account verification: "I am calling about account ${patient.accountNumber}. Please send a complete itemized statement and explain my current patient balance."`,
-      `Selected charges: "I am requesting review of $${amount} across ${selected.length} selected line items. Please explain the documented services and any applicable adjustments."`,
-      `Financial assistance: "Could you send the financial assistance policy and self-pay pricing options? Please explain eligibility and any hospital-specific AGB calculation if applicable."`,
-      `Follow-up: "Please confirm receipt, your review timeline and whether you can voluntarily pause collections. I will verify any revised balance or settlement in writing."`,
+      `Open the conversation
+“Hello, I am calling about account ${patient.accountNumber}. I would like help understanding my itemized statement. Am I speaking with the right department for a billing review? May I have your name and a reference number for this call?”`,
+      selected.length
+        ? `Explain your request
+“I have ${selected.length} selected line item${selected.length === 1 ? '' : 's'} to discuss. The amount I am asking you to review is $${amount} within the original charges. I understand this is not a confirmed refund or reduction. Could we go through each selected charge together?”`
+        : `Explain your request
+“I have not selected any charges to dispute. Please help me understand the statement and provide a complete itemized breakdown before I decide whether anything needs review.”`,
+      `Confirm what the balance means
+“My statement lists total charges of $${financials.totalBilledGross.toFixed(2)}${financials.patientResponsibility === null ? ', but it does not show a patient balance' : ` and a patient balance of $${financials.patientResponsibility.toFixed(2)}`}. Could you explain which insurance adjustments, payments and credits have been applied? Are any claims or adjustments still pending? If I am insured, can you help me compare this with my insurer’s explanation of benefits?”`,
+      ...selected.map(
+        (item) =>
+          `Discuss ${item.code || 'the uncoded service'} — ${item.rawDescription}
+“The statement lists ${item.rawDescription}, ${item.code ? `code ${item.code}, ` : ''}${item.dateOfService ? `on ${item.dateOfService}, ` : 'with no service date shown, '}quantity ${item.quantity}, billed at $${item.billedAmount.toFixed(2)}. ${item.anomalies.map(phoneQuestion).join(' ')} Please explain the supporting record. If you confirm an error, could you send a corrected statement and explain how the correction affects my patient balance?”`,
+      ),
+      `Ask about affordable options
+“Could you send me your financial assistance policy and explain how to apply? Are there self-pay prices, discounts or payment plans that could apply to my situation? Please explain eligibility, interest, fees and the full terms in writing before I choose an option.”`,
+      `If the concern is not resolved
+“Could you refer this to a billing supervisor or coding reviewer? How do I submit the supporting statement and a written review request? What reference number should I use, and when should I expect a response? Can you voluntarily pause collection activity while you review it? Please confirm whether that request is accepted; I am not assuming a pause is automatic.”`,
+      `Close and confirm the next steps
+“Let me read back what we agreed: the charges you will review, the documents you will send, and the expected response date. Is that correct? Please send the explanation and any corrected balance in writing. Who should I contact if I have not heard back by that date? Thank you for your help.”`,
     ],
   };
 }

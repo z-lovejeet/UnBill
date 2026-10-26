@@ -314,8 +314,8 @@ export default function ScanPage() {
             <h2 className="font-semibold">What you will get</h2>
             <p className="text-sm leading-7 text-slate-600">
               An itemized report, explanations for review findings, editable selections, a matching
-              review letter and four phone prompts. The optional coach helps you phrase follow-up
-              questions.
+              review letter and a read-aloud phone script. The optional coach helps you phrase
+              follow-up questions.
             </p>
             <Link href="/about" className="text-link">
               See how the review works

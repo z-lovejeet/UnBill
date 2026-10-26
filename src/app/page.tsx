@@ -121,7 +121,7 @@ export default function Home() {
             },
             {
               title: 'Prepare a request you can verify',
-              copy: 'Choose the findings you want to discuss. The letter and four phone prompts use the same selected amount, including after you revisit the report.',
+              copy: 'Choose the findings you want to discuss. The letter and a read-aloud phone script use the same selected amount, including after you revisit the report.',
             },
           ]}
         />

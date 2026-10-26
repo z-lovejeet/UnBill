@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useReport } from '@/hooks/use-report';
 import { useAuditStore } from '@/lib/store';
-import { formatCurrency } from '@/lib/utils';
+import { ReviewSummary } from '@/components/review-summary';
 import { AuditTable } from '@/components/audit-table';
 import { CopilotDrawer } from '@/components/copilot-drawer';
 import { GuideSteps } from '@/components/page-content';
@@ -62,7 +62,6 @@ export default function ResultsPage() {
         </Link>
       </div>
     );
-  const selected = report.items.filter((i) => i.isDisputed).length;
   return (
     <div className="page-shell space-y-8 sm:space-y-10">
       <header className="flex flex-wrap gap-5 justify-between items-start">
@@ -100,68 +99,7 @@ export default function ResultsPage() {
           </Link>
         </div>
       </header>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          [
-            'Gross Charges',
-            formatCurrency(report.financials.totalBilledGross),
-            'Before insurance or a billing review',
-          ],
-          [
-            'Selected Review Amount',
-            formatCurrency(report.financials.totalPotentialSavings),
-            `${selected} selected line items; no guaranteed reduction`,
-          ],
-          [
-            'Reported Patient Balance',
-            report.financials.patientResponsibility === null
-              ? 'Not Provided'
-              : formatCurrency(report.financials.patientResponsibility),
-            'As extracted; verify against your insurer EOB',
-          ],
-          [
-            'Review Notes',
-            String(report.anomalies.length),
-            'Heuristic findings, not confirmed violations',
-          ],
-        ].map(([label, value, detail]) => (
-          <div key={label} className="surface p-5 sm:p-6">
-            <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-              {label}
-            </h2>
-            <p
-              className="font-mono text-2xl font-semibold mt-3"
-              data-testid={label === 'Selected Review Amount' ? 'review-total' : undefined}
-            >
-              {value}
-            </p>
-            <p className="text-xs text-slate-500 mt-2 leading-relaxed">{detail}</p>
-          </div>
-        ))}
-      </div>
-      <section className="grid md:grid-cols-[0.7fr_1.5fr] gap-6 rounded-2xl bg-emerald-50/60 border border-emerald-100 p-6 sm:p-8">
-        <div>
-          <p className="eyebrow">Reading this report</p>
-          <h2 className="text-xl font-semibold tracking-tight mt-3">
-            The numbers tell
-            <br />
-            different parts of the story.
-          </h2>
-        </div>
-        <div className="text-sm leading-7 text-slate-600 space-y-3">
-          <p>
-            Gross charges describe the statement before adjustments. The patient balance is the
-            amount reported on the source, when available. The selected review amount reflects the
-            findings you have included below; it is not an estimate of what you legally owe or will
-            save.
-          </p>
-          <p>
-            Expand a service to read its supporting detail. Use the filters to focus on findings,
-            price comparisons or codes without a reference. Change a selection whenever you want the
-            letter and phone guide to cover a different set of questions.
-          </p>
-        </div>
-      </section>
+      <ReviewSummary report={report} />
       <details className="surface p-5 sm:p-6">
         <summary className="text-sm font-semibold cursor-pointer">
           Review context and methodology notes
@@ -210,7 +148,7 @@ export default function ResultsPage() {
             },
             {
               title: 'Ask about the selected charges',
-              copy: 'Use the letter and four phone prompts to request an explanation or corrected statement. The optional coach can help you phrase a follow-up question.',
+              copy: 'Use the letter and read-aloud phone script to request an explanation or corrected statement. The optional coach can help you phrase a follow-up question.',
             },
             {
               title: 'Keep a record of the response',

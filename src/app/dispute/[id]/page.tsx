@@ -13,10 +13,14 @@ export default function DisputePage() {
   const [message, setMessage] = useState('');
   async function copy() {
     try {
-      await navigator.clipboard.writeText(report!.disputePackage.formalLetterText);
-      setMessage('Letter copied.');
+      await navigator.clipboard.writeText(
+        tab === 'PHONE'
+          ? report!.disputePackage.phoneNegotiationPoints.join('\n\n')
+          : report!.disputePackage.formalLetterText,
+      );
+      setMessage(tab === 'PHONE' ? 'Phone script copied.' : 'Letter copied.');
     } catch {
-      setMessage('Clipboard access was unavailable. Select the letter text below and copy it.');
+      setMessage('Clipboard access was unavailable. Select the text below and copy it.');
     }
   }
   if (loading)
@@ -63,7 +67,7 @@ export default function DisputePage() {
             onClick={copy}
             className="rounded-lg border bg-white px-4 py-2 text-sm hover:bg-slate-50"
           >
-            Copy Letter
+            {tab === 'PHONE' ? 'Copy Phone Script' : 'Copy Letter'}
           </button>
           <button
             onClick={() => window.print()}
@@ -121,18 +125,67 @@ export default function DisputePage() {
           </div>
         </article>
       ) : tab === 'PHONE' ? (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Four questions for the billing team</h2>
-          <p className="text-sm leading-7 text-slate-600 max-w-2xl">
-            Have the statement and any insurer explanation of benefits beside you. Ask the
-            representative to explain one selected item at a time, and note their name, the date and
-            any reference number in your own records.
-          </p>
-          {report.disputePackage.phoneNegotiationPoints.map((point, index) => (
-            <p className="p-5 bg-white border rounded-xl text-sm leading-relaxed" key={index}>
-              {point}
+        <section className="space-y-5" aria-label="Read-aloud phone script">
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 sm:p-8">
+            <p className="eyebrow">Keep this open during your call</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+              A word-for-word script for your billing call
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
+              Read the quoted text aloud and pause for the representative’s answer. The script
+              includes only your selected charges and updates when you change the selection.
             </p>
-          ))}
+            <div className="mt-5 grid gap-4 text-sm sm:grid-cols-2">
+              <div>
+                <p className="font-semibold text-emerald-950">Have ready</p>
+                <p className="mt-1 leading-6 text-slate-600">
+                  Your itemized statement, account number, insurer’s explanation of benefits if
+                  available, and somewhere to take notes.
+                </p>
+              </div>
+              <div>
+                <p className="font-semibold text-emerald-950">Call the verified billing number</p>
+                <p className="mt-1 leading-6 text-slate-600">
+                  {report.facility.billingPhone
+                    ? `${report.facility.billingPhone} is printed on the source. Verify it against your statement before calling.`
+                    : 'Use the number on your original statement or the provider’s official website. No billing number was extracted.'}
+                </p>
+              </div>
+            </div>
+          </div>
+          <ol className="space-y-4">
+            {report.disputePackage.phoneNegotiationPoints.map((point, index) => {
+              const [title, ...script] = point.split('\n');
+              return (
+                <li
+                  key={index}
+                  className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 print:break-inside-avoid"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100 font-mono text-xs font-semibold text-emerald-900">
+                      {index + 1}
+                    </span>
+                    <h3 className="pt-1 text-base font-semibold leading-6 text-slate-950">
+                      {title}
+                    </h3>
+                  </div>
+                  <p className="mb-2 mt-5 text-[11px] font-semibold uppercase tracking-wider text-emerald-800">
+                    Say this
+                  </p>
+                  <blockquote className="border-l-2 border-emerald-300 pl-4 text-sm leading-8 text-slate-700">
+                    {script.join('\n') || point}
+                  </blockquote>
+                </li>
+              );
+            })}
+          </ol>
+          <aside className="rounded-2xl border border-sky-200 bg-sky-50 p-6">
+            <h3 className="font-semibold text-sky-950">Write down the outcome</h3>
+            <p className="mt-2 text-sm leading-7 text-sky-900">
+              Call date · Representative · Reference number · Charges being reviewed · Documents
+              promised · Follow-up date. Keep these notes with your statement outside the app.
+            </p>
+          </aside>
         </section>
       ) : (
         <section className="grid gap-4">
