@@ -26,3 +26,9 @@ The baseline production deployment was ready and newer than the key update. A sy
 - Full lint, TypeScript, 23-test suite and production build passed before publication.
 
 Google's quota day and project scope are documented at https://ai.google.dev/gemini-api/docs/rate-limits . Project-specific model quotas must be read from the operator's AI Studio; the configured 18-attempt policy does not assert a universal free-tier allowance or guarantee provider uptime.
+
+## Hosted follow-up
+
+The production overall AI_DAILY_REQUEST_LIMIT had been changed to 18 and its shared counter was at 21. That application-wide setting blocked both extraction models and the coach. It was restored to the previously configured 200 while the dedicated 3.8 primary cap remains 18. The existing counter was preserved.
+
+The subsequent PDF request still exhausted both 18-second provider windows. The fallback window is extended to 32 seconds while the primary stays at 18; total provider wait is bounded to 50 seconds under the 60-second route/client limit. This allows a slower valid provider response without changing the quota policy.

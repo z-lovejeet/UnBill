@@ -140,7 +140,7 @@ async function extract(parts: unknown[], signal?: AbortSignal): Promise<RawBillD
       throw new ApiError(503, 'The configured extraction model is invalid.');
     if (signal?.aborted) throw new ApiError(499, 'Request cancelled.', 'CANCELLED');
     if (index === 0 && !(await reserveGeminiPrimaryAttempt(model))) continue;
-    const timeout = AbortSignal.timeout(18000);
+    const timeout = AbortSignal.timeout(index === 0 ? 18000 : 32000);
     const requestSignal = signal ? AbortSignal.any([signal, timeout]) : timeout;
     const started = Date.now();
     try {

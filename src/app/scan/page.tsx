@@ -82,7 +82,7 @@ export default function ScanPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-        signal: AbortSignal.any([controller.signal, AbortSignal.timeout(45000)]),
+        signal: AbortSignal.any([controller.signal, AbortSignal.timeout(60000)]),
       });
       let data;
       try {
@@ -180,46 +180,43 @@ export default function ScanPage() {
             <div className="p-6 sm:p-8 space-y-5">
               {tab === 'UPLOAD' ? (
                 <>
-                <input
-                  id="statement-file"
-                  type="file"
-                  ref={input}
-                  accept={supported.join(',')}
-                  disabled={busy}
-                  onChange={(e) => {
-                    if (e.target.files?.[0]) choose(e.target.files[0]);
-                  }}
-                  className="hidden"
-                />
-                <label
-                  htmlFor="statement-file"
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => {
-                    e.preventDefault();
-                    if (!busy && e.dataTransfer.files[0]) choose(e.dataTransfer.files[0]);
-                  }}
-                  className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center space-y-3 cursor-pointer hover:border-emerald-400 transition-colors block"
-                >
-                  <UploadCloud className="w-9 h-9 mx-auto text-slate-400" />
-                  <p className="font-semibold text-sm">
-                    Itemized Statement File
-                  </p>
-                  <span
-                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-xs"
+                  <input
+                    id="statement-file"
+                    type="file"
+                    ref={input}
+                    accept={supported.join(',')}
+                    disabled={busy}
+                    onChange={(e) => {
+                      if (e.target.files?.[0]) choose(e.target.files[0]);
+                    }}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="statement-file"
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      if (!busy && e.dataTransfer.files[0]) choose(e.dataTransfer.files[0]);
+                    }}
+                    className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center space-y-3 cursor-pointer hover:border-emerald-400 transition-colors block"
                   >
-                    <UploadCloud className="w-4 h-4" />
-                    Choose File
-                  </span>
-                  <p className="text-xs text-slate-500">
-                    Drag a file here or click anywhere in this area. PNG, JPEG, WebP or PDF · max 2.5 MB.
-                  </p>
-                  {file && (
-                    <p className="text-sm break-all flex items-center justify-center gap-2">
-                      <FileText className="w-4 h-4 shrink-0" />
-                      {file.name} · {(file.size / 1_000_000).toFixed(2)} MB
+                    <UploadCloud className="w-9 h-9 mx-auto text-slate-400" />
+                    <p className="font-semibold text-sm">Itemized Statement File</p>
+                    <span className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-xs">
+                      <UploadCloud className="w-4 h-4" />
+                      Choose File
+                    </span>
+                    <p className="text-xs text-slate-500">
+                      Drag a file here or click anywhere in this area. PNG, JPEG, WebP or PDF · max
+                      2.5 MB.
                     </p>
-                  )}
-                </label>
+                    {file && (
+                      <p className="text-sm break-all flex items-center justify-center gap-2">
+                        <FileText className="w-4 h-4 shrink-0" />
+                        {file.name} · {(file.size / 1_000_000).toFixed(2)} MB
+                      </p>
+                    )}
+                  </label>
                 </>
               ) : (
                 <div>
